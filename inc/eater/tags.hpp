@@ -40,6 +40,14 @@ namespace Eater
         ~Tags();
 
         /**
+         * Checks if a tag exists.
+         *
+         * \param tag Tag to find.
+         * \return True if found else false. 
+         */
+        bool find(const std::string &tag);
+
+        /**
          * Adds a tag.
          *
          * Will not add duplicated.

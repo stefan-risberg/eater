@@ -38,6 +38,17 @@ namespace Eater
         }
     }
 
+    bool Tags::find(const std::string &tag)
+    {
+        for (auto it = begin(); it != end(); it++) {
+            if (*it == tag) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool Tags::addTag(const std::string &tag)
     {
         for (auto it = begin(); it != end(); it++) {
