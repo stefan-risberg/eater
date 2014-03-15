@@ -2,59 +2,89 @@
 #include <ctime>
 
 namespace Eater {
-    TimeStamp::TimeStamp(const Date &d, const Time &t) :
-        Date(d), Time(t)
-    {}
-
-    TimeStamp::TimeStamp(u32 d, u32 t) :
-        Date(d), Time(t)
-    {}
-
     TimeStamp::TimeStamp() :
-        Date(), Time()
+        _time(),
+        _date()
     {}
 
-    void TimeStamp::setCurrentTime()
+    TimeStamp::TimeStamp(const Time &t, const Date &d) :
+        _time(t),
+        _date(d)
+    {}
+
+    TimeStamp::TimeStamp(u32 t, u32 d) :
+        _time(t),
+        _date(d)
+    {}
+
+    TimeStamp::TimeStamp(u64 ts)
+    {
+        setTimeStamp(ts);
+    }
+
+    void TimeStamp::setCurrent()
     {
         std::time_t t = std::time(0);
         struct std::tm *now = std::localtime(&t);
-        setDate(now->tm_year + 1900, now->tm_mon + 1, now->tm_mday);
-        setTime(now->tm_hour, now->tm_min, now->tm_sec, 0);
+
+        _date.setDate(now->tm_year + 1900, now->tm_mon + 1, now->tm_mday);
+        _time.setTime(now->tm_hour, now->tm_min, now->tm_sec, 0);
+    }
+
+    void TimeStamp::setTime(u32 t)
+    {
+        _time.setTime(t);
+    }
+
+    void TimeStamp::setDate(u32 d)
+    {
+        _date.setDate(d);
+    }
+
+    void TimeStamp::setTime(const Time &t)
+    {
+        _time.setTime(t.getTime());
+    }
+
+    void TimeStamp::setDate(const Date &d)
+    {
+        _date.setDate(d.getDate());
     }
 
     void TimeStamp::setTimeStamp(u64 ts)
     {
+        u32 time = 0x00000000FFFFFFFF & ts;
         u32 date = ts >> 32;
-        u32 time = ts & 0x00000000FFFFFFFF;
-
-        setTime(time);
-        setDate(date);
+        _time.setTime(time);
+        _date.setDate(date);
     }
 
-    void TimeStamp::setTimeStamp(u32 d, u32 t)
+    void TimeStamp::setTimeStamp(const TimeStamp &ts)
     {
-        setTime(t);
-        setDate(d);
+        _time.setTime(ts.getTime());
+        _date.setDate(ts.getDate());
     }
 
-    void TimeStamp::setTimeStamp(const Date &d, const Time &t)
+    u32 TimeStamp::getTime() const
     {
-        setTime(t.getTime());
-        setDate(d.getDate());
+        return _time.getTime();
+    }
+
+    u32 TimeStamp::getDate() const
+    {
+        return _date.getDate();
     }
 
     u64 TimeStamp::getTimeStamp() const
     {
-        u64 ts = getDate();
-        ts <<= 32;
-
-        ts += getTime();
-
+        u64 ts = _date.getDate();
+        ts = ts << 32;
+        ts += _time.getTime();
         return ts;
     }
 
     std::string TimeStamp::toString() const
     {
-        return Date::toString() + " " + Time::toString();
+        return _date.toString() + " " + _time.toString();
     }
 }
