@@ -6,16 +6,24 @@
 #include "eater/common.hpp"
 #include "eater/fooditem.hpp"
 #include "eater/nutrients.hpp"
+#include "eater/timestamp.hpp"
 
 namespace Eater {
     class Recepie;
 
-    class Recepie : public Nutrients{
+    class Recepie
+    {
+        // Private data.
         private:
             u32 _id;
             std::string _name;
             std::vector<u32> _foods;
             std::vector<u32> _amounts;
+
+        // Public data.
+        public:
+            MacroNutrients macro_nutrients;
+            TimeStamp time_stamp;
 
         public:
             /**
@@ -146,7 +154,7 @@ namespace Eater {
              * \param[in] item Nutrient item to change by.
              * \param[in] amount Amount of the nutrient item.
              */
-            void changeNutrients(const Nutrients &item, u32 amount);
+            void changeNutrients(const MacroNutrients &item, u32 amount);
     };
 }
 

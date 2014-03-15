@@ -2,18 +2,18 @@
 
 namespace Eater {
     Recepie::Recepie() :
-        Nutrients(0.0, 0.0, 0.0, 0.0),
-        _id(0), _name("")
+        _id(0), _name(""),
+        macro_nutrients(0.0, 0.0, 0.0, 0.0)
     {}
 
     Recepie::Recepie(u32 _id,
                      const std::string &_name,
                      const std::vector<FoodItem> &_foods,
                      const std::vector<u32> &_amounts) :
-        Nutrients(0.0, 0.0, 0.0, 0.0),
         _id(_id),
         _name(_name),
-        _amounts(_amounts)
+        _amounts(_amounts),
+        macro_nutrients(0.0, 0.0, 0.0, 0.0)
     {
         if (_amounts.size() != _foods.size()) {
             return;
@@ -22,7 +22,7 @@ namespace Eater {
         for (u32 i = 0; i < _foods.size(); i++) {
             this->_foods.push_back(_foods[i].id());
 
-            changeNutrients(_foods[i], _amounts[i]);
+            changeNutrients(_foods[i].macro_nutrients, _amounts[i]);
         }
     }
 
@@ -75,7 +75,7 @@ namespace Eater {
             _foods.push_back(food.id());
             _amounts.push_back(amount);
 
-            changeNutrients(food, amount);
+            changeNutrients(food.macro_nutrients, amount);
             
             return true;
         }
@@ -105,7 +105,7 @@ namespace Eater {
     bool Recepie::removeFood(const FoodItem &food) {
         for (u32 i = 0; i < _foods.size(); i++) {
             if (_foods.at(i) == food.id()) {
-                changeNutrients(food, -(_amounts[i]));
+                changeNutrients(food.macro_nutrients, -(_amounts[i]));
 
                 _amounts.erase(_amounts.begin() + i);
                 _foods.erase(_foods.begin() + i);
@@ -141,25 +141,25 @@ namespace Eater {
 
         auto diff = amount - _amounts[at];
 
-        changeNutrients(food, diff);
+        changeNutrients(food.macro_nutrients, diff);
 
         _amounts[at] += diff;
 
         return true;
     }
 
-    void Recepie::changeNutrients(const Nutrients &item, u32 amount)
+    void Recepie::changeNutrients(const MacroNutrients &item, u32 amount)
     {
-        auto a = calories() + (amount * (item.calories() / 100));
-        calories(a);
+        auto a = macro_nutrients.calories() + (amount * (item.calories() / 100));
+        macro_nutrients.calories(a);
 
-        a = proteins() + (amount * (item.proteins() / 100));
-        proteins(a);
+        a = macro_nutrients.proteins() + (amount * (item.proteins() / 100));
+        macro_nutrients.proteins(a);
 
-        a = carbohydrates() + (amount * (item.carbohydrates() / 100));
-        carbohydrates(a);
+        a = macro_nutrients.carbohydrates() + (amount * (item.carbohydrates() / 100));
+        macro_nutrients.carbohydrates(a);
 
-        a = fats() + (amount * (item.fats() / 100));
-        fats(a);
+        a = macro_nutrients.fats() + (amount * (item.fats() / 100));
+        macro_nutrients.fats(a);
     }
 }
