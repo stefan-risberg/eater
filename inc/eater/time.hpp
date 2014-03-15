@@ -2,11 +2,9 @@
 #define EATER_TIME_HPP_
 
 #include "eater/common.hpp"
-#include "eater/traits/to_string_trait.hpp"
-#include "eater/traits/from_string_trait.hpp"
 
 namespace Eater {
-    class Time : public ToString_trait, public FromString_trait{
+    class Time {
         private:
             union {
                 u32 _value;
@@ -45,10 +43,10 @@ namespace Eater {
              */
             Time();
 
-            virtual void hours(u8 h);
-            virtual void minutes(u8 m);
-            virtual void seconds(u8 s);
-            virtual void milliSeconds(u8 ms);
+            void hours(u8 h);
+            void minutes(u8 m);
+            void seconds(u8 s);
+            void milliSeconds(u8 ms);
             void setTime(u32 t);
             void setTime(u8 h, u8 m, u8 s = 0, u8 ms = 0);
 
@@ -58,8 +56,8 @@ namespace Eater {
             u8 milliSeconds() const;
             u32 getTime() const;
 
-            virtual bool fromString(const std::string &time);
-            virtual std::string toString() const;
+            bool fromString(const std::string &time);
+            std::string toString() const;
     };
 }
 

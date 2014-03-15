@@ -4,13 +4,12 @@
 #include "eater/common.hpp"
 #include "eater/time.hpp"
 #include "eater/date.hpp"
-#include "eater/traits/to_string_trait.hpp"
 
 namespace Eater {
     /**
      * A time stamp.
      */
-    class TimeStamp : public ToString_trait {
+    class TimeStamp {
     private:
         Time _time; //!< Time of time stamp. 
         Date _date; //!< Date of time stamp.
@@ -124,7 +123,7 @@ namespace Eater {
          * \return String representing timestamp.
          * \see ToString_trait
          */
-        virtual std::string toString() const;
+        std::string toString() const;
     };
 }
 

@@ -2,14 +2,12 @@
 #define EATER_DATE_HPP_
 
 #include "eater/common.hpp"
-#include "eater/traits/to_string_trait.hpp"
-#include "eater/traits/from_string_trait.hpp"
 
 namespace Eater {
     /**
      * Holds a date and modifing functions.
      */
-    class Date : public FromString_trait, public ToString_trait {
+    class Date {
         private:
             union {
                 u32 _date;
@@ -59,35 +57,35 @@ namespace Eater {
              * \param m New month.
              * \param d New day.
              */
-            virtual void setDate(u16 y, u8 m, u8 d);
+            void setDate(u16 y, u8 m, u8 d);
 
             /**
              * Set new date.
              *
              * \param _date Date with format: 16bit year 8bit month 8bit day.
              */
-            virtual void setDate(u32 _date);
+            void setDate(u32 _date);
 
             /**
              * Set new year.
              *
              * \param y New year.
              */
-            virtual void year(const u16 y);
+            void year(const u16 y);
 
             /**
              * Set new month.
              *
              * \param m New month.
              */
-            virtual void month(const u8 m);
+            void month(const u8 m);
 
             /**
              * Set new day
              *
              * \param d New day.
              */
-            virtual void day(const u8 d);
+            void day(const u8 d);
 
             /**
              * Get whole date.
@@ -123,14 +121,14 @@ namespace Eater {
              * \param d New date.
              * \return False if date was in wrong format.
              */
-            virtual bool fromString(const std::string &date);
+            bool fromString(const std::string &date);
 
             /**
              * Resturn date as a string.
              *
              * \return Date.
              */
-            virtual std::string toString() const;
+            std::string toString() const;
     };
 }
 
