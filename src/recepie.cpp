@@ -150,16 +150,24 @@ namespace Eater {
 
     void Recepie::changeNutrients(const MacroNutrients &item, u32 amount)
     {
-        auto a = macro_nutrients.calories() + (amount * (item.calories() / 100));
+        auto a = macro_nutrients.calories(); 
+        a += (amount * (item.calories() / 100));
+
         macro_nutrients.calories(a);
 
-        a = macro_nutrients.proteins() + (amount * (item.proteins() / 100));
+        a = macro_nutrients.proteins(); 
+        a += (amount * (item.proteins() / 100));
+
         macro_nutrients.proteins(a);
 
-        a = macro_nutrients.carbohydrates() + (amount * (item.carbohydrates() / 100));
+        a = macro_nutrients.carbohydrates();
+        a += (amount * (item.carbohydrates() / 100));
+
         macro_nutrients.carbohydrates(a);
 
-        a = macro_nutrients.fats() + (amount * (item.fats() / 100));
+        a = macro_nutrients.fats();
+        a += (amount * (item.fats() / 100));
+
         macro_nutrients.fats(a);
     }
 }
