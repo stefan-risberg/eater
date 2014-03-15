@@ -4,7 +4,7 @@
 #include "eater/common.hpp"
 
 namespace Eater {
-    class Nutrients {
+    class MacroNutrients {
         private:
             f32 _calories;
             f32 _proteins;
@@ -20,10 +20,10 @@ namespace Eater {
              * \param _carbohydrates Carbohydrat count for 100g.
              * \param _fats Fat count for 100g.
              */
-            Nutrients(f32 _calories = 0,
-                      f32 _proteins = 0.0,
-                      f32 _carbohydrates = 0.0,
-                      f32 _fats = 0.0);
+            MacroNutrients(f32 _calories = 0,
+                           f32 _proteins = 0.0,
+                           f32 _carbohydrates = 0.0,
+                           f32 _fats = 0.0);
 
             /**
              * Set calorie count.

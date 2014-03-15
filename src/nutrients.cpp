@@ -1,17 +1,17 @@
 #include "eater/nutrients.hpp"
 
 namespace Eater {
-    Nutrients::Nutrients(f32 _calories,
-                         f32 _proteins,
-                         f32 _carbohydrates,
-                         f32 _fats) :
+    MacroNutrients::MacroNutrients(f32 _calories,
+                                   f32 _proteins,
+                                   f32 _carbohydrates,
+                                   f32 _fats) :
         _calories(_calories),
         _proteins(_proteins),
         _carbohydrates(_carbohydrates),
         _fats(_fats)
     {}
 
-    void Nutrients::calories(f32 _calories)
+    void MacroNutrients::calories(f32 _calories)
     {
         if (_calories < 0.0) {
             _calories = 0.0;
@@ -19,7 +19,7 @@ namespace Eater {
         this->_calories = _calories;
     }
 
-    void Nutrients::proteins(f32 _proteins)
+    void MacroNutrients::proteins(f32 _proteins)
     {
         if (_proteins < 0.0) {
             _proteins = 0.0;
@@ -27,7 +27,7 @@ namespace Eater {
         this->_proteins = _proteins;
     }
 
-    void Nutrients::carbohydrates(f32 _carbohydrates)
+    void MacroNutrients::carbohydrates(f32 _carbohydrates)
     {
         if (_carbohydrates < 0.0) {
             _carbohydrates = 0.0;
@@ -40,7 +40,7 @@ namespace Eater {
      *
      * \param[in] _fats New fat count.
      */
-    void Nutrients::fats(f32 _fats)
+    void MacroNutrients::fats(f32 _fats)
     {
         if (_fats < 0.0) {
             _fats = 0.0;
@@ -53,7 +53,7 @@ namespace Eater {
      *
      * \return The calorie count.
      */
-    f32 Nutrients::calories() const
+    f32 MacroNutrients::calories() const
     {
         return _calories;
     }
@@ -63,7 +63,7 @@ namespace Eater {
      *
      * \return The protein count.
      */
-    f32 Nutrients::proteins() const
+    f32 MacroNutrients::proteins() const
     {
         return _proteins;
     }
@@ -73,7 +73,7 @@ namespace Eater {
      *
      * \return The carbohydrate count.
      */
-    f32 Nutrients::carbohydrates() const {
+    f32 MacroNutrients::carbohydrates() const {
         return _carbohydrates;
     }
 
@@ -82,7 +82,7 @@ namespace Eater {
      *
      * \return The fat count.
      */
-    f32 Nutrients::fats() const {
+    f32 MacroNutrients::fats() const {
         return _carbohydrates;
     }
 }
