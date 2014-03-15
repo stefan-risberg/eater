@@ -9,8 +9,6 @@
 #include "eater/timestamp.hpp"
 
 namespace Eater {
-    class Recepie;
-
     class Recepie
     {
         // Private data.
