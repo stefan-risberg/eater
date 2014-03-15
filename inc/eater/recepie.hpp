@@ -7,6 +7,7 @@
 #include "eater/fooditem.hpp"
 #include "eater/nutrients.hpp"
 #include "eater/timestamp.hpp"
+#include "eater/tags.hpp"
 
 namespace Eater {
     class Recepie
@@ -20,8 +21,9 @@ namespace Eater {
 
         // Public data.
         public:
-            MacroNutrients macro_nutrients;
-            TimeStamp time_stamp;
+            MacroNutrients macro_nutrients; //!< Nutrients of the recepie.
+            TimeStamp time_stamp; //!< Time stamp of recepie.
+            Tags tags; //!< Tags of the recepie.
 
         public:
             /**
