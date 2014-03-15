@@ -2,7 +2,7 @@
 
 namespace Eater
 {
-    Tags::Tags(tags_t *tags, bool valid)
+    Tags::Tags(tags_vec *tags, bool valid)
     {
         if (!valid) {
             for (size_t i = 0; i < tags->size(); i++) {
@@ -20,12 +20,12 @@ namespace Eater
 
     Tags::Tags()
     {
-        _tags = new tags_t;
+        _tags = new tags_vec;
     }
 
     Tags::Tags(const Tags &tags)
     {
-        _tags = new tags_t;
+        _tags = new tags_vec;
         for (auto it = tags.begin(); it != tags.end(); it++) {
             _tags->push_back(*it);
         }
@@ -61,7 +61,7 @@ namespace Eater
         return true;
     }
 
-    bool Tags::addTags(const tags_t &tags)
+    bool Tags::addTags(const tags_vec &tags)
     {
         bool found_dup = false;
 
@@ -88,12 +88,12 @@ namespace Eater
         return false;
     }
 
-    tags_t::iterator Tags::removeTag(tags_t::iterator &it)
+    tags_vec::iterator Tags::removeTag(tags_vec::iterator &it)
     {
         return _tags->erase(it);
     }
 
-    bool Tags::removeTags(const tags_t &tags)
+    bool Tags::removeTags(const tags_vec &tags)
     {
         bool one_failed = false;
 
@@ -108,22 +108,22 @@ namespace Eater
         return !one_failed;
     }
 
-    tags_t::iterator Tags::begin()
+    tags_vec::iterator Tags::begin()
     {
         return _tags->begin();
     }
 
-    tags_t::const_iterator Tags::begin() const
+    tags_vec::const_iterator Tags::begin() const
     {
         return _tags->cbegin();
     }
 
-    tags_t::iterator Tags::end()
+    tags_vec::iterator Tags::end()
     {
         return _tags->end();
     }
 
-    tags_t::const_iterator Tags::end() const
+    tags_vec::const_iterator Tags::end() const
     {
         return _tags->cend();
     }

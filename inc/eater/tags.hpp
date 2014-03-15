@@ -5,13 +5,14 @@
 
 namespace Eater
 {
+    typedef std::vector<std::string> tags_vec;
     /**
      * Holds only unique tags.
      */
     class Tags
     {
     private:
-        tags_t *_tags = nullptr;
+        tags_vec *_tags = nullptr;
 
     public:
         /**
@@ -20,7 +21,7 @@ namespace Eater
          * \param[in] tags Vector of tags.
          * \param valid True if tags doesn't contain duplicates.  
          */
-        Tags(tags_t *tags, bool valid = true);
+        Tags(tags_vec *tags, bool valid = true);
 
         /**
          * Default constructor.
@@ -65,7 +66,7 @@ namespace Eater
          * \param tags Tags to be added.
          * \return If one, some or all are already presant, false. Else true. 
          */
-        bool addTags(const tags_t &tags);
+        bool addTags(const tags_vec &tags);
 
         /**
          * Removes a tag.
@@ -81,7 +82,7 @@ namespace Eater
          * \param it Iterator position.
          * \return Iterator following the last removed element.
          */
-        tags_t::iterator removeTag(tags_t::iterator &it);
+        tags_vec::iterator removeTag(tags_vec::iterator &it);
 
         /**
          * Removes tags.
@@ -89,35 +90,35 @@ namespace Eater
          * \param tags Tags to be removed.
          * \return false if not all tags was removed, else false. 
          */
-        bool removeTags(const tags_t &tags);
+        bool removeTags(const tags_vec &tags);
 
         /**
          * Gets an iterator.
          *
          * \return Gets an iterator at the beginning of tags.
          */
-        tags_t::iterator begin();
+        tags_vec::iterator begin();
 
         /**
          * Gets an iterator.
          *
          * \return Gets an iterator at the beginning of tags.
          */
-        tags_t::const_iterator begin() const;
+        tags_vec::const_iterator begin() const;
         
         /**
          * Gets an iterator.
          *
          * \return Gets an interator at the end of the tags.
          */
-        tags_t::iterator end();
+        tags_vec::iterator end();
 
         /**
          * Gets an iterator.
          *
          * \return Gets an interator at the end of the tags.
          */
-        tags_t::const_iterator end() const;
+        tags_vec::const_iterator end() const;
     };
 } /* Eater */ 
 

@@ -38,8 +38,6 @@ namespace Eater {
     typedef float f32;
     typedef double f64;
 
-    typedef std::vector<std::string> tags_t;
-
     template<class T> T convStrToInt(const std::string &number)
     {
         try {
