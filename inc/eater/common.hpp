@@ -5,13 +5,14 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 #define DEBUG
 
 #ifdef DEBUG
 #define E_Debug(msg) std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg
 #else
-#define E_Debug(msg) std::cerr
+#define E_Debug(msg) 
 #endif
 
 #define E_BLACK(msg) "\033[1;30m" msg "\033[0m"
@@ -36,6 +37,8 @@ namespace Eater {
 
     typedef float f32;
     typedef double f64;
+
+    typedef std::vector<std::string> tags_t;
 
     template<class T> T convStrToInt(const std::string &number)
     {
