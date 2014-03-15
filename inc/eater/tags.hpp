@@ -1,5 +1,5 @@
-#ifndef TAGS_HPP_
-#define TAGS_HPP_
+#ifndef EATER_TAGS_HPP_
+#define EATER_TAGS_HPP_
 
 #include "eater/common.hpp"
 
@@ -121,5 +121,5 @@ namespace Eater
     };
 } /* Eater */ 
 
-#endif /* end of include guard: TAGS_HPP_ */
+#endif /* end of include guard: EATER_TAGS_HPP_ */
 
