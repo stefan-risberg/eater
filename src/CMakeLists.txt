@@ -6,6 +6,7 @@ add_executable (Eater
     date.cpp
     time.cpp
     timestamp.cpp
+    tags.cpp
     )
 #qt5_use_modules(Eater Widgets)
 
