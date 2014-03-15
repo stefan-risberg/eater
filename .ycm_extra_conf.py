@@ -64,6 +64,7 @@ flags = [
 '/usr/include',
 '-isystem',
 '/usr/local/include',
+'-lsqlite3',
 ]
 
 

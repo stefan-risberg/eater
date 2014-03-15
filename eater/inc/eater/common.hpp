@@ -8,6 +8,7 @@
 #include <vector>
 
 #define DEBUG
+#define COLOR
 
 #ifdef DEBUG
 #define E_Debug(msg) std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg
@@ -15,6 +16,9 @@
 #define E_Debug(msg) 
 #endif
 
+#define LOGG(msg) std::cout << msg
+
+#ifdef COLOR
 #define E_BLACK(msg) "\033[1;30m" msg "\033[0m"
 #define E_RED(msg) "\033[1;31m" msg "\033[0m"
 #define E_GREEN(msg) "\033[1;32m" msg "\033[0m"
@@ -23,6 +27,16 @@
 #define E_MAGENTA(msg) "\033[1;35m" msg "\033[0m"
 #define E_CYAN(msg) "\033[1;36m" msg "\033[0m"
 #define E_WHITE(msg) "\033[1;37m" msg "\033[0m"
+#else
+#define E_BLACK(msg) msg
+#define E_RED(msg) msg
+#define E_GREEN(msg) msg
+#define E_YELLOW(msg) msg
+#define E_BLUE(msg) msg
+#define E_MAGENTA(msg) msg
+#define E_CYAN(msg) msg
+#define E_WHITE(msg) msg
+#endif
 
 namespace Eater {
     typedef uint64_t u64;

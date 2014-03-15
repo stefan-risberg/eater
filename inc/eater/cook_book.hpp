@@ -1,6 +1,0 @@
-#ifndef EATER_COOK_BOOK_HPP_
-#define EATER_COOK_BOOK_HPP_
-
-
-#endif /* EATER_COOK_BOOK_HPP_ */
-
