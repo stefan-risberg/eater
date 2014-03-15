@@ -3,8 +3,8 @@
 
 namespace Eater {
     FoodItem::FoodItem() :
-        Nutrients(0.0, 0.0, 0.0, 0.0),
-        _id(0), _name(""), _brand("")
+        _id(1), _name(""), _brand(""),
+        macro_nutrients(0, 0.0, 0.0, 0.0)
     {}
 
     FoodItem::FoodItem(u32 _id,
@@ -15,8 +15,17 @@ namespace Eater {
                        f32 _proteins,
                        f32 _carbohydrates,
                        f32 _fats) :
-        Nutrients(_calories, _proteins, _carbohydrates, _fats),
-        _id(_id), _name(_name), _brand(_brand), _tags(_tags)
+        _id(_id), _name(_name), _brand(_brand), _tags(_tags),
+        macro_nutrients(_calories, _proteins, _carbohydrates, _fats)
+    {}
+
+    FoodItem::FoodItem(u32 _id,
+                       const std::string &_name,
+                       const std::string &_brand,
+                       std::vector<std::string> &_tags,
+                       const MacroNutrients &macro_nutrients) :
+        _id(_id), _name(_name), _brand(_brand), _tags(_tags),
+        macro_nutrients(macro_nutrients)
     {}
 
     void FoodItem::id(const u32 _id)

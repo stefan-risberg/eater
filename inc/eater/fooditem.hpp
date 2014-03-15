@@ -9,14 +9,19 @@
 #include "eater/timestamp.hpp"
 
 namespace Eater {
-    class FoodItem : public Nutrients
+    class FoodItem
     {
+        // Private data.
         private:
             u32 _id;
             std::string _name;
             std::string _brand;
             std::vector<std::string> _tags;
             TimeStamp _ts;
+
+        // Public data.
+        public:
+            MacroNutrients macro_nutrients;
 
         public:
             /**
@@ -27,13 +32,13 @@ namespace Eater {
             /**
              * Constructor that initializes a default food item.
              *
-             * \param[in] _id Id of the food item.
-             * \param[in] _name Name of food.
-             * \param[in] _brand Brand of food item.
-             * \param[in] _calories Calorie count for 100g of the food item.
-             * \param[in] _proteins Protein count for 100g of the food item.
-             * \param[in] _carbohydrate Carbohydrate count for 100g of food item.
-             * \param[in] _fats Fat count for 100g of food item.
+             * \param _id Id of the food item.
+             * \param _name Name of food.
+             * \param _brand Brand of food item.
+             * \param _calories Calorie count for 100g of the food item.
+             * \param _proteins Protein count for 100g of the food item.
+             * \param _carbohydrate Carbohydrate count for 100g of food item.
+             * \param _fats Fat count for 100g of food item.
              */
             FoodItem(u32 _id,
                      const std::string &_name,
@@ -43,6 +48,20 @@ namespace Eater {
                      f32 _proteins,
                      f32 _carbohydrates,
                      f32 _fats);
+
+            /**
+             * Constructor that initializes a default food item.
+             *
+             * \param _id Id of the food item.
+             * \param _name Name of food.
+             * \param _brand Brand of food item.
+             * \param nutrients Nutrient content of food item.
+             */ 
+            FoodItem(u32 _id,
+                     const std::string &_name,
+                     const std::string &_brand,
+                     std::vector<std::string> &_tags,
+                     const MacroNutrients &macro_nutrients);
 
             /**
              * Sets food item id.
