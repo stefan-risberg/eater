@@ -2,29 +2,46 @@
 
 namespace Eater {
     Recepie::Recepie() :
-        _id(0), _name(""),
+        _id(-1), _name(""),
         mn(0.0, 0.0, 0.0, 0.0)
     {}
 
     Recepie::Recepie(id_t _id,
                      const std::string &_name,
-                     const food_vec &_foods,
-                     const std::vector<u32> &_amounts) :
+                     const amount_vec &foods,
+                     const DB_FoodItems &db) :
         _id(_id),
         _name(_name),
-        _amounts(_amounts),
+        _foods(foods),
         mn(0.0, 0.0, 0.0, 0.0)
     {
-        if (_amounts.size() != _foods.size()) {
-            return;
-        }
-
-        for (u32 i = 0; i < _foods.size(); i++) {
-            this->_foods.push_back(_foods[i].id());
-
-            changeNutrients(_foods[i].mn, _amounts[i]);
+        FoodItem item;
+        // We need to fetch all food items nutritional values to add to
+        // the recepie.
+        for(auto it = _foods.begin(); it != _foods.end(); it++) {
+            if (db.find(it->food, item)) {
+                changeNutrients(item.mn, it->amount);
+            }
         }
     }
+
+    Recepie::Recepie(const Recepie &rec) :
+        _id(rec._id),
+        _name(rec._name),
+        _foods(rec._foods),
+        mn(rec.mn),
+        ts(rec.ts),
+        tags(rec.tags)
+    {}
+
+    Recepie::Recepie(Recepie &&rec) :
+        _id(std::move(rec._id)),
+        _name(std::move(rec._name)),
+        _foods(std::move(rec._foods)),
+        mn(std::move(rec.mn)),
+        ts(std::move(rec.ts)),
+        tags(std::move(rec.tags))
+    {}
 
     void Recepie::id(const id_t _id)
     {
@@ -46,22 +63,10 @@ namespace Eater {
         return _name;
     }
 
-    id_vec Recepie::foods() const
+    bool Recepie::foodExists(const FoodItem &food) const
     {
-        return _foods;
-    }
-
-    std::vector<u32> Recepie::amounts() const
-    {
-        return _amounts;
-    }
-
-    bool Recepie::foodExists(const FoodItem &food, u32 *at) const
-    {
-        *at = 0;
-        for (u32 i = 0; i < _foods.size(); i++) {
-            if (_foods.at(i) == food.id()) {
-                *at = i;
+        for (auto it = _foods.begin(); it != _foods.end(); it++) {
+            if (it->food == food.id()) {
                 return true;
             }
         }
@@ -72,8 +77,10 @@ namespace Eater {
     bool Recepie::addFood(const FoodItem &food, const u32 amount)
     {
         if (!foodExists(food)) {
-            _foods.push_back(food.id());
-            _amounts.push_back(amount);
+            amount_t a;
+            a.food = food.id();
+            a.amount = amount;
+            _foods.push_back(std::move(a));
 
             changeNutrients(food.mn, amount);
             
@@ -103,12 +110,10 @@ namespace Eater {
     }
 
     bool Recepie::removeFood(const FoodItem &food) {
-        for (u32 i = 0; i < _foods.size(); i++) {
-            if (_foods.at(i) == food.id()) {
-                changeNutrients(food.mn, -(_amounts[i]));
-
-                _amounts.erase(_amounts.begin() + i);
-                _foods.erase(_foods.begin() + i);
+        for (auto it = _foods.begin(); it != _foods.end(); it++) {
+            if (it->food == food.id()) {
+                changeNutrients(food.mn, it->amount);
+                _foods.erase(it);
 
                 return true;
             }
@@ -130,22 +135,19 @@ namespace Eater {
         return found_one;
     }
 
-    bool Recepie::modifieFood(const FoodItem &food, const u32 amount)
+    bool Recepie::modifyFood(const FoodItem &food, const u32 amount)
     {
-        u32 at = 0;
-        bool found = foodExists(food, &at);
+        for (auto a : _foods) {
+            if (a.food == food.id()) {
+                auto diff = amount - a.amount;
 
-        if (!found) {
-            return false;
+                changeNutrients(food.mn, diff);
+                a.amount = amount;
+                return true;
+            }
         }
 
-        auto diff = amount - _amounts[at];
-
-        changeNutrients(food.mn, diff);
-
-        _amounts[at] += diff;
-
-        return true;
+        return false;
     }
 
     void Recepie::changeNutrients(const MacroNutrients &item, u32 amount)

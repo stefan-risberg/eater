@@ -8,16 +8,24 @@
 #include "eater/nutrients.hpp"
 #include "eater/timestamp.hpp"
 #include "eater/tags.hpp"
+#include "eater/db_food_items.hpp"
 
 namespace Eater {
+    struct amount_t
+    {
+        id_t food;
+        u32 amount;
+    };
+
+    typedef std::vector<amount_t> amount_vec;
+
     class Recepie
     {
         // Private data.
         private:
             id_t _id;
             std::string _name;
-            id_vec _foods;
-            std::vector<u32> _amounts;
+            amount_vec _foods;
 
         // Public data.
         public:
@@ -34,15 +42,25 @@ namespace Eater {
             /**
              * Initializer constructor.
              *
-             * \param[in] _id Id of recepie.
-             * \param[in] _name Name of recepie.
-             * \param[in] _foods List of foods.
-             * \param[in] _amounts Amountf of food item in the food list.
+             * \param _id Id of recepie.
+             * \param _name Name of recepie.
+             * \param foods Foods with amounts. 
+             * \param db To look upp foods nutritional value. 
              */
             Recepie(id_t _id,
                     const std::string &_name,
-                    const food_vec &_foods,
-                    const std::vector<u32> &_amounts);
+                    const amount_vec &foods,
+                    const DB_FoodItems &db);
+
+            /**
+             * Copy constructor.
+             */
+            Recepie(const Recepie &rec);
+
+            /**
+             * Move constructor.
+             */
+            Recepie(Recepie &&rec);
 
             /**
              * Set new id for recepie.
@@ -73,30 +91,12 @@ namespace Eater {
             std::string name() const;
 
             /**
-             * Get ids of all the foods in the recepie.
-             *
-             * \return All ids of food items.
-             */
-            id_vec foods() const;
-
-            /**
-             * Get amount of food items in the recepie.
-             *
-             * \return Amounts of all food items.
-             */
-            std::vector<u32> amounts() const;
-
-            /**
              * Check if a certain food is in the recepie.
              *
-             * at will be set to 0.
-             *
-             * \param[in] food Food to check if it is in the recepie,
-             * \param[out] at Location at where food item was found at, if no one was
-             * found, value is 0.
+             * \param food Food to check if it is in the recepie,
              * \return True if it does else false.
              */
-            bool foodExists(const FoodItem &food, u32 *at = nullptr) const;
+            bool foodExists(const FoodItem &food) const;
 
             /**
              * Adds a food item to the recepie. 
@@ -139,13 +139,13 @@ namespace Eater {
             bool removeFoods(const food_vec &_foods);
 
             /**
-             * Modifies the amount of a food item in the recepie.
+             * Modify the amount of a food item in the recepie.
              *
              * \param[in] food Food item to modifie.
              * \param[in] amount New amount of the food item.
              * \return If food item was modified true else false.
              */
-            bool modifieFood(const FoodItem &food, const u32 amount);
+            bool modifyFood(const FoodItem &food, const u32 amount);
 
         private:
             /**
