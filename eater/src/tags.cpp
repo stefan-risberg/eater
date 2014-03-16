@@ -31,10 +31,9 @@ namespace Eater
         }
     }
 
-    Tags::Tags(Tags &&tags)
-    {
-        _tags = std::move(tags._tags);
-    }
+    Tags::Tags(Tags &&tags) :
+        _tags(std::move(tags._tags))
+    {}
 
     Tags::~Tags()
     {
