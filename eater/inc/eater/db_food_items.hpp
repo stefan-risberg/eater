@@ -84,6 +84,16 @@ namespace Eater
          */
         bool find(const id_t id, FoodItem &item) const;
 
+        /**
+         * Search for a list of items.
+         *
+         * Items that aren't found will just be ignored.
+         * 
+         * \param ids Vector of ids to look for.
+         * \return Vector of all the foods that were found.
+         */
+         food_vec find(const id_vec &ids) const;
+
     private:
         /**
          * Initializes the database.

@@ -239,6 +239,20 @@ namespace Eater
         return false;
     }
 
+    food_vec DB_FoodItems::find(const id_vec &ids) const
+    {
+        food_vec foods;
+        FoodItem f;
+
+        for (auto it = ids.begin(); it != ids.end(); it++) {
+            if (find(*it, f)) {
+                foods.push_back(f);
+            }
+        }
+
+        return foods;
+    }
+
     bool DB_FoodItems::init()
     {
         if (db == nullptr) {
