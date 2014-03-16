@@ -36,6 +36,11 @@ namespace Eater
         Tags(const Tags &tags);
 
         /**
+         * Move constructor.
+         */
+        Tags(Tags &&tags);
+
+        /**
          * Default destructor.
          */
         ~Tags();
