@@ -41,7 +41,7 @@ namespace Eater {
              */
             Recepie(id_t _id,
                     const std::string &_name,
-                    const food_item_vec &_foods,
+                    const food_vec &_foods,
                     const std::vector<u32> &_amounts);
 
             /**
@@ -119,7 +119,7 @@ namespace Eater {
              * \param[in] _amounts Amounts of food.
              * \return True if one, some or all items were added else false.
              */
-            bool addFoods(const food_item_vec &_foods,
+            bool addFoods(const food_vec &_foods,
                           const std::vector<u32> &_amounts);
 
             /**
@@ -136,7 +136,7 @@ namespace Eater {
              * \param[in] _foods Food items to remove.
              * \return If one, some or all have been removed ture else false.
              */
-            bool removeFoods(const food_item_vec &_foods);
+            bool removeFoods(const food_vec &_foods);
 
             /**
              * Modifies the amount of a food item in the recepie.

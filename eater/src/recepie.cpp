@@ -8,7 +8,7 @@ namespace Eater {
 
     Recepie::Recepie(id_t _id,
                      const std::string &_name,
-                     const food_item_vec &_foods,
+                     const food_vec &_foods,
                      const std::vector<u32> &_amounts) :
         _id(_id),
         _name(_name),
@@ -83,7 +83,7 @@ namespace Eater {
         return false;
     }
 
-    bool Recepie::addFoods(const food_item_vec &_foods,
+    bool Recepie::addFoods(const food_vec &_foods,
                             const std::vector<u32> &_amounts)
     {
         if (_foods.size() != _amounts.size()) {
@@ -117,7 +117,7 @@ namespace Eater {
         return false;
     }
 
-    bool Recepie::removeFoods(const food_item_vec &_foods)
+    bool Recepie::removeFoods(const food_vec &_foods)
     {
         bool found_one = false;
         for (auto it = _foods.begin(); it != _foods.end(); it++) {

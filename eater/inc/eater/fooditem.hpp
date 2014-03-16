@@ -11,7 +11,7 @@
 namespace Eater {
     class FoodItem;
 
-    typedef std::vector<FoodItem> food_item_vec;
+    typedef std::vector<FoodItem> food_vec;
 
     class FoodItem
     {
