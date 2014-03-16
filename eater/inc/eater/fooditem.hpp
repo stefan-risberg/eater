@@ -9,6 +9,10 @@
 #include "eater/tags.hpp"
 
 namespace Eater {
+    class FoodItem;
+
+    typedef std::vector<FoodItem> food_item_vec;
+
     class FoodItem
     {
         // Private data.
@@ -85,6 +89,13 @@ namespace Eater {
          * \return Brand of food item.
          */
         std::string brand() const;
+
+        /**
+         * Creates a string representation of food item.
+         *
+         * \return String representation of item.
+         */
+        std::string toString() const;
     };
 }
 
