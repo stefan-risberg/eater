@@ -6,13 +6,13 @@ namespace Eater {
         _id(1), _name(""), _brand("")
     {}
 
-    FoodItem::FoodItem(u32 _id,
+    FoodItem::FoodItem(id_t _id,
                        const std::string &_name,
                        const std::string &_brand) :
         _id(_id), _name(_name), _brand(_brand)
     {}
 
-    void FoodItem::id(const u32 _id)
+    void FoodItem::id(const id_t _id)
     {
         this->_id = _id;
     }
@@ -27,7 +27,7 @@ namespace Eater {
         this->_brand = _brand;
     }
 
-    u32 FoodItem::id() const
+    id_t FoodItem::id() const
     {
         return _id;
     }

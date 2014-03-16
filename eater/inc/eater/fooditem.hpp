@@ -13,7 +13,7 @@ namespace Eater {
     {
         // Private data.
     private:
-        u32 _id;
+        id_t _id;
         std::string _name;
         std::string _brand;
 
@@ -40,7 +40,7 @@ namespace Eater {
          * \param _carbohydrate Carbohydrate count for 100g of food item.
          * \param _fats Fat count for 100g of food item.
          */
-        FoodItem(u32 _id,
+        FoodItem(id_t _id,
                  const std::string &_name,
                  const std::string &_brand);
 
@@ -49,7 +49,7 @@ namespace Eater {
          *
          * \param[in] _id New id.
          */
-        void id(const u32 _id);
+        void id(const id_t _id);
 
         /**
          * Set food item name.
@@ -70,7 +70,7 @@ namespace Eater {
          *
          * \return Id of food item.
          */
-        u32 id() const;
+        id_t id() const;
 
         /**
          * Get food item name.

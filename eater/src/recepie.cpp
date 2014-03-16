@@ -6,7 +6,7 @@ namespace Eater {
         macro_nutrients(0.0, 0.0, 0.0, 0.0)
     {}
 
-    Recepie::Recepie(u32 _id,
+    Recepie::Recepie(id_t _id,
                      const std::string &_name,
                      const std::vector<FoodItem> &_foods,
                      const std::vector<u32> &_amounts) :
@@ -26,7 +26,7 @@ namespace Eater {
         }
     }
 
-    void Recepie::id(const u32 _id)
+    void Recepie::id(const id_t _id)
     {
         this->_id = _id;
     }
@@ -36,7 +36,7 @@ namespace Eater {
         this->_name = _name;
     }
 
-    u32 Recepie::id() const
+    id_t Recepie::id() const
     {
         return _id;
     }
@@ -46,7 +46,7 @@ namespace Eater {
         return _name;
     }
 
-    std::vector<u32> Recepie::foods() const
+    std::vector<id_t> Recepie::foods() const
     {
         return _foods;
     }

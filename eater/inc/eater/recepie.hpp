@@ -14,9 +14,9 @@ namespace Eater {
     {
         // Private data.
         private:
-            u32 _id;
+            id_t _id;
             std::string _name;
-            std::vector<u32> _foods;
+            std::vector<id_t> _foods;
             std::vector<u32> _amounts;
 
         // Public data.
@@ -39,7 +39,7 @@ namespace Eater {
              * \param[in] _foods List of foods.
              * \param[in] _amounts Amountf of food item in the food list.
              */
-            Recepie(u32 _id,
+            Recepie(id_t _id,
                     const std::string &_name,
                     const std::vector<FoodItem> &_foods,
                     const std::vector<u32> &_amounts);
@@ -49,7 +49,7 @@ namespace Eater {
              *
              * \param[in] _id New id.
              */
-            void id(const u32 _id);
+            void id(const id_t _id);
 
             /**
              * Set new name for recepie.
@@ -63,7 +63,7 @@ namespace Eater {
              *
              * \return Id of recepie.
              */
-            u32 id() const;
+            id_t id() const;
 
             /**
              * Get name of recepie.
@@ -77,7 +77,7 @@ namespace Eater {
              *
              * \return All ids of food items.
              */
-            std::vector<u32> foods() const;
+            std::vector<id_t> foods() const;
 
             /**
              * Get amount of food items in the recepie.
