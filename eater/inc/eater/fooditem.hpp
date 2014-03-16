@@ -54,6 +54,11 @@ namespace Eater {
         FoodItem(FoodItem &&item);
 
         /**
+         * Copy constructor.
+         */
+        FoodItem(const FoodItem &item);
+
+        /**
          * Sets food item id.
          *
          * \param[in] _id New id.

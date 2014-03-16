@@ -13,14 +13,13 @@ namespace Eater {
     {}
 
     FoodItem::FoodItem(FoodItem &&item) :
-        tags(item.tags)
-    {
-        _id = std::move(item._id);
-        _name = std::move(item._name);
-        _brand = std::move(item._brand);
-        mn = std::move(item.mn);
-        ts = std::move(item.ts);
-    }
+        _id(std::move(item._id)),
+        _name(std::move(item._name)),
+        _brand(std::move(item._brand)),
+        mn(std::move(item.mn)),
+        ts(std::move(item.ts)),
+        tags(std::move(item.tags))
+    {}
 
     FoodItem::FoodItem(const FoodItem &item) :
         _id(item._id),
