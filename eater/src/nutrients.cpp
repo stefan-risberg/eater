@@ -48,41 +48,33 @@ namespace Eater {
         this->_fats = _fats;
     }
 
-    /**
-     * Get calorie count.
-     *
-     * \return The calorie count.
-     */
     f32 MacroNutrients::calories() const
     {
         return _calories;
     }
 
-    /**
-     * Get protein count.
-     *
-     * \return The protein count.
-     */
     f32 MacroNutrients::proteins() const
     {
         return _proteins;
     }
 
-    /**
-     * Get carbohydrate count.
-     *
-     * \return The carbohydrate count.
-     */
     f32 MacroNutrients::carbohydrates() const {
         return _carbohydrates;
     }
 
-    /**
-     * Get fat count.
-     *
-     * \return The fat count.
-     */
     f32 MacroNutrients::fats() const {
         return _carbohydrates;
     }
+
+    std::string MacroNutrients::toString() const
+    {
+        std::stringstream ss;
+        ss << "Kcal: " << calories()
+            << " Proteins: " << proteins()
+            << " Carbohydrates: " << carbohydrates()
+            << " Fats: " << fats();
+
+        return ss.str();
+    }
+
 }

@@ -80,6 +80,13 @@ namespace Eater {
              * \return Fat count.
              */
             f32 fats() const;
+
+            /**
+             * Creates string representation of nutrient.
+             *
+             * \return String representation.
+             */
+            std::string toString() const;
     };
 }
 
