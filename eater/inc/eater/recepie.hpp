@@ -21,8 +21,8 @@ namespace Eater {
 
         // Public data.
         public:
-            MacroNutrients macro_nutrients; //!< Nutrients of the recepie.
-            TimeStamp time_stamp; //!< Time stamp of recepie.
+            MacroNutrients mn; //!< Nutrients of the recepie.
+            TimeStamp ts; //!< Time stamp of recepie.
             Tags tags; //!< Tags of the recepie.
 
         public:

@@ -45,11 +45,11 @@ namespace Eater {
     std::string FoodItem::toString() const
     {
         std::stringstream ss;
-        ss << id() << " - " << time_stamp.toString() << "\n\t"
+        ss << id() << " - " << ts.toString() << "\n\t"
             << "Name: " << name() << "\n\t"
             << "Brand: " << brand() << "\n\t"
             << "Tags: " << tags.toString() << "\n\t"
-            << "Macro: " << macro_nutrients.toString();
+            << "Macro: " << mn.toString();
 
         return ss.str();
     }

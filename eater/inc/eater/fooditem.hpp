@@ -23,8 +23,8 @@ namespace Eater {
 
         // Public data.
     public:
-        MacroNutrients macro_nutrients; //!< Macro nutrient of Food Item.
-        TimeStamp time_stamp; //!< Timestamp of the item.
+        MacroNutrients mn; //!< Macro nutrient of Food Item.
+        TimeStamp ts; //!< Timestamp of the item.
         Tags tags; //!< Tags for the food item.
 
     public:

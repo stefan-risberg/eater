@@ -3,7 +3,7 @@
 namespace Eater {
     Recepie::Recepie() :
         _id(0), _name(""),
-        macro_nutrients(0.0, 0.0, 0.0, 0.0)
+        mn(0.0, 0.0, 0.0, 0.0)
     {}
 
     Recepie::Recepie(id_t _id,
@@ -13,7 +13,7 @@ namespace Eater {
         _id(_id),
         _name(_name),
         _amounts(_amounts),
-        macro_nutrients(0.0, 0.0, 0.0, 0.0)
+        mn(0.0, 0.0, 0.0, 0.0)
     {
         if (_amounts.size() != _foods.size()) {
             return;
@@ -22,7 +22,7 @@ namespace Eater {
         for (u32 i = 0; i < _foods.size(); i++) {
             this->_foods.push_back(_foods[i].id());
 
-            changeNutrients(_foods[i].macro_nutrients, _amounts[i]);
+            changeNutrients(_foods[i].mn, _amounts[i]);
         }
     }
 
@@ -75,7 +75,7 @@ namespace Eater {
             _foods.push_back(food.id());
             _amounts.push_back(amount);
 
-            changeNutrients(food.macro_nutrients, amount);
+            changeNutrients(food.mn, amount);
             
             return true;
         }
@@ -105,7 +105,7 @@ namespace Eater {
     bool Recepie::removeFood(const FoodItem &food) {
         for (u32 i = 0; i < _foods.size(); i++) {
             if (_foods.at(i) == food.id()) {
-                changeNutrients(food.macro_nutrients, -(_amounts[i]));
+                changeNutrients(food.mn, -(_amounts[i]));
 
                 _amounts.erase(_amounts.begin() + i);
                 _foods.erase(_foods.begin() + i);
@@ -141,7 +141,7 @@ namespace Eater {
 
         auto diff = amount - _amounts[at];
 
-        changeNutrients(food.macro_nutrients, diff);
+        changeNutrients(food.mn, diff);
 
         _amounts[at] += diff;
 
@@ -150,24 +150,24 @@ namespace Eater {
 
     void Recepie::changeNutrients(const MacroNutrients &item, u32 amount)
     {
-        auto a = macro_nutrients.calories(); 
+        auto a = mn.calories(); 
         a += (amount * (item.calories() / 100));
 
-        macro_nutrients.calories(a);
+        mn.calories(a);
 
-        a = macro_nutrients.proteins(); 
+        a = mn.proteins(); 
         a += (amount * (item.proteins() / 100));
 
-        macro_nutrients.proteins(a);
+        mn.proteins(a);
 
-        a = macro_nutrients.carbohydrates();
+        a = mn.carbohydrates();
         a += (amount * (item.carbohydrates() / 100));
 
-        macro_nutrients.carbohydrates(a);
+        mn.carbohydrates(a);
 
-        a = macro_nutrients.fats();
+        a = mn.fats();
         a += (amount * (item.fats() / 100));
 
-        macro_nutrients.fats(a);
+        mn.fats(a);
     }
 }

@@ -103,7 +103,7 @@ namespace Eater
                          sqlite3_column_int(s, 0));
 
             sqlite3_finalize(s);
-            if (item.time_stamp > ts) {
+            if (item.ts > ts) {
                 return false;
             }
         }
@@ -115,15 +115,15 @@ namespace Eater
     {
         std::stringstream ss;
         ss << "update fooditems set "
-            << "date=" << item.time_stamp.getDate() << ", "
-            << "time=" << item.time_stamp.getTime() << ", "
+            << "date=" << item.ts.getDate() << ", "
+            << "time=" << item.ts.getTime() << ", "
             << "name='" << item.name() << "', "
             << "brand='" << item.brand() << "', "
             << "tags='" << item.tags.toString() << "', "
-            << "kcal=" << item.macro_nutrients.calories() << ", "
-            << "proteins=" << item.macro_nutrients.proteins() << ", "
-            << "carbohydrates=" << item.macro_nutrients.carbohydrates() << ", "
-            << "fats=" << item.macro_nutrients.fats()
+            << "kcal=" << item.mn.calories() << ", "
+            << "proteins=" << item.mn.proteins() << ", "
+            << "carbohydrates=" << item.mn.carbohydrates() << ", "
+            << "fats=" << item.mn.fats()
             << " where id=" << item.id() << ";";
 
         sqlite3_stmt *s;
@@ -154,15 +154,15 @@ namespace Eater
         ss << "insert into fooditems (date, time, name, brand, tags, "
             << "kcal, proteins, carbohydrates, fats) "
             << "values ("
-            << item.time_stamp.getDate() << ", "
-            << item.time_stamp.getTime() << ", "
+            << item.ts.getDate() << ", "
+            << item.ts.getTime() << ", "
             << "'" << item.name() << "', "
             << "'" << item.brand() << "', "
             << "'" << item.tags.toString() << "', "
-            << item.macro_nutrients.calories() << ", "
-            << item.macro_nutrients.proteins() << ", "
-            << item.macro_nutrients.carbohydrates() << ", "
-            << item.macro_nutrients.fats() << ");";
+            << item.mn.calories() << ", "
+            << item.mn.proteins() << ", "
+            << item.mn.carbohydrates() << ", "
+            << item.mn.fats() << ");";
 
         std::cout << ss.str() << std::endl;
         sqlite3_stmt *s;
@@ -212,8 +212,8 @@ namespace Eater
             return false;
         } else if (r == SQLITE_ROW) {
             item.id(sqlite3_column_int(s, 0));
-            item.time_stamp.setDate(sqlite3_column_int(s, 1));
-            item.time_stamp.setTime(sqlite3_column_int(s, 2));
+            item.ts.setDate(sqlite3_column_int(s, 1));
+            item.ts.setTime(sqlite3_column_int(s, 2));
             
             ss.str(std::string()); ss << sqlite3_column_text(s, 3);
             item.name(ss.str());
@@ -221,10 +221,10 @@ namespace Eater
             item.brand(ss.str());
             ss.str(std::string()); ss << sqlite3_column_text(s, 5);
             item.tags.fromString(ss.str());
-            item.macro_nutrients.calories(sqlite3_column_double(s, 6));
-            item.macro_nutrients.proteins(sqlite3_column_double(s, 7));
-            item.macro_nutrients.carbohydrates(sqlite3_column_double(s, 8));
-            item.macro_nutrients.fats(sqlite3_column_double(s, 9));
+            item.mn.calories(sqlite3_column_double(s, 6));
+            item.mn.proteins(sqlite3_column_double(s, 7));
+            item.mn.carbohydrates(sqlite3_column_double(s, 8));
+            item.mn.fats(sqlite3_column_double(s, 9));
 
             sqlite3_finalize(s);
 
