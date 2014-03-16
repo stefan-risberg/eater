@@ -119,6 +119,22 @@ namespace Eater
          * \return Gets an interator at the end of the tags.
          */
         tags_vec::const_iterator end() const;
+
+        /**
+         * Creates a string representation of all tags.
+         *
+         * \return String representation of tags.
+         */
+        std::string toString() const;
+
+        /**
+         * Converst a string to tags.
+         *
+         * The format of that tags string is: tag,tag,tag,tag,
+         *
+         * \param tags Tags to parse.
+         */
+        void fromString(const std::string &tags);
     };
 } /* Eater */ 
 

@@ -127,4 +127,29 @@ namespace Eater
     {
         return _tags->cend();
     }
+
+    std::string Tags::toString() const
+    {
+        std::string str = "";
+        for(auto it = begin(); it != end(); it++) {
+            str += *it + ',';
+        }
+
+        return str;
+    }
+
+    // TODO: Make syntax check on tags string (14.03.16 - steffenomak)
+    void Tags::fromString(const std::string &tags) {
+        _tags->clear();
+
+        std::string tag = "";
+
+        for (auto it = tags.begin(); it != tags.end(); it++) {
+            if (*it == ',') {
+                addTag(tag);
+            } else {
+                tag += *it;
+            }
+        }
+    }
 } /* Eater */ 
