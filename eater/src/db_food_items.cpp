@@ -1,6 +1,5 @@
 #include "eater/db_food_items.hpp"
 #include <fstream>
-#include <cstring>
 
 namespace Eater
 {
