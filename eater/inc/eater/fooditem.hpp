@@ -49,6 +49,11 @@ namespace Eater {
                  const std::string &_brand);
 
         /**
+         * Move constructor.
+         */
+        FoodItem(FoodItem &&item);
+
+        /**
          * Sets food item id.
          *
          * \param[in] _id New id.
