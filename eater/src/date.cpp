@@ -24,6 +24,14 @@ namespace Eater {
         }
     }
 
+    Date::Date(const Date &d) :
+        _date(d._date)
+    {}
+
+    Date::Date(Date &&d) :
+        _date(std::move(d._date))
+    {}
+
     void Date::setDate(u16 y, u8 m, u8 d)
     {
         year(y);

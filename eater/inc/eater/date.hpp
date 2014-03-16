@@ -50,6 +50,17 @@ namespace Eater {
              * \param date Date.
              */
             Date(const std::string &date);
+
+            /**
+             * Copu constructor.
+             */
+            Date(const Date &d);
+
+            /**
+             * Move constructor.
+             */
+            Date(Date &&d);
+
             /**
              * Set new date.
              *
