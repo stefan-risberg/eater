@@ -2,45 +2,31 @@
 
 namespace Eater
 {
-    Tags::Tags(tags_vec *tags, bool valid)
+    Tags::Tags(tags_vec &&tags, bool valid) :
+        _tags(tags)
     {
         if (!valid) {
-            for (size_t i = 0; i < tags->size(); i++) {
-                for (size_t j = i + 1; j < tags->size(); j++) {
-                    if (tags->at(i) == tags->at(j)) {
-                        tags->erase(tags->begin() + j);
+            for (auto i = _tags.begin(); i != _tags.end(); i++) {
+                for(auto j = i + 1; j != _tags.end(); j++) {
+                    if (*j == *i) {
+                        _tags.erase(j);
                         j--;
                     }
                 }
             }
         }
-
-        _tags = tags;
     }
 
     Tags::Tags()
-    {
-        _tags = new tags_vec;
-    }
+    {}
 
-    Tags::Tags(const Tags &tags)
-    {
-        _tags = new tags_vec;
-        for (auto it = tags.begin(); it != tags.end(); it++) {
-            _tags->push_back(*it);
-        }
-    }
+    Tags::Tags(const Tags &tags) :
+        _tags(tags._tags)
+    {}
 
     Tags::Tags(Tags &&tags) :
         _tags(std::move(tags._tags))
     {}
-
-    Tags::~Tags()
-    {
-        if (_tags != nullptr) {
-            delete _tags;
-        }
-    }
 
     bool Tags::find(const std::string &tag)
     {
@@ -61,7 +47,7 @@ namespace Eater
             }
         }
 
-        _tags->push_back(tag);
+        _tags.push_back(tag);
         return true;
     }
 
@@ -84,7 +70,7 @@ namespace Eater
     {
         for (auto it = begin(); it != end(); it++) {
             if (*it == tag) {
-                _tags->erase(it);
+                _tags.erase(it);
                 return true;
             }
         }
@@ -94,7 +80,7 @@ namespace Eater
 
     tags_vec::iterator Tags::removeTag(tags_vec::iterator &it)
     {
-        return _tags->erase(it);
+        return _tags.erase(it);
     }
 
     bool Tags::removeTags(const tags_vec &tags)
@@ -114,22 +100,22 @@ namespace Eater
 
     tags_vec::iterator Tags::begin()
     {
-        return _tags->begin();
+        return _tags.begin();
     }
 
     tags_vec::const_iterator Tags::begin() const
     {
-        return _tags->cbegin();
+        return _tags.cbegin();
     }
 
     tags_vec::iterator Tags::end()
     {
-        return _tags->end();
+        return _tags.end();
     }
 
     tags_vec::const_iterator Tags::end() const
     {
-        return _tags->cend();
+        return _tags.cend();
     }
 
     std::string Tags::toString() const
@@ -144,7 +130,7 @@ namespace Eater
 
     // TODO: Make syntax check on tags string (14.03.16 - steffenomak)
     void Tags::fromString(const std::string &tags) {
-        _tags->clear();
+        _tags.clear();
 
         std::string tag = "";
 

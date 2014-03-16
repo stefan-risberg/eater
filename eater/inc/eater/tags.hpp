@@ -12,7 +12,7 @@ namespace Eater
     class Tags
     {
     private:
-        tags_vec *_tags = nullptr;
+        tags_vec _tags;
 
     public:
         /**
@@ -21,7 +21,7 @@ namespace Eater
          * \param[in] tags Vector of tags.
          * \param valid True if tags doesn't contain duplicates.  
          */
-        Tags(tags_vec *tags, bool valid = true);
+        Tags(tags_vec &&tags, bool valid = true);
 
         /**
          * Default constructor.
@@ -39,11 +39,6 @@ namespace Eater
          * Move constructor.
          */
         Tags(Tags &&tags);
-
-        /**
-         * Default destructor.
-         */
-        ~Tags();
 
         /**
          * Checks if a tag exists.
