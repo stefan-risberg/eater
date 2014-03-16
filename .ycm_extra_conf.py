@@ -59,7 +59,7 @@ flags = [
 '-x',
 'c++',
 '-isystem',
-'./inc',
+'./eater/inc',
 '-isystem',
 '/usr/include',
 '-isystem',
