@@ -58,6 +58,13 @@ namespace Eater {
 
             bool fromString(const std::string &time);
             std::string toString() const;
+
+            bool operator<(const Time &t) const;
+            bool operator<=(const Time &t) const;
+            bool operator>(const Time &t) const;
+            bool operator>=(const Time &t) const;
+            bool operator==(const Time &t) const;
+            bool operator!=(const Time &t) const;
     };
 }
 

@@ -87,4 +87,67 @@ namespace Eater {
     {
         return _date.toString() + " " + _time.toString();
     }
+
+    bool TimeStamp::operator<(const TimeStamp &ts) const
+    {
+        if (_date < ts._date) {
+            return true;
+        } else if (_date == ts._date && _time < ts._time) {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TimeStamp::operator<=(const TimeStamp &ts) const
+    {
+        if (_date <= ts._date) {
+            return true;
+        } else if (_date == ts._date && _time <= ts._time) {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TimeStamp::operator>(const TimeStamp &ts) const
+    {
+        if (_date > ts._date) {
+            return true;
+        } else if (_date == ts._date && _time > ts._time) {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TimeStamp::operator>=(const TimeStamp &ts) const
+    {
+        if (_date >= ts._date) {
+            return true;
+        } else if (_date == ts._date && _time >= ts._time) {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TimeStamp::operator==(const TimeStamp &ts) const
+    {
+        if (_date == ts._date && _time == ts._time) {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool TimeStamp::operator!=(const TimeStamp &ts) const
+    {
+        if (_date != ts._date || _time != ts._time) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

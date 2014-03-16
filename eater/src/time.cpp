@@ -175,5 +175,35 @@ namespace Eater {
 
         return ss.str();
     }
+
+    bool Time::operator<(const Time &t) const
+    {
+        return _value < t._value;
+    }
+
+    bool Time::operator<=(const Time &t) const
+    {
+        return _value <= t._value;
+    }
+
+    bool Time::operator>(const Time &t) const
+    {
+        return _value > t._value;
+    }
+
+    bool Time::operator>=(const Time &t) const
+    {
+        return _value >= t._value;
+    }
+
+    bool Time::operator==(const Time &t) const
+    {
+        return _value == t._value;
+    }
+
+    bool Time::operator!=(const Time &t) const
+    {
+        return _value != t._value;
+    }
 }
 

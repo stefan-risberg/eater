@@ -124,6 +124,13 @@ namespace Eater {
          * \see ToString_trait
          */
         std::string toString() const;
+
+        bool operator<(const TimeStamp &ts) const;
+        bool operator<=(const TimeStamp &ts) const;
+        bool operator>(const TimeStamp &ts) const;
+        bool operator>=(const TimeStamp &ts) const;
+        bool operator==(const TimeStamp &ts) const;
+        bool operator!=(const TimeStamp &ts) const;
     };
 }
 

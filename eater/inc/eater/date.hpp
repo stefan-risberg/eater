@@ -129,6 +129,13 @@ namespace Eater {
              * \return Date.
              */
             std::string toString() const;
+
+            bool operator<(const Date &t) const;
+            bool operator<=(const Date &t) const;
+            bool operator>(const Date &t) const;
+            bool operator>=(const Date &t) const;
+            bool operator==(const Date &t) const;
+            bool operator!=(const Date &t) const;
     };
 }
 

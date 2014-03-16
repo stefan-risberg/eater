@@ -144,4 +144,34 @@ namespace Eater {
 
         return ss.str();
     }
+
+    bool Date::operator<(const Date &d) const
+    {
+        return _date < d._date;
+    }
+
+    bool Date::operator<=(const Date &d) const
+    {
+        return _date <= d._date;
+    }
+
+    bool Date::operator>(const Date &d) const
+    {
+        return _date > d._date;
+    }
+
+    bool Date::operator>=(const Date &d) const
+    {
+        return _date >= d._date;
+    }
+
+    bool Date::operator==(const Date &d) const
+    {
+        return _date == d._date;
+    }
+
+    bool Date::operator!=(const Date &d) const
+    {
+        return _date != d._date;
+    }
 }
