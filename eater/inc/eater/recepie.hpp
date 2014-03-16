@@ -16,7 +16,7 @@ namespace Eater {
         private:
             id_t _id;
             std::string _name;
-            std::vector<id_t> _foods;
+            id_vec _foods;
             std::vector<u32> _amounts;
 
         // Public data.
@@ -41,7 +41,7 @@ namespace Eater {
              */
             Recepie(id_t _id,
                     const std::string &_name,
-                    const std::vector<FoodItem> &_foods,
+                    const food_item_vec &_foods,
                     const std::vector<u32> &_amounts);
 
             /**
@@ -77,7 +77,7 @@ namespace Eater {
              *
              * \return All ids of food items.
              */
-            std::vector<id_t> foods() const;
+            id_vec foods() const;
 
             /**
              * Get amount of food items in the recepie.
@@ -119,7 +119,7 @@ namespace Eater {
              * \param[in] _amounts Amounts of food.
              * \return True if one, some or all items were added else false.
              */
-            bool addFoods(const std::vector<FoodItem> &_foods,
+            bool addFoods(const food_item_vec &_foods,
                           const std::vector<u32> &_amounts);
 
             /**
@@ -136,7 +136,7 @@ namespace Eater {
              * \param[in] _foods Food items to remove.
              * \return If one, some or all have been removed ture else false.
              */
-            bool removeFoods(const std::vector<FoodItem> &_foods);
+            bool removeFoods(const food_item_vec &_foods);
 
             /**
              * Modifies the amount of a food item in the recepie.

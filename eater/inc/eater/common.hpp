@@ -55,6 +55,8 @@ namespace Eater {
 
     typedef i32 id_t;
 
+    typedef std::vector<id_t> id_vec;
+
     template<class T> T convStrToInt(const std::string &number)
     {
         try {
