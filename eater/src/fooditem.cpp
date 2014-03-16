@@ -3,7 +3,7 @@
 
 namespace Eater {
     FoodItem::FoodItem() :
-        _id(1), _name(""), _brand("")
+        _id(-1), _name(""), _brand("")
     {}
 
     FoodItem::FoodItem(id_t _id,
