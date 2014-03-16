@@ -11,22 +11,23 @@
 #define COLOR
 
 #ifdef DEBUG
-#define E_Debug(msg) std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg
+#define E_Debug(msg) std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg << std::endl
 #else
 #define E_Debug(msg) 
 #endif
 
 #define LOGG(msg) std::cout << msg
+#define LOGG_LN(msg) std::cout << msg << std::endl
 
 #ifdef COLOR
-#define E_BLACK(msg) "\033[1;30m" msg "\033[0m"
-#define E_RED(msg) "\033[1;31m" msg "\033[0m"
-#define E_GREEN(msg) "\033[1;32m" msg "\033[0m"
-#define E_YELLOW(msg) "\033[1;33m" msg "\033[0m"
-#define E_BLUE(msg) "\033[1;34m" msg "\033[0m"
-#define E_MAGENTA(msg) "\033[1;35m" msg "\033[0m"
-#define E_CYAN(msg) "\033[1;36m" msg "\033[0m"
-#define E_WHITE(msg) "\033[1;37m" msg "\033[0m"
+#define E_BLACK(msg) "\033[1;30m" << msg << "\033[0m"
+#define E_RED(msg) "\033[1;31m" << msg << "\033[0m"
+#define E_GREEN(msg) "\033[1;32m" << msg << "\033[0m"
+#define E_YELLOW(msg) "\033[1;33m" << msg << "\033[0m"
+#define E_BLUE(msg) "\033[1;34m" << msg << "\033[0m"
+#define E_MAGENTA(msg) "\033[1;35m" << msg << "\033[0m"
+#define E_CYAN(msg) "\033[1;36m" << msg << "\033[0m"
+#define E_WHITE(msg) "\033[1;37m" << msg << "\033[0m"
 #else
 #define E_BLACK(msg) msg
 #define E_RED(msg) msg
@@ -51,6 +52,8 @@ namespace Eater {
 
     typedef float f32;
     typedef double f64;
+
+    typedef i32 id_t;
 
     template<class T> T convStrToInt(const std::string &number)
     {
