@@ -3,18 +3,18 @@
 
 namespace Eater {
     TimeStamp::TimeStamp() :
-        _time(),
-        _date()
+        _date(),
+        _time()
     {}
 
-    TimeStamp::TimeStamp(const Time &t, const Date &d) :
-        _time(t),
-        _date(d)
+    TimeStamp::TimeStamp(const Date &d, const Time &t) :
+        _date(d),
+        _time(t)
     {}
 
-    TimeStamp::TimeStamp(u32 t, u32 d) :
-        _time(t),
-        _date(d)
+    TimeStamp::TimeStamp(u32 d, u32 t) :
+        _date(d),
+        _time(t)
     {}
 
     TimeStamp::TimeStamp(u64 ts)
@@ -31,19 +31,10 @@ namespace Eater {
         _time.setTime(now->tm_hour, now->tm_min, now->tm_sec, 0);
     }
 
-    void TimeStamp::setTime(u32 t)
-    {
-        _time.setTime(t);
-    }
 
     void TimeStamp::setDate(u32 d)
     {
         _date.setDate(d);
-    }
-
-    void TimeStamp::setTime(const Time &t)
-    {
-        _time.setTime(t.getTime());
     }
 
     void TimeStamp::setDate(const Date &d)
@@ -51,18 +42,34 @@ namespace Eater {
         _date.setDate(d.getDate());
     }
 
+    void TimeStamp::setTime(const Time &t)
+    {
+        _time.setTime(t.getTime());
+    }
+
+    void TimeStamp::setTime(u32 t)
+    {
+        _time.setTime(t);
+    }
+
     void TimeStamp::setTimeStamp(u64 ts)
     {
         u32 time = 0x00000000FFFFFFFF & ts;
         u32 date = ts >> 32;
-        _time.setTime(time);
         _date.setDate(date);
+        _time.setTime(time);
     }
 
     void TimeStamp::setTimeStamp(const TimeStamp &ts)
     {
-        _time.setTime(ts.getTime());
-        _date.setDate(ts.getDate());
+        setDate(ts.getDate());
+        setTime(ts.getTime());
+    }
+
+    void TimeStamp::setTimeStamp(u32 d, u32 t)
+    {
+        setDate(d);
+        setTime(t);
     }
 
     u32 TimeStamp::getTime() const
@@ -149,5 +156,4 @@ namespace Eater {
 
         return false;
     }
-
 }

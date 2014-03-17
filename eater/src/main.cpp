@@ -1,35 +1,27 @@
 #include <iostream>
-#include "eater/fooditem.hpp"
-#include "eater/date.hpp"
-#include "eater/time.hpp"
-#include "eater/timestamp.hpp"
-#include "eater/nutrients.hpp"
-#include "eater/tags.hpp"
-#include <vector>
-#include <string>
+#include "eater/db_fooditems.hpp"
 
-using namespace Eater;
 
 int main()
 {
-    Tags t;
+    Eater::DB_FoodItems db;
+    db.open("fooditems.db");
 
-    t.addTag("Fisk");
-    t.addTag("Lejon");
-    t.addTag("Arab");
+    Eater::id_vec id;
+    id.push_back(1);
+    id.push_back(8);
+    id.push_back(4);
 
-    t.addTag("Fisk");
+    Eater::food_vec foods;
 
-    tags_vec tags;
-    tags.push_back("Lejon");
-    tags.push_back("Fisk");
+    foods = db.find(id);
 
-    t.removeTags(tags);
-
-
-    for (auto it = t.begin(); it != t.end(); it++) {
-        std::cout << *it << std::endl;
+    for (auto it = foods.begin(); it != foods.end(); it++) {
+        std::cout << it->toString() << std::endl;
     }
+
+
+    db.close();
 
     return 0;
 }

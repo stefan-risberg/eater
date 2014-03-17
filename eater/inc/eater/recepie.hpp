@@ -8,16 +8,17 @@
 #include "eater/nutrients.hpp"
 #include "eater/timestamp.hpp"
 #include "eater/tags.hpp"
-#include "eater/db_food_items.hpp"
 
 namespace Eater {
     struct amount_t
     {
-        id_t food;
+        FoodItem item;
         u32 amount;
     };
+    class Recepie;
 
     typedef std::vector<amount_t> amount_vec;
+    typedef std::vector<Recepie> recepie_vec;
 
     class Recepie
     {
@@ -49,8 +50,7 @@ namespace Eater {
              */
             Recepie(id_t _id,
                     const std::string &_name,
-                    const amount_vec &foods,
-                    const DB_FoodItems &db);
+                    const amount_vec &foods);
 
             /**
              * Copy constructor.
@@ -103,11 +103,10 @@ namespace Eater {
              *
              * If the food item exists the recepie nothing will change.
              *
-             * \param[in] food Food item to be added.
-             * \param[in] amount Amount of the food added.
+             * \param food To add with amount. 
              * \return True if amount was added else false.
              */
-            bool addFood(const FoodItem &food, const u32 amount);
+            bool addFood(const amount_t &food);
 
             /**
              * Adds food items to the recepie.
@@ -115,12 +114,10 @@ namespace Eater {
              * Duplicates will be discarded. _foods and _amounts have to have the same
              * length.
              *
-             * \param[in] _foods Foods to be added.
-             * \param[in] _amounts Amounts of food.
+             * \param foods Foods to add with amounts. 
              * \return True if one, some or all items were added else false.
              */
-            bool addFoods(const food_vec &_foods,
-                          const std::vector<u32> &_amounts);
+            bool addFoods(const amount_vec &foods);
 
             /**
              * Removes a food item from recepie.
@@ -154,7 +151,7 @@ namespace Eater {
              * \param[in] item Nutrient item to change by.
              * \param[in] amount Amount of the nutrient item.
              */
-            void changeNutrients(const MacroNutrients &item, u32 amount);
+            void changeNutrients(const FoodItem &item, u32 amount);
     };
 }
 

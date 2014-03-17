@@ -106,6 +106,8 @@ namespace Eater {
          * \return String representation of item.
          */
         std::string toString() const;
+
+        FoodItem& operator=(const FoodItem &it);
     };
 }
 

@@ -8,20 +8,14 @@ namespace Eater {
 
     Recepie::Recepie(id_t _id,
                      const std::string &_name,
-                     const amount_vec &foods,
-                     const DB_FoodItems &db) :
+                     const amount_vec &foods) :
         _id(_id),
         _name(_name),
         _foods(foods),
         mn(0.0, 0.0, 0.0, 0.0)
     {
-        FoodItem item;
-        // We need to fetch all food items nutritional values to add to
-        // the recepie.
-        for(auto it = _foods.begin(); it != _foods.end(); it++) {
-            if (db.find(it->food, item)) {
-                changeNutrients(item.mn, it->amount);
-            }
+        for (auto food : _foods) {
+            changeNutrients(food.item, food.amount);
         }
     }
 
@@ -65,8 +59,8 @@ namespace Eater {
 
     bool Recepie::foodExists(const FoodItem &food) const
     {
-        for (auto it = _foods.begin(); it != _foods.end(); it++) {
-            if (it->food == food.id()) {
+        for (auto f : _foods) {
+            if (f.item.id() == food.id()) {
                 return true;
             }
         }
@@ -74,15 +68,12 @@ namespace Eater {
         return false;
     }
 
-    bool Recepie::addFood(const FoodItem &food, const u32 amount)
+    bool Recepie::addFood(const amount_t &food)
     {
-        if (!foodExists(food)) {
-            amount_t a;
-            a.food = food.id();
-            a.amount = amount;
-            _foods.push_back(std::move(a));
+        if (!foodExists(food.item)) {
+            _foods.push_back(food);
 
-            changeNutrients(food.mn, amount);
+            changeNutrients(food.item, food.amount);
             
             return true;
         }
@@ -90,16 +81,12 @@ namespace Eater {
         return false;
     }
 
-    bool Recepie::addFoods(const food_vec &_foods,
-                            const std::vector<u32> &_amounts)
+    bool Recepie::addFoods(const amount_vec &foods)
     {
-        if (_foods.size() != _amounts.size()) {
-            return false;
-        }
-
         bool added_one = false;
-        for (u32 i = 0; i < _foods.size(); i++) {
-            bool r = addFood(_foods.at(i), _amounts.at(i));
+
+        for (auto food : foods) {
+            bool r = addFood(food);
 
             if (r) {
                 added_one = true;
@@ -111,8 +98,8 @@ namespace Eater {
 
     bool Recepie::removeFood(const FoodItem &food) {
         for (auto it = _foods.begin(); it != _foods.end(); it++) {
-            if (it->food == food.id()) {
-                changeNutrients(food.mn, it->amount);
+            if (it->item.id() == food.id()) {
+                changeNutrients(food, it->amount);
                 _foods.erase(it);
 
                 return true;
@@ -138,10 +125,10 @@ namespace Eater {
     bool Recepie::modifyFood(const FoodItem &food, const u32 amount)
     {
         for (auto a : _foods) {
-            if (a.food == food.id()) {
+            if (a.item.id() == food.id()) {
                 auto diff = amount - a.amount;
 
-                changeNutrients(food.mn, diff);
+                changeNutrients(food, diff);
                 a.amount = amount;
                 return true;
             }
@@ -150,25 +137,26 @@ namespace Eater {
         return false;
     }
 
-    void Recepie::changeNutrients(const MacroNutrients &item, u32 amount)
+    void Recepie::changeNutrients(const FoodItem &item, u32 amount)
     {
+        auto mn = item.mn;
         auto a = mn.calories(); 
-        a += (amount * (item.calories() / 100));
+        a += (amount * (mn.calories() / 100));
 
         mn.calories(a);
 
         a = mn.proteins(); 
-        a += (amount * (item.proteins() / 100));
+        a += (amount * (mn.proteins() / 100));
 
         mn.proteins(a);
 
         a = mn.carbohydrates();
-        a += (amount * (item.carbohydrates() / 100));
+        a += (amount * (mn.carbohydrates() / 100));
 
         mn.carbohydrates(a);
 
         a = mn.fats();
-        a += (amount * (item.fats() / 100));
+        a += (amount * (mn.fats() / 100));
 
         mn.fats(a);
     }

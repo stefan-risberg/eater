@@ -1,5 +1,21 @@
-#include "eater/db_food_items.hpp"
+#include "eater/db_fooditems.hpp"
 #include <fstream>
+
+static const char ca_fooditems[] = "fooditems";
+static const char ca_name[] = "name";
+static const char ca_brand[] = "brand";
+
+static const char ca_recepies[] = "recepies";
+static const char ca_foods[] = "foods";
+
+static const char ca_kcal[] = "kcal";
+static const char ca_proteins[] = "proteins";
+static const char ca_carbohydrates[] = "carbohydrates";
+static const char ca_fats[] = "fats";
+static const char ca_id[] = "id";
+static const char ca_date[] = "date";
+static const char ca_time[] = "time";
+static const char ca_tags[] = "tags";
 
 namespace Eater
 {
@@ -44,7 +60,8 @@ namespace Eater
     bool DB_FoodItems::exists(const id_t item) const
     {
         std::stringstream ss;
-        ss << "select id from fooditems where id=" << item << ";";
+        ss << "select " << ca_id << " from " << ca_fooditems
+            << " where id=" << item << ";";
 
         sqlite3_stmt *s;
         int r = sqlite3_prepare_v2(db, ss.str().c_str(),
@@ -77,7 +94,8 @@ namespace Eater
     bool DB_FoodItems::old(const FoodItem &item) const
     {
         std::stringstream ss;
-        ss << "select date,time from fooditems where id=" << item.id() << ";";
+        ss << "select " << ca_date << "," << ca_time
+            << "from fooditems where id=" << item.id() << ";";
 
         sqlite3_stmt *s;
 
@@ -113,17 +131,17 @@ namespace Eater
     void DB_FoodItems::update(const FoodItem &item)
     {
         std::stringstream ss;
-        ss << "update fooditems set "
-            << "date=" << item.ts.getDate() << ", "
-            << "time=" << item.ts.getTime() << ", "
-            << "name='" << item.name() << "', "
-            << "brand='" << item.brand() << "', "
-            << "tags='" << item.tags.toString() << "', "
-            << "kcal=" << item.mn.calories() << ", "
-            << "proteins=" << item.mn.proteins() << ", "
-            << "carbohydrates=" << item.mn.carbohydrates() << ", "
-            << "fats=" << item.mn.fats()
-            << " where id=" << item.id() << ";";
+        ss << "update " << ca_fooditems << " set "
+            << ca_date << "=" << item.ts.getDate() << ", "
+            << ca_time << "=" << item.ts.getTime() << ", "
+            << ca_name << "='" << item.name() << "', "
+            << ca_brand << "='" << item.brand() << "', "
+            << ca_tags << "='" << item.tags.toString() << "', "
+            << ca_kcal << "=" << item.mn.calories() << ", "
+            << ca_proteins << "=" << item.mn.proteins() << ", "
+            << ca_carbohydrates << "=" << item.mn.carbohydrates() << ", "
+            << ca_fats << "=" << item.mn.fats()
+            << " where " << ca_id << "=" << item.id() << ";";
 
         sqlite3_stmt *s;
         int r = sqlite3_prepare_v2(db, ss.str().c_str(), -1, &s, nullptr);
@@ -262,31 +280,31 @@ namespace Eater
             return true;
         }
 
-        std::string sql = "create table fooditems("\
-                          "id integer primary key,"\
-                          "date integer not null,"\
-                          "time integer not null,"\
-                          "name text not null,"\
-                          "brand text not null,"\
-                          "tags text,"\
-                          "kcal real,"\
-                          "proteins real,"\
-                          "carbohydrates real,"\
-                          "fats real"\
-                          ");";
+        std::stringstream ss;
+        ss << "create table " << ca_fooditems << "("
+            << ca_id << " integer primary key, "
+            << ca_date << " integer not null, "
+            << ca_time << " integer not null, "
+            << ca_name << " text not null, "
+            << ca_brand << " text not null, "
+            << ca_tags << " text, "
+            << ca_kcal << " real, "
+            << ca_proteins << " real, "
+            << ca_carbohydrates << " real, "
+            << ca_fats << " real);";
 
-        sqlite3_stmt *statement;
+        sqlite3_stmt *s;
 
-        auto r = sqlite3_prepare_v2(db, sql.c_str(), -1, &statement, nullptr);
+        auto r = sqlite3_prepare_v2(db, ss.str().c_str(),  -1, &s, nullptr);
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
-            LOGG("Faild to prepare statement, return code: ");
+            LOGG("init: Faild to prepare statement, return code: ");
             LOGG_LN(E_MAGENTA(r));
 
             return false;
         }
 
-        r = sqlite3_step(statement);
+        r = sqlite3_step(s);
 
         if (r != SQLITE_DONE) {
             LOGG(E_RED("ERROR: "));
@@ -296,7 +314,7 @@ namespace Eater
             return false;
         }
 
-        sqlite3_finalize(statement);
+        sqlite3_finalize(s);
         LOGG_LN("Init of database table sucessfull");
 
         return true;
@@ -304,12 +322,13 @@ namespace Eater
 
     bool DB_FoodItems::tableExists() const
     {
-        std::string sql = "select count(*) from sqlite_master "\
-                          "where type='table' and name='fooditems';";
+        std::stringstream ss;
+        ss << "select count(*) from sqlite_master where type='table' and name='"
+            << ca_fooditems << "';";
 
         sqlite3_stmt *s;
 
-        auto r = sqlite3_prepare_v2(db , sql.c_str(), -1, &s, nullptr);
+        auto r = sqlite3_prepare_v2(db , ss.str().c_str(), -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));

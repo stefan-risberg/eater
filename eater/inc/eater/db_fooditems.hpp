@@ -3,8 +3,6 @@
 
 #include "eater/common.hpp"
 #include "eater/fooditem.hpp"
-#include "eater/timestamp.hpp"
-#include "eater/nutrients.hpp"
 #include <sqlite3.h>
 
 namespace Eater
@@ -111,6 +109,10 @@ namespace Eater
          * \return true if it does else false.
          */
         bool tableExists() const;
+
+        class FoodItems
+        {
+        };
 
     };
 } /* Eater */ 

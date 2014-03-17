@@ -72,4 +72,16 @@ namespace Eater {
 
         return ss.str();
     }
+
+    FoodItem& FoodItem::operator=(const FoodItem &it)
+    {
+        _id = it._id;
+        _name = it._name;
+        _brand = it._brand;
+        mn = it.mn;
+        ts = it.ts;
+        tags = it.tags;
+
+        return *this;
+    }
 }

@@ -11,8 +11,8 @@ namespace Eater {
      */
     class TimeStamp {
     private:
-        Time _time; //!< Time of time stamp. 
         Date _date; //!< Date of time stamp.
+        Time _time; //!< Time of time stamp. 
 
     public:
         /**
@@ -26,7 +26,7 @@ namespace Eater {
          * \param t Time.
          * \param d Date.
          */
-        TimeStamp(const Time &t, const Date &d);
+        TimeStamp(const Date &d, const Time &t);
 
         /**
          * Set time and date for time stamp.
@@ -34,7 +34,7 @@ namespace Eater {
          * \param t Time.
          * \param d Date.  
          */
-        TimeStamp(u32 t, u32 d);
+        TimeStamp(u32 d, u32 t);
 
         /**
          * Set time and date for new timestamp.
@@ -49,18 +49,25 @@ namespace Eater {
         void setCurrent();
 
         /**
-         * Set new time for timestamp.
+         * Set new date for timestamp.
          *
-         * \param t New time. 
+         * \param d New date.
          */
-        void setTime(u32 t);
+        void setDate(u32 d);
 
         /**
          * Set new date for timestamp.
          *
          * \param d New date.
          */
-        void setDate(u32 d);
+        void setDate(const Date &d);
+
+        /**
+         * Set new time for timestamp.
+         *
+         * \param t New time. 
+         */
+        void setTime(u32 t);
 
         /**
          * Set new time for timestamp.
@@ -69,12 +76,6 @@ namespace Eater {
          */
         void setTime(const Time &t);
 
-        /**
-         * Set new date for timestamp.
-         *
-         * \param d New date.
-         */
-        void setDate(const Date &d);
         
         /**
          * Set new timestamp.
@@ -89,6 +90,14 @@ namespace Eater {
          * \param ts New timestamp. 
          */
         void setTimeStamp(const TimeStamp &ts);
+
+        /**
+         * Set new timestamp.
+         *
+         * \param d New date.
+         * \param t New Time.  
+         */
+        void setTimeStamp(u32 d, u32 t);
 
         /**
          * Query the time.

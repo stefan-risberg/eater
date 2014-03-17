@@ -129,7 +129,8 @@ namespace Eater
     }
 
     // TODO: Make syntax check on tags string (14.03.16 - steffenomak)
-    void Tags::fromString(const std::string &tags) {
+    void Tags::fromString(const std::string &tags)
+    {
         _tags.clear();
 
         std::string tag = "";
@@ -141,5 +142,12 @@ namespace Eater
                 tag += *it;
             }
         }
+    }
+
+    Tags& Tags::operator=(const Tags &t)
+    {
+        _tags = t._tags;
+
+        return *this;
     }
 } /* Eater */ 

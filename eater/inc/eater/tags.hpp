@@ -135,6 +135,8 @@ namespace Eater
          * \param tags Tags to parse.
          */
         void fromString(const std::string &tags);
+
+        Tags& operator=(const Tags &t);
     };
 } /* Eater */ 
 
