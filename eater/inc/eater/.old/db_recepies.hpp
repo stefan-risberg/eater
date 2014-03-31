@@ -3,19 +3,17 @@
 
 #include "eater/common.hpp"
 #include "eater/recepie.hpp"
-#include <sqlite3.h>
+#include "eater/db.hpp"
 
 namespace Eater
 {
     class DB_Recepies
     {
     private:
-        sqlite3 *db;
+        shared_sqlite3 db;
 
     public:
-        DB_Recepies();
-        bool open(const std::string &_db);
-        void clone();
+        DB_Recepies(shared_sqlite3 &db);
 
         bool exists(const id_t item) const;
         bool old(const Recepie &rec) const;
@@ -23,7 +21,12 @@ namespace Eater
         void save(Recepie &rec);
         
         bool find(const id_t id, FoodItem &item) const;
-        
+        food_vec find(const id_vec &ids) const;
+
+        friend class DB;
+
+    private:
+        bool init();
     };
 } /* Eater */ 
 

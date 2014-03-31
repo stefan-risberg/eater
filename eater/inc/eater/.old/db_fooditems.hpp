@@ -3,38 +3,24 @@
 
 #include "eater/common.hpp"
 #include "eater/fooditem.hpp"
-#include <sqlite3.h>
+#include "eater/db.hpp"
 
 namespace Eater
 {
     class DB_FoodItems
     {
     private:
-        sqlite3 *db;
+        shared_sqlite3 db;
 
     public:
         /**
          * Default constructor.
          *
-         * Does nothing.
-         */
-        DB_FoodItems();
-
-        /**
-         * Opens a connection to food item database.
+         * Assigns a valid database object to the food items database.
          *
-         * If not found one will be created and initialized.
-         *
-         * \param _db Name of database.
-         * \return true if opening or creation of database was succesfull,
-         * else false. 
+         * \param db Database object. 
          */
-        bool open(const std::string &_db);
-
-        /**
-         * Closes the database.
-         */
-        void close();
+        DB_FoodItems(shared_sqlite3 &db);
 
         /**
          * Check if a certain food item exists in database.
@@ -92,28 +78,17 @@ namespace Eater
          */
          food_vec find(const id_vec &ids) const;
 
+         friend class DB;
+
     private:
         /**
          * Initializes the database.
          *
-         * If the database already exists and the correct table exits then
-         * nothing else will happen.
+         * Creates a table with correct values, will not chech if table already exists.
          *
          * \return true if database is ready to use, else false.
          */
         bool init();
-
-        /**
-         * Checks if FOODITEMS table exits in the database.
-         *
-         * \return true if it does else false.
-         */
-        bool tableExists() const;
-
-        class FoodItems
-        {
-        };
-
     };
 } /* Eater */ 
 
