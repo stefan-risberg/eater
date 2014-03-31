@@ -7,8 +7,8 @@ namespace Eater {
     class MacroNutrients {
         private:
             f32 _calories;
-            f32 _proteins;
             f32 _carbohydrates;
+            f32 _proteins;
             f32 _fats;
 
         public:
@@ -16,14 +16,27 @@ namespace Eater {
              * Default constructor.
              *
              * \param _calories Calorie count for 100g.
-             * \param _proteins Protein count for 100g.
              * \param _carbohydrates Carbohydrat count for 100g.
+             * \param _proteins Protein count for 100g.
              * \param _fats Fat count for 100g.
              */
             MacroNutrients(f32 _calories = 0,
-                           f32 _proteins = 0.0,
                            f32 _carbohydrates = 0.0,
+                           f32 _proteins = 0.0,
                            f32 _fats = 0.0);
+
+            /**
+             * Set all values of the MacroNutrient.
+             *
+             * \param _calories Calorie count for 100g.
+             * \param _carbohydrates Carbohydrat count for 100g.
+             * \param _proteins Protein count for 100g.
+             * \param _fats Fat count for 100g.
+             */
+            void set(f32 _calories,
+                     f32 _carbohydrates,
+                     f32 _proteins,
+                     f32 _fats);
 
             /**
              * Set calorie count.
@@ -33,18 +46,18 @@ namespace Eater {
             void calories(f32 _calories);
 
             /**
-             * Set protein count.
-             *
-             * \param _protins New protein count.
-             */
-            void proteins(f32 _proteins);
-
-            /**
              * Set carbohydrate count.
              *
              * \param  _carbohydrates New carbohydrate count.
              */
             void carbohydrates(f32 _carbohydrates);
+
+            /**
+             * Set protein count.
+             *
+             * \param _protins New protein count.
+             */
+            void proteins(f32 _proteins);
 
             /**
              * Set fat count.
@@ -89,6 +102,9 @@ namespace Eater {
             std::string toString() const;
     };
 }
+
+std::ostream& operator<<(std::ostream &os, const Eater::MacroNutrients &mn);
+std::istream& operator>>(std::istream &is, Eater::MacroNutrients &mn);
 
 #endif /* EATER_NUTRIENTS_HPP_ */
 
