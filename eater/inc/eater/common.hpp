@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <fstream>
 
 #define DEBUG
 #define COLOR
