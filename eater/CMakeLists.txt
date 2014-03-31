@@ -13,7 +13,6 @@ add_executable (Eater
     src/time.cpp
     src/timestamp.cpp
     src/tags.cpp
-    src/db_fooditems.cpp
 )
 
 include_directories(
