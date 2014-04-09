@@ -138,6 +138,7 @@ namespace Eater
         for (auto it = tags.begin(); it != tags.end(); it++) {
             if (*it == ',') {
                 addTag(tag);
+                tag = "";
             } else {
                 tag += *it;
             }
@@ -151,3 +152,18 @@ namespace Eater
         return *this;
     }
 } /* Eater */ 
+
+std::ostream& operator<<(std::ostream &os, const Eater::Tags &tags)
+{
+    return os << tags.toString();
+}
+
+std::istream& operator>>(std::istream &is, Eater::Tags &tags)
+{
+    std::string str;
+    is >> str;
+
+    tags.fromString(str);
+
+    return is;
+}

@@ -1,24 +1,25 @@
 #include <iostream>
-#include "eater/db_fooditems.hpp"
-
+#include "eater/fooditem.hpp"
+#include "eater/file_db.hpp"
 
 int main()
 {
-    Eater::DB_FoodItems db;
-    db.open("fooditems.db");
+    Eater::FoodItem it("Mellanmjölk", "Arla");
+    it.mn.set(45, 4.9, 3.5, 1.5);
+    it.ts.setCurrent();
+    it.tags.addTags({"mjölk", "färsk", "svenskt"});
 
-    Eater::id_vec id;
-    id.push_back(1);
-    id.push_back(8);
-    id.push_back(4);
+    Eater::FileDB db;
+    db.open("test.db");
 
-    Eater::food_vec foods;
 
-    foods = db.find(id);
+    it.name("Bönor med tacosmak");
+    it.brand("Ölands skördeprodukter");
+    it.mn.set(102, 15.3, 7.2, 0.9);
+    it.ts.setCurrent();
+    it.tags.addTags({"bönor", "svenskt", "taco"});
 
-    for (auto it = foods.begin(); it != foods.end(); it++) {
-        std::cout << it->toString() << std::endl;
-    }
+    it.id(-1);
 
 
     db.close();

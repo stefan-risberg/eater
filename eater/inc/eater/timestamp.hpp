@@ -143,5 +143,8 @@ namespace Eater {
     };
 }
 
+std::ostream& operator<<(std::ostream &os, const Eater::TimeStamp &ts);
+std::istream& operator>>(std::istream &is, Eater::TimeStamp &ts);
+
 #endif /* EATER_TIMESTAMP_HPP_ */
 

@@ -6,10 +6,9 @@ namespace Eater {
         _id(-1), _name(""), _brand("")
     {}
 
-    FoodItem::FoodItem(id_t _id,
-                       const std::string &_name,
+    FoodItem::FoodItem(const std::string &_name,
                        const std::string &_brand) :
-        _id(_id), _name(_name), _brand(_brand)
+        _id(-1), _name(_name), _brand(_brand)
     {}
 
     FoodItem::FoodItem(FoodItem &&item) :
@@ -85,3 +84,34 @@ namespace Eater {
         return *this;
     }
 }
+
+std::ostream& operator<<(std::ostream &os, const Eater::FoodItem &it)
+{
+    return os << it.id() << " "
+        << it.name() << " "
+        << it.brand() << " "
+        << it.mn << " "
+        << it.ts << " "
+        << it.tags;
+}
+
+std::istream& operator>>(std::istream &is, Eater::FoodItem &it)
+{
+    Eater::id_t id;
+    std::string name, brand;
+    Eater::MacroNutrients mn;
+    Eater::TimeStamp ts;
+    Eater::Tags tags;
+
+    is >> id >> name >> brand >> mn >> ts >> tags;
+
+    it.id(id);
+    it.name(name);
+    it.brand(brand);
+    it.mn = mn;
+    it.tags = tags;
+    it.ts = ts;
+
+    return is;
+}
+
