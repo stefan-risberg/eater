@@ -10,7 +10,7 @@ project(Eater)
 
 
 add_subdirectory(
-    eater
+    src
 )
 
 
