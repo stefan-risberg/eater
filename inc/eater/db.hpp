@@ -12,7 +12,7 @@ namespace Eater
     class DB
     {
     private:
-        std::shared_ptr<sqlite3> db;
+        shared_sqlite3 db;
 
     public:
         std::shared_ptr<DB_FoodItems> food_items;
@@ -22,9 +22,16 @@ namespace Eater
         bool open(const std::string &data_base);
         void close();
 
+        static bool tableExists(shared_sqlite3 &db,
+                                const std::string &table);
+
+        static bool prepare(const shared_sqlite3 &db,
+                            const std::string &query,
+                            sqlite3_stmt **st,
+                            const std::string &call_from);
+
     private:
         bool init();
-        bool tableExists(const std::string &table) const;
     };
 
 } /* Eater */ 

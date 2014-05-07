@@ -3,7 +3,6 @@
 
 #include "eater/common.hpp"
 #include "eater/fooditem.hpp"
-#include "eater/db.hpp"
 
 namespace Eater
 {
@@ -11,6 +10,17 @@ namespace Eater
     {
     private:
         shared_sqlite3 db;
+        static const char * fooditems;
+        static const char * id;
+        static const char * name;
+        static const char * brand;
+        static const char * date;
+        static const char * time;
+        static const char * kcal;
+        static const char * proteins;
+        static const char * carbohydrates;
+        static const char * fats;
+        static const char * tags;
 
     public:
         /**
@@ -58,6 +68,16 @@ namespace Eater
          * \param item Item to save.
          */
         void save(FoodItem &item);
+
+        /**
+         * Saves a vector of items.
+         *
+         * If items id filed is anything else then -1 the item will not be
+         * saved. If saved the id filed will be updated for all saved items.
+         *
+         * \param items Items to save. 
+         */
+        void save(food_vec &items);
 
         /**
          * Searches for an item by id in the database.

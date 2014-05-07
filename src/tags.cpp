@@ -30,8 +30,8 @@ namespace Eater
 
     bool Tags::find(const std::string &tag)
     {
-        for (auto it = begin(); it != end(); it++) {
-            if (*it == tag) {
+        for (auto &it : _tags) {
+            if (it == tag) {
                 return true;
             }
         }
@@ -138,6 +138,7 @@ namespace Eater
         for (auto it = tags.begin(); it != tags.end(); it++) {
             if (*it == ',') {
                 addTag(tag);
+                tag = "";
             } else {
                 tag += *it;
             }

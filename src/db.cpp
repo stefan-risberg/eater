@@ -1,12 +1,10 @@
 #include "eater/db.hpp"
-#include "eater/const_data.hpp"
 
 namespace Eater
 {
-    DB::DB()
-    {
-       food_items = std::shared_ptr<DB_FoodItems>(nullptr);
-    }
+    DB::DB() :
+        food_items(nullptr)
+    {}
 
     bool DB::open(const std::string &data_base)
     {
@@ -20,17 +18,16 @@ namespace Eater
 
             return false;
         }
+        
+        db = shared_sqlite3(tmp_db, sqlite3_close);
+        food_items = std::shared_ptr<DB_FoodItems>(new DB_FoodItems(db));
 
         if (!init()) {
             return false;
         }
 
-        db = std::shared_ptr<sqlite3>(tmp_db, sqlite3_close);
-
         LOGG("Opened database: ");
         LOGG_LN(data_base);
-
-        food_items = std::shared_ptr<DB_FoodItems>(new DB_FoodItems(db));
 
         return true;
     }
@@ -51,20 +48,15 @@ namespace Eater
             return false;
         }
 
-        if (!tableExists(ca_fooditems)) {
-            bool r = food_items->init();
-            
-            if (!r) {
-                error(ca_fooditems);
+        bool r = food_items->init();
 
-                return false;
-            }
-        }
+        if (!r) { error("FoodItems"); return false; }
 
         return true;
     }
 
-    bool DB::tableExists(const std::string &table) const
+    bool DB::tableExists(shared_sqlite3 &db,
+                         const std::string &table)
     {
         std::stringstream ss;
         ss << "select count(*) from sqlite_master where type='table' and name='"
@@ -73,6 +65,16 @@ namespace Eater
         sqlite3_stmt *s;
 
         int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(), -1, &s, nullptr);
+
+        if (r != SQLITE_OK) {
+            LOGG(E_RED("ERROR: "));
+            LOGG("Faild to prepare statement, return code: ");
+            LOGG_LN(E_MAGENTA(r));
+
+            return false;
+        }
+
+        r = sqlite3_step(s);
 
         if (r == SQLITE_DONE) {
             sqlite3_finalize(s);
@@ -94,4 +96,27 @@ namespace Eater
         return false;
     }
 
+    bool DB::prepare(const shared_sqlite3 &db,
+                     const std::string &query,
+                     sqlite3_stmt **st,
+                     const std::string &call_from)
+    {
+        int r = sqlite3_prepare_v2(db.get(),
+                                   query.c_str(),
+                                   -1,
+                                   st,
+                                   nullptr);
+
+        if (r != SQLITE_OK) {
+            LOGG(E_RED("ERROR: "));
+            LOGG("Faild to prepare statement, return code: ");
+            LOGG_LN(E_MAGENTA(r));
+            LOGG(E_RED("Called from: "));
+            LOGG_LN(call_from);
+
+            return false;
+        }
+
+        return true;
+    }
 } /* Eater */ 

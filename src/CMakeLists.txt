@@ -5,22 +5,26 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 set(CMAKE_CXX_COMPILER "clang++")
 
 add_executable (Eater
-    src/main.cpp
-    src/fooditem.cpp
-    src/recepie.cpp
-    src/nutrients.cpp
-    src/date.cpp
-    src/time.cpp
-    src/timestamp.cpp
-    src/tags.cpp
+    main.cpp
+    fooditem.cpp
+    recepie.cpp
+    nutrients.cpp
+    date.cpp
+    time.cpp
+    timestamp.cpp
+    tags.cpp
+    db.cpp
+    db_fooditems.cpp
 )
 
 include_directories(
     ${SQLITE3_INCLUDE_DIRS}
-    inc
+    ../inc
 )
 
-set_target_properties(Eater PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set_target_properties(Eater PROPERTIES 
+    RUNTIME_OUTPUT_DIRECTORY
+    ${CMAKE_SOURCE_DIR}/bin)
 
 target_link_libraries(Eater
     ${SQLITE3_LIBRARIES}

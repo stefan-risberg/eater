@@ -6,6 +6,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <memory>
+
+#include <sqlite3.h>
 
 #define DEBUG
 #define COLOR
@@ -56,6 +59,9 @@ namespace Eater {
     typedef i32 id_t;
 
     typedef std::vector<id_t> id_vec;
+
+    typedef std::shared_ptr<sqlite3> shared_sqlite3;
+    typedef std::weak_ptr<sqlite3> weak_sqlite3;
 
     template<class T> T convStrToInt(const std::string &number)
     {

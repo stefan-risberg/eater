@@ -35,11 +35,6 @@ namespace Eater {
         this->_carbohydrates = _carbohydrates;
     }
 
-    /**
-     * Set fat count.
-     *
-     * \param[in] _fats New fat count.
-     */
     void MacroNutrients::fats(f32 _fats)
     {
         if (_fats < 0.0) {
@@ -63,7 +58,7 @@ namespace Eater {
     }
 
     f32 MacroNutrients::fats() const {
-        return _carbohydrates;
+        return _fats;
     }
 
     std::string MacroNutrients::toString() const
