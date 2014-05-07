@@ -60,7 +60,6 @@ flags = [
 'c++',
 '-I./inc',
 '-I/usr/include',
-'-lsqlite3',
 ]
 
 
