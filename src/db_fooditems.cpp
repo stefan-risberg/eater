@@ -2,6 +2,7 @@
 #include "eater/db.hpp"
 #include "format.h"
 #include <fstream>
+#include <cassert>
 
 namespace Eater
 {
@@ -27,18 +28,11 @@ namespace Eater
         w.Format("select {} from {} where id={};")
             << id << fooditems << item;
 
-        sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), w.c_str(),
-                                   -1, &s, nullptr);
+        sqlite3_stmt *s = nullptr;
 
-        if (r != SQLITE_OK) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("Faild to prepare statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
-            return false;
-        }
+        assert(DB::prepare(db, w.str(), &s));
 
-        r = sqlite3_step(s);
+        int r = sqlite3_step(s);
 
         if (r == SQLITE_DONE) {
             sqlite3_finalize(s);
@@ -61,19 +55,11 @@ namespace Eater
         w.Format("select {},{} from {} where id={};")
             << date << time << item.id();
 
-        sqlite3_stmt *s;
+        sqlite3_stmt *s = nullptr; 
 
-        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
+        assert(DB::prepare(db, w.str(), &s));
 
-        if (r != SQLITE_OK) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("Faild to prepare statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
-
-            return false;
-        }
-
-        r = sqlite3_step(s);
+        int r = sqlite3_step(s);
 
         if (r == SQLITE_DONE) {
             sqlite3_finalize(s);
@@ -119,18 +105,10 @@ namespace Eater
             << fats << item.mn.fats()
             << id << item.id();
 
-        sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
+        sqlite3_stmt *s = nullptr;
+        assert(DB::prepare(db, w.str(), &s));
 
-        if (r != SQLITE_OK) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("update: Faild to prepare statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
-
-            return;
-        }
-
-        r = sqlite3_step(s);
+        int r = sqlite3_step(s);
 
         if (r != SQLITE_DONE) {
             LOGG(E_RED("ERROR: "));
@@ -158,18 +136,11 @@ namespace Eater
             << item.mn.calories() << item.mn.proteins()
             << item.mn.carbohydrates() << item.mn.fats();
 
-        sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
+        sqlite3_stmt *s = nullptr;
 
-        if (r != SQLITE_OK) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("save: Faild to prepare statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
+        assert(DB::prepare(db, w.str(), &s));
 
-            return;
-        }
-
-        r = sqlite3_step(s);
+        int r = sqlite3_step(s);
 
         if (r != SQLITE_DONE) {
             LOGG(E_RED("ERROR: "));
@@ -195,18 +166,11 @@ namespace Eater
         w.Format("select * from {} where {}={};")
             << fooditems << this->id << id;
 
-        sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
+        sqlite3_stmt *s = nullptr;
+        
+        assert(DB::prepare(db, w.str(), &s));
 
-        if (r != SQLITE_OK) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("find: Faild to prepare statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
-
-            return false;
-        }
-
-        r = sqlite3_step(s);
+        int r = sqlite3_step(s);
 
         if (r == SQLITE_DONE) {
             sqlite3_finalize(s);
@@ -273,18 +237,11 @@ namespace Eater
             << fooditems << id << date << time << name << brand << tags << kcal
             << proteins << carbohydrates << fats;
 
-        sqlite3_stmt *s;
+        sqlite3_stmt *s = nullptr;
 
-        auto r = sqlite3_prepare_v2(db.get(), w.c_str(),  -1, &s, nullptr);
-        if (r != SQLITE_OK) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("init: Faild to prepare statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
+        assert(DB::prepare(db, w.str(), &s));
 
-            return false;
-        }
-
-        r = sqlite3_step(s);
+        int r = sqlite3_step(s);
 
         if (r != SQLITE_DONE) {
             LOGG(E_RED("ERROR: "));
