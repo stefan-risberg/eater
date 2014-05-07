@@ -1,4 +1,5 @@
 #include "eater/db.hpp"
+#include "format.h"
 
 namespace Eater
 {
@@ -58,17 +59,18 @@ namespace Eater
     bool DB::tableExists(shared_sqlite3 &db,
                          const std::string &table)
     {
-        std::stringstream ss;
-        ss << "select count(*) from sqlite_master where type='table' and name='"
-            << table << "';";
+        fmt::Writer w;
+        w.Format("select count(*) from sqlite_master "
+                 "where type='table' and name='{}';")
+            << table;
 
         sqlite3_stmt *s;
 
-        int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(), -1, &s, nullptr);
+        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
-            LOGG("Faild to prepare statement, return code: ");
+            LOGG("tableExists: Faild to prepare statement, return code: ");
             LOGG_LN(E_MAGENTA(r));
 
             return false;

@@ -1,5 +1,6 @@
 #include "eater/db_fooditems.hpp"
 #include "eater/db.hpp"
+#include "format.h"
 #include <fstream>
 
 namespace Eater
@@ -22,12 +23,12 @@ namespace Eater
 
     bool DB_FoodItems::exists(const id_t item) const
     {
-        std::stringstream ss;
-        ss << "select " << id << " from " << fooditems
-            << " where id=" << item << ";";
+        fmt::Writer w;
+        w.Format("select {} from {} where id={};")
+            << id << fooditems << item;
 
         sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(),
+        int r = sqlite3_prepare_v2(db.get(), w.c_str(),
                                    -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
@@ -56,13 +57,13 @@ namespace Eater
 
     bool DB_FoodItems::old(const FoodItem &item) const
     {
-        std::stringstream ss;
-        ss << "select " << date << "," << time
-            << "from fooditems where id=" << item.id() << ";";
+        fmt::Writer w;
+        w.Format("select {},{} from {} where id={};")
+            << date << time << item.id();
 
         sqlite3_stmt *s;
 
-        int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(), -1, &s, nullptr);
+        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
@@ -93,21 +94,33 @@ namespace Eater
 
     void DB_FoodItems::update(const FoodItem &item)
     {
-        std::stringstream ss;
-        ss << "update " << fooditems << " set "
-            << date << "=" << item.ts.getDate() << ", "
-            << time << "=" << item.ts.getTime() << ", "
-            << name << "='" << item.name() << "', "
-            << brand << "='" << item.brand() << "', "
-            << tags << "='" << item.tags.toString() << "', "
-            << kcal << "=" << item.mn.calories() << ", "
-            << proteins << "=" << item.mn.proteins() << ", "
-            << carbohydrates << "=" << item.mn.carbohydrates() << ", "
-            << fats << "=" << item.mn.fats()
-            << " where " << id << "=" << item.id() << ";";
+        fmt::Writer w;
+        w.Format("update {} set "
+                 "{}={},"
+                 "{}={},"
+                 "{}={},"
+                 "{}={},"
+                 "{}={},"
+                 "{}={},"
+                 "{}={},"
+                 "{}={},"
+                 "{}={} "
+                 "where {}={};"
+                 )
+            << fooditems
+            << date << item.ts.getDate()
+            << time << item.ts.getTime()
+            << name << item.name()
+            << brand << item.brand()
+            << tags << item.tags.toString()
+            << kcal << item.mn.calories()
+            << proteins << item.mn.proteins()
+            << carbohydrates << item.mn.carbohydrates()
+            << fats << item.mn.fats()
+            << id << item.id();
 
         sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(), -1, &s, nullptr);
+        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
@@ -130,22 +143,23 @@ namespace Eater
 
     void DB_FoodItems::save(FoodItem &item)
     {
-        std::stringstream ss;
-        ss << "insert into fooditems (date, time, name, brand, tags, "
-            << "kcal, proteins, carbohydrates, fats) "
-            << "values ("
-            << item.ts.getDate() << ", "
-            << item.ts.getTime() << ", "
-            << "'" << item.name() << "', "
-            << "'" << item.brand() << "', "
-            << "'" << item.tags.toString() << "', "
-            << item.mn.calories() << ", "
-            << item.mn.proteins() << ", "
-            << item.mn.carbohydrates() << ", "
-            << item.mn.fats() << ");";
+        fmt::Writer w;
+        w.Format("insert into {} ("
+                 "{}, {}, {}, {}, {}, {}, {}, {}, {})"
+                 " values ({}, {}, '{}', '{}', '{}', {}, {}, {}, {});")
+            << fooditems
+
+            << date << time
+            << name << brand << tags
+            << kcal << proteins << carbohydrates << fats
+
+            << item.ts.getDate() << item.ts.getTime()
+            << item.name() << item.brand() << item.tags.toString()
+            << item.mn.calories() << item.mn.proteins()
+            << item.mn.carbohydrates() << item.mn.fats();
 
         sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(), -1, &s, nullptr);
+        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
@@ -177,11 +191,12 @@ namespace Eater
 
     bool DB_FoodItems::find(const id_t id, FoodItem &item) const
     {
-        std::stringstream ss;
-        ss << "select * from fooditems where id=" << id << ";";
+        fmt::Writer w;
+        w.Format("select * from {} where {}={};")
+            << fooditems << this->id << id;
 
         sqlite3_stmt *s;
-        int r = sqlite3_prepare_v2(db.get(), ss.str().c_str(), -1, &s, nullptr);
+        int r = sqlite3_prepare_v2(db.get(), w.c_str(), -1, &s, nullptr);
 
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
@@ -200,13 +215,11 @@ namespace Eater
             item.id(sqlite3_column_int(s, 0));
             item.ts.setDate(sqlite3_column_int(s, 1));
             item.ts.setTime(sqlite3_column_int(s, 2));
-            
-            ss.str(std::string()); ss << sqlite3_column_text(s, 3);
-            item.name(ss.str());
-            ss.str(std::string()); ss << sqlite3_column_text(s, 4);
-            item.brand(ss.str());
-            ss.str(std::string()); ss << sqlite3_column_text(s, 5);
-            item.tags.fromString(ss.str());
+
+            item.name(std::string(reinterpret_cast<const char*>(sqlite3_column_text(s, 3))));
+            item.brand(std::string(reinterpret_cast<const char*>(sqlite3_column_text(s, 4))));
+            item.tags.fromString(std::string(reinterpret_cast<const char*>(sqlite3_column_text(s, 5))));
+
             item.mn.calories(sqlite3_column_double(s, 6));
             item.mn.proteins(sqlite3_column_double(s, 7));
             item.mn.carbohydrates(sqlite3_column_double(s, 8));
@@ -245,22 +258,24 @@ namespace Eater
             return true;
         }
 
-        std::stringstream ss;
-        ss << "create table " << fooditems << "("
-            << id << " integer primary key, "
-            << date << " integer not null, "
-            << time << " integer not null, "
-            << name << " text not null, "
-            << brand << " text not null, "
-            << tags << " text, "
-            << kcal << " real, "
-            << proteins << " real, "
-            << carbohydrates << " real, "
-            << fats << " real);";
+        fmt::Writer w;
+        w.Format("create table {} ("
+                 "{} integer primary key,"
+                 "{} integer not null,"
+                 "{} integer not null,"
+                 "{} text not null,"
+                 "{} text not null,"
+                 "{} text,"
+                 "{} real,"
+                 "{} real,"
+                 "{} real,"
+                 "{} real);")
+            << fooditems << id << date << time << name << brand << tags << kcal
+            << proteins << carbohydrates << fats;
 
         sqlite3_stmt *s;
 
-        auto r = sqlite3_prepare_v2(db.get(), ss.str().c_str(),  -1, &s, nullptr);
+        auto r = sqlite3_prepare_v2(db.get(), w.c_str(),  -1, &s, nullptr);
         if (r != SQLITE_OK) {
             LOGG(E_RED("ERROR: "));
             LOGG("init: Faild to prepare statement, return code: ");
