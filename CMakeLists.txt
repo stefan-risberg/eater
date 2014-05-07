@@ -29,7 +29,8 @@ add_executable (eater
 )
 
 add_library(format STATIC IMPORTED)
-set_target_properties(format PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/lib/cppformat/build/libformat.a)
+set_target_properties(format PROPERTIES IMPORTED_LOCATION
+    ${CMAKE_SOURCE_DIR}/lib/cppformat/libformat.a)
 
 include_directories(eater
     inc
