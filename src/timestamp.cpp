@@ -157,3 +157,17 @@ namespace Eater {
         return false;
     }
 }
+
+std::ostream& operator<<(std::ostream &os, const Eater::TimeStamp &ts)
+{
+    return os << ts.getTimeStamp();
+}
+
+std::istream& operator>>(std::istream &is, Eater::TimeStamp &ts)
+{
+    Eater::u64 tmp;
+    is >> tmp;
+
+    ts.setTimeStamp(tmp);
+    return is;
+}

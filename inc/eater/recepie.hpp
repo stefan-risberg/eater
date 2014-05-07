@@ -15,6 +15,7 @@ namespace Eater {
         FoodItem item;
         u32 amount;
     };
+
     class Recepie;
 
     typedef std::vector<amount_t> amount_vec;

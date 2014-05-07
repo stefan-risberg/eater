@@ -7,8 +7,8 @@
 #include <sstream>
 #include <vector>
 #include <memory>
-
 #include <sqlite3.h>
+#include <fstream>
 
 #define DEBUG
 #define COLOR

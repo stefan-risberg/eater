@@ -140,5 +140,8 @@ namespace Eater
     };
 } /* Eater */ 
 
+std::ostream& operator<<(std::ostream &os, const Eater::Tags &tags);
+std::istream& operator>>(std::istream &is, Eater::Tags &tags);
+
 #endif /* end of include guard: EATER_TAGS_HPP_ */
 

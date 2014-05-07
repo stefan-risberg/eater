@@ -36,16 +36,10 @@ namespace Eater {
         /**
          * Constructor that initializes a default food item.
          *
-         * \param _id Id of the food item.
          * \param _name Name of food.
          * \param _brand Brand of food item.
-         * \param _calories Calorie count for 100g of the food item.
-         * \param _proteins Protein count for 100g of the food item.
-         * \param _carbohydrate Carbohydrate count for 100g of food item.
-         * \param _fats Fat count for 100g of food item.
          */
-        FoodItem(id_t _id,
-                 const std::string &_name,
+        FoodItem(const std::string &_name,
                  const std::string &_brand);
 
         /**
@@ -110,5 +104,8 @@ namespace Eater {
         FoodItem& operator=(const FoodItem &it);
     };
 }
+
+std::ostream& operator<<(std::ostream &os, const Eater::FoodItem &it);
+std::istream& operator>>(std::istream &is, Eater::FoodItem &it);
 
 #endif /* end of include guard: EATER_FOOD_ITEM_HPP */
