@@ -96,11 +96,8 @@ namespace Eater
          * \param ids Vector of ids to look for.
          * \return Vector of all the foods that were found.
          */
-         food_vec find(const id_vec &ids) const;
+        food_vec find(const id_vec &ids) const;
 
-         friend class DB;
-
-    private:
         /**
          * Initializes the database.
          *
