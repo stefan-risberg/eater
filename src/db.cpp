@@ -100,8 +100,7 @@ namespace Eater
 
     bool DB::prepare(const shared_sqlite3 &db,
                      const std::string &query,
-                     sqlite3_stmt **st,
-                     const std::string &call_from)
+                     sqlite3_stmt **st)
     {
         int r = sqlite3_prepare_v2(db.get(),
                                    query.c_str(),
@@ -113,8 +112,6 @@ namespace Eater
             LOGG(E_RED("ERROR: "));
             LOGG("Faild to prepare statement, return code: ");
             LOGG_LN(E_MAGENTA(r));
-            LOGG(E_RED("Called from: "));
-            LOGG_LN(call_from);
 
             return false;
         }
