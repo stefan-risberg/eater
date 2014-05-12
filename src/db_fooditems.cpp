@@ -19,8 +19,15 @@ namespace Eater
     const char * DB_FoodItems::tags = "tags";
 
     DB_FoodItems::DB_FoodItems(shared_sqlite3 &db) :
-        db(db)
+        TableHandler(db)
     {}
+
+    DB_FoodItems::~DB_FoodItems()
+    {
+        if (!close()) {
+            LOGG_LN("Well this sould not happen....");
+        }
+    }
 
     bool DB_FoodItems::exists(const id_t item) const
     {

@@ -3,13 +3,13 @@
 
 #include "eater/common.hpp"
 #include "eater/fooditem.hpp"
+#include "eater/table_handler.hpp"
 
 namespace Eater
 {
-    class DB_FoodItems
+    class DB_FoodItems : TableHandler
     {
     private:
-        shared_sqlite3 db;
         static const char * fooditems;
         static const char * id;
         static const char * name;
@@ -31,6 +31,11 @@ namespace Eater
          * \param db Database object. 
          */
         DB_FoodItems(shared_sqlite3 &db);
+
+        /**
+         * Calls close.
+         */
+        virtual ~DB_FoodItems();
 
         /**
          * Check if a certain food item exists in database.
@@ -105,7 +110,12 @@ namespace Eater
          *
          * \return true if database is ready to use, else false.
          */
-        bool init();
+        virtual bool init();
+
+        /**
+         * Does nothing.
+         */
+        virtual bool close() { return true; }
     };
 } /* Eater */ 
 
