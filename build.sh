@@ -1,8 +1,7 @@
 #!/bin/zsh
 
 BUILD_DIR=build
-NUM_BUILD_THREADS=9
-
+NUM_BUILD_THREADS=`expr $(nproc) + 1`
 
 function build_cppformat {
     echo "Building cppformat"
