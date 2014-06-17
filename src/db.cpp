@@ -118,4 +118,49 @@ namespace Eater
 
         return true;
     }
+
+    bool DB::createTable(shared_sqlite3 &db,
+                         const std::string &table_name,
+                         const std::vector<std::string> &col_name,
+                         const std::vector<std::string> &col_type)
+    {
+        if (col_name.size() != col_type.size()) {
+            LOGG(E_RED("ERROR:"));
+            LOGG_LN("col_name and col_type not same size.");
+            return false;
+        }
+
+        fmt::Writer w;
+        w.Format("create table {} (") << table_name;
+
+        auto col_amount = col_name.size();
+        for (unsigned long i = 0; i < col_amount; i++) {
+            w.Format("{} {}") << col_name[i] << col_type[i];
+
+            if (i - 1 == col_amount) {
+                w << ");";
+            } else {
+                w << ", ";
+            }
+        }
+
+        sqlite3_stmt *s = nullptr;
+        assert(DB::prepare(db, w.str(), &s));
+
+        int r = sqlite3_step(s);
+
+        if (r != SQLITE_DONE) {
+            LOGG(E_RED("ERROR: "));
+            LOGG("Faild to step statement, return code: ");
+            LOGG_LN(E_MAGENTA(r));
+
+            return false;
+        }
+        w.Format("Created table: {}") << table_name;
+
+        LOGG_LN(w.str());
+
+        sqlite3_finalize(s);
+        return true;
+    }
 } /* Eater */ 

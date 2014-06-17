@@ -3,6 +3,7 @@
 
 #include <sqlite3.h>
 #include <memory>
+#include <vector>
 
 #include "eater/common.hpp"
 #include "eater/db_fooditems.hpp"
@@ -66,6 +67,24 @@ namespace Eater
         static bool prepare(const shared_sqlite3 &db,
                             const std::string &query,
                             sqlite3_stmt **st);
+
+        /**
+         * Creates a table on the database if it does not exist.
+         *
+         * WIll not check if table already exists, if it does, undefined
+         * behavior.
+         *
+         * \param db Database to create on.
+         * \param tbl_name Name of new table.
+         * \param col_name Vector of column names.
+         * \param col_type Column type.
+         * \return True if creation of the table was successfull. Otherwise
+         * false.    
+         */
+        static bool createTable(shared_sqlite3 &db,
+                                const std::string &tbl_name,
+                                const std::vector<std::string> &col_name,
+                                const std::vector<std::string> &col_type);
 
     private:
         /**
