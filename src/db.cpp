@@ -137,12 +137,15 @@ namespace Eater
         for (unsigned long i = 0; i < col_amount; i++) {
             w.Format("{} {}") << col_name[i] << col_type[i];
 
-            if (i - 1 == col_amount) {
+            if (i + 1 == col_amount) {
                 w << ");";
             } else {
                 w << ", ";
             }
         }
+
+        LOGG(E_RED("SQL: "));
+        LOGG_LN(w.str());
 
         sqlite3_stmt *s = nullptr;
         assert(DB::prepare(db, w.str(), &s));
@@ -156,6 +159,7 @@ namespace Eater
 
             return false;
         }
+        w.Clear();
         w.Format("Created table: {}") << table_name;
 
         LOGG_LN(w.str());
