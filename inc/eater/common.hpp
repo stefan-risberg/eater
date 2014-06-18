@@ -72,6 +72,7 @@ namespace Eater {
     typedef i32 id_t;
 
     typedef std::vector<id_t> id_vec;
+    typedef std::vector<std::string> str_vec;
 
     typedef std::shared_ptr<sqlite3> shared_sqlite3;
     typedef std::weak_ptr<sqlite3> weak_sqlite3;
