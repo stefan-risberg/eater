@@ -46,11 +46,11 @@
 #define LOGG_LN(msg) std::cout << msg << std::endl
 
 #ifdef ENABLE_ERROR
-#define LOGG_ERROR(msg) std::cout << E_MAGENTA("ERROR: ") << msg
+#define LOGG_ERROR(msg) std::cout << E_MAGENTA("ERROR: ") << msg << std::endl
 #ifdef ENABLE_WARNING
-#define LOGG_WARNING(msg) std::cout << E_RED("WARNING: ") << msg
+#define LOGG_WARNING(msg) std::cout << E_RED("WARNING: ") << msg << std::endl
 #ifdef ENABLE_MESSAGE
-#define LOGG_MESSAGE(msg) std::cout << "MSG: " << msg
+#define LOGG_MESSAGE(msg) std::cout << "MSG: " << msg << std::endl
 #endif
 #endif
 #endif
