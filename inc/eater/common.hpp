@@ -19,8 +19,6 @@
 #define E_Debug(msg) 
 #endif
 
-#define LOGG(msg) std::cout << msg
-#define LOGG_LN(msg) std::cout << msg << std::endl
 
 #ifdef COLOR
 #define E_BLACK(msg) "\033[1;30m" << msg << "\033[0m"
@@ -41,6 +39,13 @@
 #define E_CYAN(msg) msg
 #define E_WHITE(msg) msg
 #endif
+
+#define LOGG(msg) std::cout << msg
+#define LOGG_LN(msg) std::cout << msg << std::endl
+
+#define LOGG_MESSAGE(msg) std::cout << "MSG: " << msg;
+#define LOGG_WARNING(msg) std::cout << E_RED("WARNING: ") << msg;
+#define LOGG_ERROR(MSG) std::cout << E_MAGENTA("ERROR: ") << msg;
 
 namespace Eater {
     typedef uint64_t u64;
