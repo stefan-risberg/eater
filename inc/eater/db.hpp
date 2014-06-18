@@ -83,7 +83,7 @@ namespace Eater
         /**
          * Creates a table on the database if it does not exist.
          *
-         * WIll not check if table already exists, if it does, undefined
+         * Will not check if table already exists, if it does, undefined
          * behavior.
          *
          * \param db Database to create on.
