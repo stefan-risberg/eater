@@ -2,6 +2,7 @@
 
 BUILD_DIR=build
 NUM_BUILD_THREADS=`expr $(nproc) + 1`
+PROJECT_BASE_DIR=$(pwd)
 
 function build_cppformat {
     echo "Building cppformat"
@@ -26,8 +27,7 @@ function build_cppformat {
         make -j $NUM_BUILD_THREADS
     fi
 
-    cd ..
-    cd ..
+    cd $PROJECT_BASE_DIR
 }
 
 function build_lib {
@@ -46,6 +46,7 @@ function build_eater {
     cmake ..
     echo "Running make..."
     make -j $NUM_BUILD_THREADS
+    cd $PROJECT_BASE_DIR
 }
 
 function build {
@@ -68,7 +69,7 @@ function clean {
 function run {
     cd bin
     ./eater
-    cd ..
+    cd $PROJECT_BASE_DIR
 }
 
 function usage {
