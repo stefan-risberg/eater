@@ -24,6 +24,18 @@ namespace Eater
     public:
         std::shared_ptr<DB_FoodItems> food_items;
 
+        static const char * tlb_fooditems;
+        static const char * col_id;
+        static const char * col_name;
+        static const char * col_brand;
+        static const char * col_date;
+        static const char * col_time;
+        static const char * col_kcal;
+        static const char * col_proteins;
+        static const char * col_carbohydrates;
+        static const char * col_fats;
+        static const char * col_tags;
+
     public:
         /**
          * Does nothing.
