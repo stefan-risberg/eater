@@ -229,38 +229,34 @@ namespace Eater
             return true;
         }
 
-        fmt::Writer w;
-        w.Format("create table {} ("
-                 "{} integer primary key,"
-                 "{} integer not null,"
-                 "{} integer not null,"
-                 "{} text not null,"
-                 "{} text not null,"
-                 "{} text,"
-                 "{} real,"
-                 "{} real,"
-                 "{} real,"
-                 "{} real);")
-            << fooditems << id << date << time << name << brand << tags << kcal
-            << proteins << carbohydrates << fats;
+        std::vector<std::string> col_names = 
+        {
+            id,
+            date,
+            time,
+            name,
+            brand,
+            tags,
+            kcal,
+            proteins,
+            carbohydrates,
+            fats
+        };
 
-        sqlite3_stmt *s = nullptr;
+        std::vector<std::string> col_types =
+        {
+            "integer primary key",
+            "integer not null",
+            "integer not null",
+            "text not null",
+            "text not null",
+            "text",
+            "real",
+            "real",
+            "real",
+            "real"
+        };
 
-        assert(DB::prepare(db, w.str(), &s));
-
-        int r = sqlite3_step(s);
-
-        if (r != SQLITE_DONE) {
-            LOGG(E_RED("ERROR: "));
-            LOGG("Faild to step statement, return code: ");
-            LOGG_LN(E_MAGENTA(r));
-
-            return false;
-        }
-
-        sqlite3_finalize(s);
-        LOGG_LN("Init of database table sucessfull");
-
-        return true;
+        return DB::createTable(db, fooditems, col_names, col_types);
     }
 } /* Eater */ 
