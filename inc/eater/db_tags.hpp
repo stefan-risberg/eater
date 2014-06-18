@@ -16,8 +16,10 @@ namespace Eater
 
         static const char * tb_food_tags;
         static const char * c_foods_id;
-
         static const char * c_tags_id;
+
+        static const char * c_id;
+
     public:
         DB_Tags (shared_sqlite3 &db);
         virtual ~DB_Tags ();
