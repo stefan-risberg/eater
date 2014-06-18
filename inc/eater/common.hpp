@@ -12,13 +12,15 @@
 
 #define DEBUG
 #define COLOR
+#define ENABLE_ERROR
+#define ENABLE_WARNING
+#define ENABLE_MESSAGE
 
 #ifdef DEBUG
 #define E_Debug(msg) std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg << std::endl
 #else
 #define E_Debug(msg) 
 #endif
-
 
 #ifdef COLOR
 #define E_BLACK(msg) "\033[1;30m" << msg << "\033[0m"
@@ -30,7 +32,7 @@
 #define E_CYAN(msg) "\033[1;36m" << msg << "\033[0m"
 #define E_WHITE(msg) "\033[1;37m" << msg << "\033[0m"
 #else
-#define E_BLACK(msg) msg
+
 #define E_RED(msg) msg
 #define E_GREEN(msg) msg
 #define E_YELLOW(msg) msg
@@ -43,9 +45,15 @@
 #define LOGG(msg) std::cout << msg
 #define LOGG_LN(msg) std::cout << msg << std::endl
 
-#define LOGG_MESSAGE(msg) std::cout << "MSG: " << msg;
-#define LOGG_WARNING(msg) std::cout << E_RED("WARNING: ") << msg;
-#define LOGG_ERROR(MSG) std::cout << E_MAGENTA("ERROR: ") << msg;
+#ifdef ENABLE_ERROR
+#define LOGG_ERROR(msg) std::cout << E_MAGENTA("ERROR: ") << msg
+#ifdef ENABLE_WARNING
+#define LOGG_WARNING(msg) std::cout << E_RED("WARNING: ") << msg
+#ifdef ENABLE_MESSAGE
+#define LOGG_MESSAGE(msg) std::cout << "MSG: " << msg
+#endif
+#endif
+#endif
 
 namespace Eater {
     typedef uint64_t u64;
