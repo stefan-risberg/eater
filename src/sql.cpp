@@ -1,5 +1,6 @@
 #include "eater/sql.hpp"
 #include "format.h"
+#include <string>
 
 namespace Eater
 {
@@ -31,16 +32,16 @@ namespace Eater
 
         bool tbl_exists = false;
 
-        std::function<void(sqlite3_stmt*)> user_prog = [&] (sqlite3_stmt *st) {
-            int ret = sqlite3_step(st);
+        std::function<void()> user_prog = [&] () {
+            auto ret = step();
 
-            if (ret == SQLITE_DONE) {
+            if (ret == DB_Driver::DONE) {
                 LOGG_MESSAGE("No table " << "fisk" << " found.");
                 tbl_exists = false;
-            } else if (ret == SQLITE_ROW) {
-                ret = sqlite3_column_int(st, 0);
+            } else if (ret == DB_Driver::ROW) {
+                auto num = column_int(0);
 
-                tbl_exists = ret == 1;
+                tbl_exists = num == 1;
             }
         };
 
@@ -77,7 +78,7 @@ namespace Eater
         std::function<void()> user_prog = [&] () {
             auto r = step();
 
-            if (r != DONE) {
+            if (r != DB_Driver::DONE) {
                 LOGG_ERROR("Faild to create table. Step ret code: " << E_MAGENTA(r));
                 created_table = false;
             } else {
@@ -86,25 +87,85 @@ namespace Eater
             }
         };
 
-        assert(prepare(w.str(), user_prog));
+        if (!prepare(w.str(), user_prog)) {
+            return false;
+        }
 
-        return true;
+        return created_table;
     }
 
     bool Sql::select(const std::string &what,
                      const std::string &from,
-                     const std::string &were)
+                     const std::string &where,
+                     std::function<void()> &func)
     {
         fmt::Writer w;
-        w.Format("select {} from {} where {};");
+        w.Format("select {} from {} where {};")
+            << what
+            << from
+            << where;
 
-        return 0;
+        if (!prepare(w.str(), func)) {
+            return false;
+        }
+
+        return true;
     }
 
 
+    bool Sql::update(const std::string &in,
+                     const std::string &to,
+                     const std::string &where)
+    {
+        fmt::Writer w;
+        w.Format("update {} set {} where {};") <<
+            in << to << where;
+
+        bool ret = false;
+        std::function<void()> func = [this, &ret] () {
+            if (step() == DB_Driver::DONE) {
+                ret = false;
+            } else {
+                ret = false;
+            }
+        };
+
+        if (!prepare(w.str(), func)) {
+            return false;
+        }
+
+        return ret;
+    }
+
+    DB_Driver::Status Sql::step()
+    {
+        if (st == nullptr) {
+            LOGG_ERROR("Tried to get column on a non-existant statement.");
+            return DB_Driver::ERROR;
+        }
+
+        auto r = sqlite3_step(st);
+
+        switch(r) {
+        case SQLITE_OK:
+            return DB_Driver::OK;
+        case SQLITE_ERROR:
+            return DB_Driver::ERROR;
+        case SQLITE_BUSY:
+            return DB_Driver::BUSY;
+        case SQLITE_FULL:
+            return DB_Driver::FULL;
+        case SQLITE_ROW:
+            return DB_Driver::ROW;
+        case SQLITE_DONE:
+            return DB_Driver::DONE;
+        default:
+            return DB_Driver::OTHER;
+        }
+    }
 
     bool Sql::prepare(const std::string &querry,
-                      std::function<void(sqlite3_stmt*)> &func)
+                      std::function<void()> &func)
     {
         int r = sqlite3_prepare_v2(sql_db.get(),
                                    querry.c_str(),
@@ -117,13 +178,42 @@ namespace Eater
             return false;
         }
 
-        func(st);
+        func();
         sqlite3_finalize(st);
         st = nullptr;
 
         return true;
     }
 
+    int Sql::column_int(int col)
+    {
+        if (st == nullptr) {
+            LOGG_ERROR("Tried to get column on a non-existant statement.");
+            return 0;
+        }
 
+        int r = sqlite3_column_int(st, col);
+        return r;
+    }
+
+    std::string Sql::column_str(int col)
+    {
+        if (st == nullptr) {
+            LOGG_ERROR("Tried to get column on a non-existant statement.");
+            return 0;
+        }
+
+        return std::string(reinterpret_cast<const char*>(sqlite3_column_text(st, col)));
+    }
+    
+    double Sql::column_double(int col)
+    {
+        if (st == nullptr) {
+            LOGG_ERROR("Tried to get column on a non-existant statement.");
+            return 0;
+        }
+
+        return sqlite3_column_double(st, col);
+    }
 } /* Eater
  */ 

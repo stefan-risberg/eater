@@ -3,6 +3,7 @@
 
 #include "eater/common.hpp"
 #include <string>
+#include <functional>
 
 namespace Eater
 {
@@ -14,7 +15,8 @@ namespace Eater
             BUSY = 5,
             FULL = 13,
             ROW = 100,
-            DONE = 101
+            DONE = 101,
+            OTHER
         };
     public:
         /**
@@ -48,12 +50,64 @@ namespace Eater
                                  const str_vec &col_types) = 0;
 
         /**
+         * Creates a select statement.
+         *
+         * After select you need to step the statement.
+         *
+         * \param what What to select.
+         * \param from From what.
+         * \param where Exclition statement.   
+         * \param func User function. 
+         * \return True if select was sucessfull.
+         */
+        virtual bool select(const std::string &what,
+                            const std::string &from,
+                            const std::string &where,
+                            std::function<void()> &func) = 0;
+
+        /**
+         * Updates an entry.
+         *
+         * \param in In what table.
+         * \param to Update to.
+         * \param where Condition for update.
+         * \return True if update was sucessfull.
+         */
+        virtual bool update(const std::string &in,
+                            const std::string &to,
+                            const std::string &where) = 0;
+
+        /**
          * Steps the database.
          *
          * \return DONE if no more tep is needed, else ROW, when data has
          * been returned.
          */
         virtual Status step() = 0;
+
+        /**
+         * Gets a integer from column col.
+         *
+         * \param col Column to check in. 
+         * \return integer in column col.
+         */
+        virtual int column_int(int col) = 0;
+
+        /**
+         * Gets a string from column col.
+         *
+         * \param col Column to check in. 
+         * \return String in column col.
+         */
+        virtual std::string column_str(int col) = 0;
+
+        /**
+         * Gets a double from column col.
+         *
+         * \param col Column to check in. 
+         * \return Double in column col.
+         */
+        virtual double column_double(int col) = 0;
 
     };
 
