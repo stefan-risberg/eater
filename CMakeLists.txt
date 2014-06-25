@@ -27,6 +27,7 @@ add_executable (eater
     src/db.cpp
     src/db_fooditems.cpp
     src/table_handler.cpp
+    src/sql.cpp
 )
 
 add_library(format STATIC IMPORTED)
