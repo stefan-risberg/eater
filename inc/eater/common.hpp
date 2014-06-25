@@ -10,6 +10,8 @@
 #include <sqlite3.h>
 #include <fstream>
 
+#include "db_driver.hpp"
+
 #define DEBUG
 #define COLOR
 #define ENABLE_ERROR
@@ -76,6 +78,9 @@ namespace Eater {
 
     typedef std::shared_ptr<sqlite3> shared_sqlite3;
     typedef std::weak_ptr<sqlite3> weak_sqlite3;
+
+    typedef std::shared_ptr<DB_Driver> s_db_driver;
+    typedef std::weak_ptr<DB_Driver> w_db_driver;
 
     template<class T> T convStrToInt(const std::string &number)
     {
