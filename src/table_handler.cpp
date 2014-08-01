@@ -2,7 +2,7 @@
 
 namespace Eater
 {
-    TableHandler::TableHandler(shared_sqlite3 &db) :
-        db(db)
+    TableHandler::TableHandler(s_db_driver &db_backend) :
+        db_backend(db_backend)
     {}
 } /* Eater */ 

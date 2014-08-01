@@ -8,10 +8,10 @@ namespace Eater
     class TableHandler
     {
     protected:
-        shared_sqlite3 db;
+        s_db_driver db_backend;
 
     public:
-        TableHandler(shared_sqlite3 &db);
+        TableHandler(s_db_driver &db_backend);
         virtual ~TableHandler() {}
 
         virtual bool init() = 0;
