@@ -10,8 +10,6 @@
 #include <sqlite3.h>
 #include <fstream>
 
-#include "eater/db_driver.hpp"
-
 #define DEBUG
 #define COLOR
 #define ENABLE_ERROR
@@ -34,7 +32,6 @@
 #define E_CYAN(msg) "\033[1;36m" << msg << "\033[0m"
 #define E_WHITE(msg) "\033[1;37m" << msg << "\033[0m"
 #else
-
 #define E_RED(msg) msg
 #define E_GREEN(msg) msg
 #define E_YELLOW(msg) msg
@@ -78,9 +75,6 @@ namespace Eater {
 
     typedef std::shared_ptr<sqlite3> shared_sqlite3;
     typedef std::weak_ptr<sqlite3> weak_sqlite3;
-
-    typedef std::shared_ptr<DB_Driver> s_db_driver;
-    typedef std::weak_ptr<DB_Driver> w_db_driver;
 
     template<class T> T convStrToInt(const std::string &number)
     {
