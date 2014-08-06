@@ -4,6 +4,10 @@
 #include "eater/common.hpp"
 #include "eater/fooditem.hpp"
 #include "eater/table_handler.hpp"
+#include "eater/db_driver.hpp"
+#include "eater/sql.hpp"
+
+#include <memory>
 
 namespace Eater
 {
@@ -28,9 +32,9 @@ namespace Eater
          *
          * Assigns a valid database object to the food items database.
          *
-         * \param db Database object. 
+         * \param sql Database backend. 
          */
-        DB_FoodItems(shared_sqlite3 &db);
+        DB_FoodItems(std::shared_ptr<DB_Driver> &db);
 
         /**
          * Calls close.
@@ -71,8 +75,9 @@ namespace Eater
          * updated for the item if saving was successfull.
          *
          * \param item Item to save.
+         * \return false if saving failed, else true.
          */
-        void save(FoodItem &item);
+        bool save(FoodItem &item);
 
         /**
          * Saves a vector of items.

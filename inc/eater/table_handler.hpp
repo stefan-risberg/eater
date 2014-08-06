@@ -2,16 +2,19 @@
 #define EATER_TABLE_HANDLER_HPP_
 
 #include "eater/common.hpp"
+#include "eater/db_driver.hpp"
+#include "eater/sql.hpp"
+#include <memory>
 
 namespace Eater
 {
     class TableHandler
     {
     protected:
-        s_db_driver db_backend;
+        std::shared_ptr<DB_Driver> db;
 
     public:
-        TableHandler(s_db_driver &db_backend);
+        TableHandler(std::shared_ptr<DB_Driver> &db);
         virtual ~TableHandler() {}
 
         virtual bool init() = 0;

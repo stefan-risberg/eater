@@ -25,8 +25,8 @@ add_executable (eater
     src/timestamp.cpp
     src/tags.cpp
     src/db.cpp
-    src/db_fooditems.cpp
     src/table_handler.cpp
+    src/db_fooditems.cpp
     src/sql.cpp
 )
 

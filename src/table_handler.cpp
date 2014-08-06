@@ -2,7 +2,7 @@
 
 namespace Eater
 {
-    TableHandler::TableHandler(s_db_driver &db_backend) :
-        db_backend(db_backend)
+    TableHandler::TableHandler(std::shared_ptr<DB_Driver> &db) :
+        db(db)
     {}
 } /* Eater */ 
