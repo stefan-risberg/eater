@@ -18,8 +18,7 @@ const char *DB_FoodItems::carbohydrates = "carbohydrates";
 const char *DB_FoodItems::fats = "fats";
 const char *DB_FoodItems::tags = "tags";
 
-DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db)
-    : TableHandler(db)
+DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 {
     LOGG_MESSAGE("DB_FoodItems was created.");
 }

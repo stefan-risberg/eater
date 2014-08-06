@@ -8,19 +8,21 @@
 
 namespace Eater
 {
-    class TableHandler
+class TableHandler
+{
+   protected:
+    std::shared_ptr<DB_Driver> db;
+
+   public:
+    TableHandler(std::shared_ptr<DB_Driver> &db);
+    virtual ~TableHandler()
     {
-    protected:
-        std::shared_ptr<DB_Driver> db;
+    }
 
-    public:
-        TableHandler(std::shared_ptr<DB_Driver> &db);
-        virtual ~TableHandler() {}
-
-        virtual bool init() = 0;
-        virtual bool close() = 0;
-    };
-} /* Eater */ 
+    virtual bool init() = 0;
+    virtual bool close() = 0;
+};
+} /* Eater */
 
 #endif /* end of include guard: EATER_TABLE_HANDLER_HPP_ */
 

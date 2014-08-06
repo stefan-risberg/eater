@@ -7,27 +7,30 @@
 
 namespace Eater
 {
-    class DB_Tags : TableHandler
+class DB_Tags : TableHandler
+{
+   private:
+    // Tags table fields.
+    static const char *tb_tags;     /*!< Table name. */
+    static const char *c_tags_text; /*!< Tags name column. */
+
+    static const char *tb_food_tags;
+    static const char *c_foods_id;
+    static const char *c_tags_id;
+
+    static const char *c_id;
+
+   public:
+    DB_Tags(shared_sqlite3 &db);
+    virtual ~DB_Tags();
+
+    virtual bool init();
+    virtual bool close()
     {
-    private:
-        // Tags table fields.
-        static const char * tb_tags; /*!< Table name. */
-        static const char * c_tags_text; /*!< Tags name column. */
-
-        static const char * tb_food_tags;
-        static const char * c_foods_id;
-        static const char * c_tags_id;
-
-        static const char * c_id;
-
-    public:
-        DB_Tags (shared_sqlite3 &db);
-        virtual ~DB_Tags ();
-
-        virtual bool init();
-        virtual bool close() { return true; }
-    };
-} /* Eater */ 
+        return true;
+    }
+};
+} /* Eater */
 
 #endif /* end of include guard: EATER_DB_TAGS_HPP_ */
 

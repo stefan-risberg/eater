@@ -35,7 +35,7 @@ bool DB::open(const std::string &data_base)
 
     if (!init()) {
         LOGG_ERROR(__PRETTY_FUNCTION__ << " - WHAAAAAY!!!!!!!");
-        
+
         return false;
     }
 

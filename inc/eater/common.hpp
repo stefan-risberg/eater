@@ -17,9 +17,10 @@
 #define ENABLE_MESSAGE
 
 #ifdef DEBUG
-#define E_Debug(msg) std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg << std::endl
+#define E_Debug(msg) \
+    std::cerr << __FILE__ << ":" << __LINE__ << ": " << msg << std::endl
 #else
-#define E_Debug(msg) 
+#define E_Debug(msg)
 #endif
 
 #ifdef COLOR
@@ -54,39 +55,44 @@
 #endif
 #endif
 
-namespace Eater {
-    typedef uint64_t u64;
-    typedef uint32_t u32;
-    typedef uint16_t u16;
-    typedef uint8_t u8;
+namespace Eater
+{
+typedef uint64_t u64;
+typedef uint32_t u32;
+typedef uint16_t u16;
+typedef uint8_t u8;
 
-    typedef int64_t i64;
-    typedef int32_t i32;
-    typedef int16_t i16;
-    typedef int8_t i8;
+typedef int64_t i64;
+typedef int32_t i32;
+typedef int16_t i16;
+typedef int8_t i8;
 
-    typedef float f32;
-    typedef double f64;
+typedef float f32;
+typedef double f64;
 
-    typedef i32 id_t;
+typedef i32 id_t;
 
-    typedef std::vector<id_t> id_vec;
-    typedef std::vector<std::string> str_vec;
+typedef std::vector<id_t> id_vec;
+typedef std::vector<std::string> str_vec;
 
-    typedef std::shared_ptr<sqlite3> shared_sqlite3;
-    typedef std::weak_ptr<sqlite3> weak_sqlite3;
+typedef std::shared_ptr<sqlite3> shared_sqlite3;
+typedef std::weak_ptr<sqlite3> weak_sqlite3;
 
-    template<class T> T convStrToInt(const std::string &number)
+template <class T>
+T convStrToInt(const std::string &number)
+{
+    try
     {
-        try {
-            T r = std::stoi(number);
-            return r;
-        } catch (std::exception &e) {
-            std::cerr << "Faild to convert to integer: " << number << "\n";
-
-            return 0;
-        }
+        T r = std::stoi(number);
+        return r;
     }
+    catch (std::exception &e)
+    {
+        std::cerr << "Faild to convert to integer: " << number << "\n";
+
+        return 0;
+    }
+}
 }
 
 #endif /* EATER_COMMON_HPP_ */

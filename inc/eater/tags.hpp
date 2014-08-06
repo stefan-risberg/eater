@@ -5,143 +5,143 @@
 
 namespace Eater
 {
-    typedef std::vector<std::string> tags_vec;
+typedef std::vector<std::string> tags_vec;
+/**
+ * Holds only unique tags.
+ */
+class Tags
+{
+   private:
+    tags_vec _tags;
+
+   public:
     /**
-     * Holds only unique tags.
+     * Takes ownership of a tag vector.
+     *
+     * \param[in] tags Vector of tags.
+     * \param valid True if tags doesn't contain duplicates.
      */
-    class Tags
-    {
-    private:
-        tags_vec _tags;
+    Tags(tags_vec &&tags, bool valid = true);
 
-    public:
-        /**
-         * Takes ownership of a tag vector.
-         *
-         * \param[in] tags Vector of tags.
-         * \param valid True if tags doesn't contain duplicates.  
-         */
-        Tags(tags_vec &&tags, bool valid = true);
+    /**
+     * Default constructor.
+     */
+    Tags();
 
-        /**
-         * Default constructor.
-         */
-        Tags();
+    /**
+     * Copy constructor.
+     *
+     * \param tags To copy.
+     */
+    Tags(const Tags &tags);
 
-        /**
-         * Copy constructor.
-         *
-         * \param tags To copy. 
-         */
-        Tags(const Tags &tags);
+    /**
+     * Move constructor.
+     */
+    Tags(Tags &&tags);
 
-        /**
-         * Move constructor.
-         */
-        Tags(Tags &&tags);
+    /**
+     * Checks if a tag exists.
+     *
+     * \param tag Tag to find.
+     * \return True if found else false.
+     */
+    bool find(const std::string &tag);
 
-        /**
-         * Checks if a tag exists.
-         *
-         * \param tag Tag to find.
-         * \return True if found else false. 
-         */
-        bool find(const std::string &tag);
+    /**
+     * Adds a tag.
+     *
+     * Will not add duplicated.
+     *
+     * \param tag Tag to add.
+     * \return If tag exists, false. Else true.
+     */
+    bool addTag(const std::string &tag);
 
-        /**
-         * Adds a tag.
-         *
-         * Will not add duplicated.
-         *
-         * \param tag Tag to add.
-         * \return If tag exists, false. Else true. 
-         */
-        bool addTag(const std::string &tag);
+    /**
+     * Adds tags.
+     *
+     * Will not add duplicates.
+     *
+     * \param tags Tags to be added.
+     * \return If one, some or all are already presant, false. Else true.
+     */
+    bool addTags(const tags_vec &tags);
 
-        /**
-         * Adds tags.
-         *
-         * Will not add duplicates.
-         *
-         * \param tags Tags to be added.
-         * \return If one, some or all are already presant, false. Else true. 
-         */
-        bool addTags(const tags_vec &tags);
+    /**
+     * Removes a tag.
+     *
+     * \param tag Tag to remove
+     * \return Ture if tag was removed, else false.
+     */
+    bool removeTag(const std::string &tag);
 
-        /**
-         * Removes a tag.
-         *
-         * \param tag Tag to remove
-         * \return Ture if tag was removed, else false. 
-         */
-        bool removeTag(const std::string &tag);
+    /**
+     * Removes a tag.
+     *
+     * \param it Iterator position.
+     * \return Iterator following the last removed element.
+     */
+    tags_vec::iterator removeTag(tags_vec::iterator &it);
 
-        /**
-         * Removes a tag.
-         *
-         * \param it Iterator position.
-         * \return Iterator following the last removed element.
-         */
-        tags_vec::iterator removeTag(tags_vec::iterator &it);
+    /**
+     * Removes tags.
+     *
+     * \param tags Tags to be removed.
+     * \return false if not all tags was removed, else false.
+     */
+    bool removeTags(const tags_vec &tags);
 
-        /**
-         * Removes tags.
-         *
-         * \param tags Tags to be removed.
-         * \return false if not all tags was removed, else false. 
-         */
-        bool removeTags(const tags_vec &tags);
+    /**
+     * Gets an iterator.
+     *
+     * \return Gets an iterator at the beginning of tags.
+     */
+    tags_vec::iterator begin();
 
-        /**
-         * Gets an iterator.
-         *
-         * \return Gets an iterator at the beginning of tags.
-         */
-        tags_vec::iterator begin();
+    /**
+     * Gets an iterator.
+     *
+     * \return Gets an iterator at the beginning of tags.
+     */
+    tags_vec::const_iterator begin() const;
 
-        /**
-         * Gets an iterator.
-         *
-         * \return Gets an iterator at the beginning of tags.
-         */
-        tags_vec::const_iterator begin() const;
-        
-        /**
-         * Gets an iterator.
-         *
-         * \return Gets an interator at the end of the tags.
-         */
-        tags_vec::iterator end();
+    /**
+     * Gets an iterator.
+     *
+     * \return Gets an interator at the end of the tags.
+     */
+    tags_vec::iterator end();
 
-        /**
-         * Gets an iterator.
-         *
-         * \return Gets an interator at the end of the tags.
-         */
-        tags_vec::const_iterator end() const;
+    /**
+     * Gets an iterator.
+     *
+     * \return Gets an interator at the end of the tags.
+     */
+    tags_vec::const_iterator end() const;
 
-        /**
-         * Creates a string representation of all tags.
-         *
-         * \return String representation of tags.
-         */
-        std::string toString() const;
+    /**
+     * Creates a string representation of all tags.
+     *
+     * \return String representation of tags.
+     */
+    std::string toString() const;
 
-        /**
-         * Converst a string to tags.
-         *
-         * The format of that tags string is: tag,tag,tag,tag,
-         *
-         * \param tags Tags to parse.
-         */
-        void fromString(const std::string &tags);
+    /**
+     * Converst a string to tags.
+     *
+     * The format of that tags string is: tag,tag,tag,tag,
+     *
+     * \param tags Tags to parse.
+     */
+    void fromString(const std::string &tags);
 
-        Tags& operator=(const Tags &t);
-    };
-} /* Eater */ 
+    Tags &operator=(const Tags &t);
+};
+} /* Eater */
 
-std::ostream& operator<<(std::ostream &os, const Eater::Tags &tags);
-std::istream& operator>>(std::istream &is, Eater::Tags &tags);
+std::ostream &operator<<(std::ostream &os, const Eater::Tags &tags);
+std::istream &operator>>(std::istream &is, Eater::Tags &tags);
 
 #endif /* end of include guard: EATER_TAGS_HPP_ */
 
