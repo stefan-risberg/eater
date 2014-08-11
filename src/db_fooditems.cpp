@@ -6,17 +6,16 @@
 
 namespace Eater
 {
-const char *DB_FoodItems::fooditems = "fooditems";
-const char *DB_FoodItems::id = "id";
-const char *DB_FoodItems::name = "name";
-const char *DB_FoodItems::brand = "brand";
-const char *DB_FoodItems::date = "date";
-const char *DB_FoodItems::time = "time";
-const char *DB_FoodItems::kcal = "kcal";
-const char *DB_FoodItems::proteins = "proteins";
-const char *DB_FoodItems::carbohydrates = "carbohydrates";
-const char *DB_FoodItems::fats = "fats";
-const char *DB_FoodItems::tags = "tags";
+const char *DB_FoodItems::col_id = "id";
+const char *DB_FoodItems::col_name = "name";
+const char *DB_FoodItems::col_brand = "brand";
+const char *DB_FoodItems::col_date = "date";
+const char *DB_FoodItems::col_time = "time";
+const char *DB_FoodItems::col_kcal = "kcal";
+const char *DB_FoodItems::col_proteins = "proteins";
+const char *DB_FoodItems::col_carbohydrates = "carbohydrates";
+const char *DB_FoodItems::col_fats = "fats";
+const char *DB_FoodItems::col_tags = "tags";
 
 DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 {
@@ -49,9 +48,9 @@ bool DB_FoodItems::exists(const id_t item) const
     };
 
     fmt::Writer w;
-    w.Format("{}={}") << id << item;
+    w.Format("{}={}") << col_id << item;
 
-    if (!db->select(id, fooditems, w.str(), func)) {
+    if (!db->select(col_id, tbl_fooditems, w.str(), func)) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
         return false;
     }
@@ -67,8 +66,8 @@ bool DB_FoodItems::old(const FoodItem &item) const
     fmt::Writer where;
     bool result = false;
 
-    what.Format("{},{}") << date << time;
-    where.Format("{}={}") << id << item;
+    what.Format("{},{}") << col_date << col_time;
+    where.Format("{}={}") << col_id << item;
 
     std::function<void()> func = [&]() {
         auto r = db->step();
@@ -86,7 +85,7 @@ bool DB_FoodItems::old(const FoodItem &item) const
         }
     };
 
-    if (!db->select(what.str(), fooditems, where.str(), func)) {
+    if (!db->select(what.str(), tbl_fooditems, where.str(), func)) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
         return false;
     }
@@ -111,14 +110,15 @@ void DB_FoodItems::update(const FoodItem &item)
         "{}={},"
         "{}={},"
         "{}={} ")
-        << date << item.ts.getDate() << time << item.ts.getTime() << name
-        << item.name() << brand << item.brand() << tags << item.tags.toString()
-        << kcal << item.mn.calories() << proteins << item.mn.proteins()
-        << carbohydrates << item.mn.carbohydrates() << fats << item.mn.fats();
+        << col_date << item.ts.getDate() << col_time << item.ts.getTime()
+        << col_name << item.name() << col_brand << item.brand() << col_tags
+        << item.tags.toString() << col_kcal << item.mn.calories()
+        << col_proteins << item.mn.proteins() << col_carbohydrates
+        << item.mn.carbohydrates() << col_fats << item.mn.fats();
 
-    where.Format("{}={}") << id << item.id();
+    where.Format("{}={}") << col_id << item.id();
 
-    if (db->update(fooditems, to.str(), where.str())) {
+    if (db->update(tbl_fooditems, to.str(), where.str())) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
         LOGG_ERROR("Faild to update an entry.");
     }
@@ -132,15 +132,15 @@ bool DB_FoodItems::save(FoodItem &item)
     fmt::Writer vals;
 
     cols.Format("{}, {}, {}, {}, {}, {}, {}, {}, {}")
-        << date << time << name << brand << tags << kcal << proteins
-        << carbohydrates << fats;
+        << col_date << col_time << col_name << col_brand << col_tags << col_kcal
+        << col_proteins << col_carbohydrates << col_fats;
 
     vals.Format("{}, {}, '{}', '{}', '{}', {}, {}, {}, {}")
         << item.ts.getDate() << item.ts.getTime() << item.name() << item.brand()
         << item.tags.toString() << item.mn.calories() << item.mn.proteins()
         << item.mn.carbohydrates() << item.mn.fats();
 
-    if (!db->insert(fooditems, cols.str(), vals.str())) {
+    if (!db->insert(tbl_fooditems, cols.str(), vals.str())) {
         LOGG_ERROR(__PRETTY_FUNCTION__ << ": Faild to save item "
                                        << item.name());
         return false;
@@ -162,7 +162,7 @@ bool DB_FoodItems::find(const id_t id, FoodItem &item) const
 {
     fmt::Writer where;
 
-    where.Format("{}={}") << fooditems << this->id << id;
+    where.Format("{}={}") << col_id << id;
 
     bool found = false;
 
@@ -190,7 +190,7 @@ bool DB_FoodItems::find(const id_t id, FoodItem &item) const
         }
     };
 
-    if (!db->select("*", fooditems, where.str(), func)) {
+    if (!db->select("*", tbl_fooditems, where.str(), func)) {
         LOGG_ERROR(__PRETTY_FUNCTION__ << "Faild to select.");
         return false;
     }
@@ -212,15 +212,17 @@ food_vec DB_FoodItems::find(const id_vec &ids) const
     return foods;
 }
 
-bool DB_FoodItems::init()
+bool DB_FoodItems::init(const std::string &tbl_name)
 {
-    if (db->tableExists(fooditems)) {
-        LOGG_MESSAGE(fooditems << " exists.");
+    tbl_fooditems = tbl_name;
+    if (db->tableExists(tbl_name)) {
+        LOGG_MESSAGE(tbl_fooditems << " exists.");
         return true;
     }
 
     std::vector<std::string> col_names = {
-        id, date, time, name, brand, tags, kcal, proteins, carbohydrates, fats};
+        col_id,   col_date, col_time,     col_name,          col_brand,
+        col_tags, col_kcal, col_proteins, col_carbohydrates, col_fats};
 
     std::vector<std::string> col_types = {
         "integer primary key", "integer not null", "integer not null",
@@ -228,7 +230,12 @@ bool DB_FoodItems::init()
         "real",                "real",             "real",
         "real"};
 
-    LOGG_MESSAGE("Try to create table " << fooditems << ".");
-    return db->createTable(fooditems, col_names, col_types);
+    LOGG_MESSAGE("Try to create table " << tbl_fooditems << ".");
+    return db->createTable(tbl_fooditems, col_names, col_types);
+}
+
+std::string DB_FoodItems::tableName()
+{
+    return tbl_fooditems;
 }
 } /* Eater */

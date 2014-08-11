@@ -7,6 +7,7 @@
 #include "eater/db_driver.hpp"
 #include "eater/sql.hpp"
 
+#include <string>
 #include <memory>
 
 namespace Eater
@@ -14,17 +15,19 @@ namespace Eater
 class DB_FoodItems : TableHandler
 {
    private:
-    static const char *fooditems;
-    static const char *id;
-    static const char *name;
-    static const char *brand;
-    static const char *date;
-    static const char *time;
-    static const char *kcal;
-    static const char *proteins;
-    static const char *carbohydrates;
-    static const char *fats;
-    static const char *tags;
+    std::string tbl_fooditems;
+
+    static const char *col_id;
+    static const char *col_name;
+    static const char *col_brand;
+    static const char *col_date;
+    static const char *col_time;
+    static const char *col_kcal;
+    static const char *col_proteins;
+    static const char *col_carbohydrates;
+    static const char *col_fats;
+    static const char *col_tags;
+
 
    public:
     /**
@@ -114,9 +117,10 @@ class DB_FoodItems : TableHandler
      * Creates a table with correct values, will not chech if table already
      *exists.
      *
+     * \param tbl_name Table name. 
      * \return true if database is ready to use, else false.
      */
-    virtual bool init();
+    virtual bool init(const std::string &tbl_name);
 
     /**
      * Does nothing.
@@ -125,6 +129,8 @@ class DB_FoodItems : TableHandler
     {
         return true;
     }
+
+    virtual std::string tableName();
 };
 } /* Eater */
 

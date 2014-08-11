@@ -4,17 +4,8 @@
 
 namespace Eater
 {
+
 const char *DB::tbl_fooditems = "fooditems";
-const char *DB::col_id = "id";
-const char *DB::col_name = "name";
-const char *DB::col_brand = "brand";
-const char *DB::col_date = "date";
-const char *DB::col_time = "time";
-const char *DB::col_kcal = "kcal";
-const char *DB::col_proteins = "proteins";
-const char *DB::col_carbohydrates = "carbohydrates";
-const char *DB::col_fats = "fats";
-const char *DB::col_tags = "tags";
 
 DB::DB() : food_items(nullptr)
 {
@@ -54,11 +45,11 @@ bool DB::init()
         food_items = std::shared_ptr<DB_FoodItems>(new DB_FoodItems(db));
     }
 
-    bool r = food_items->init();
+    bool r = food_items->init(tbl_fooditems);
 
     if (!r) {
         LOGG_ERROR(__PRETTY_FUNCTION__ << " - faild to initialize table "
-                                       << tbl_fooditems << ".");
+                                       << food_items->tableName());
         return false;
     }
 

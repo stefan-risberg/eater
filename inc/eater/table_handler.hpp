@@ -4,6 +4,7 @@
 #include "eater/common.hpp"
 #include "eater/db_driver.hpp"
 #include "eater/sql.hpp"
+#include <string>
 #include <memory>
 
 namespace Eater
@@ -19,8 +20,9 @@ class TableHandler
     {
     }
 
-    virtual bool init() = 0;
+    virtual bool init(const std::string &tbl_name) = 0;
     virtual bool close() = 0;
+    virtual std::string tableName() = 0;
 };
 } /* Eater */
 
