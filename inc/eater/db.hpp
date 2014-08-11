@@ -26,8 +26,6 @@ class DB
    public:
     std::shared_ptr<DB_FoodItems> food_items;
 
-    static const char *tbl_fooditems;
-
    public:
     DB();
 

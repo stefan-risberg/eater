@@ -4,8 +4,15 @@
 #include <fstream>
 #include <cassert>
 
+#define CHECK_RESULT(c);                 \
+    if (!c) {                            \
+        LOGG_ERROR(__PRETTY_FUNCTION__); \
+        return false;                    \
+    }
+
 namespace Eater
 {
+const char *DB_FoodItems::tbl_fooditems = "fooditems";
 const char *DB_FoodItems::col_id = "id";
 const char *DB_FoodItems::col_name = "name";
 const char *DB_FoodItems::col_brand = "brand";
@@ -47,13 +54,10 @@ bool DB_FoodItems::exists(const id_t item) const
         }
     };
 
-    fmt::Writer w;
-    w.Format("{}={}") << col_id << item;
+    fmt::Writer where;
+    where.Format("{}='{}'") << col_id << item;
 
-    if (!db->select(col_id, tbl_fooditems, w.str(), func)) {
-        LOGG_ERROR(__PRETTY_FUNCTION__);
-        return false;
-    }
+    CHECK_RESULT(db->select(tbl_fooditems, col_id, where.str(), func));
 
     return result;
 }
@@ -85,10 +89,7 @@ bool DB_FoodItems::old(const FoodItem &item) const
         }
     };
 
-    if (!db->select(what.str(), tbl_fooditems, where.str(), func)) {
-        LOGG_ERROR(__PRETTY_FUNCTION__);
-        return false;
-    }
+    CHECK_RESULT(db->select(tbl_fooditems, what.str(), where.str(), func));
 
     return result;
 }
@@ -140,11 +141,7 @@ bool DB_FoodItems::save(FoodItem &item)
         << item.tags.toString() << item.mn.calories() << item.mn.proteins()
         << item.mn.carbohydrates() << item.mn.fats();
 
-    if (!db->insert(tbl_fooditems, cols.str(), vals.str())) {
-        LOGG_ERROR(__PRETTY_FUNCTION__ << ": Faild to save item "
-                                       << item.name());
-        return false;
-    }
+    CHECK_RESULT(db->insert(tbl_fooditems, cols.str(), vals.str()));
 
     item.id(db->getLastInsertRowId());
 
@@ -190,10 +187,7 @@ bool DB_FoodItems::find(const id_t id, FoodItem &item) const
         }
     };
 
-    if (!db->select("*", tbl_fooditems, where.str(), func)) {
-        LOGG_ERROR(__PRETTY_FUNCTION__ << "Faild to select.");
-        return false;
-    }
+    CHECK_RESULT(db->select(tbl_fooditems, "*", where.str(), func));
 
     return found;
 }
@@ -212,10 +206,9 @@ food_vec DB_FoodItems::find(const id_vec &ids) const
     return foods;
 }
 
-bool DB_FoodItems::init(const std::string &tbl_name)
+bool DB_FoodItems::init()
 {
-    tbl_fooditems = tbl_name;
-    if (db->tableExists(tbl_name)) {
+    if (db->tableExists(tbl_fooditems)) {
         LOGG_MESSAGE(tbl_fooditems << " exists.");
         return true;
     }
@@ -234,8 +227,4 @@ bool DB_FoodItems::init(const std::string &tbl_name)
     return db->createTable(tbl_fooditems, col_names, col_types);
 }
 
-std::string DB_FoodItems::tableName()
-{
-    return tbl_fooditems;
-}
 } /* Eater */

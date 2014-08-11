@@ -20,9 +20,8 @@ class TableHandler
     {
     }
 
-    virtual bool init(const std::string &tbl_name) = 0;
+    virtual bool init() = 0;
     virtual bool close() = 0;
-    virtual std::string tableName() = 0;
 };
 } /* Eater */
 

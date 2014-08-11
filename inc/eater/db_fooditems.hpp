@@ -15,8 +15,7 @@ namespace Eater
 class DB_FoodItems : TableHandler
 {
    private:
-    std::string tbl_fooditems;
-
+    static const char *tbl_fooditems;
     static const char *col_id;
     static const char *col_name;
     static const char *col_brand;
@@ -120,7 +119,7 @@ class DB_FoodItems : TableHandler
      * \param tbl_name Table name. 
      * \return true if database is ready to use, else false.
      */
-    virtual bool init(const std::string &tbl_name);
+    virtual bool init();
 
     /**
      * Does nothing.
@@ -129,8 +128,6 @@ class DB_FoodItems : TableHandler
     {
         return true;
     }
-
-    virtual std::string tableName();
 };
 } /* Eater */
 
