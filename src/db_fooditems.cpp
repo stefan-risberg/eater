@@ -4,12 +4,6 @@
 #include <fstream>
 #include <cassert>
 
-#define CHECK_RESULT(c);                 \
-    if (!c) {                            \
-        LOGG_ERROR(__PRETTY_FUNCTION__); \
-        return false;                    \
-    }
-
 namespace Eater
 {
 const char *DB_FoodItems::tbl_fooditems = "fooditems";
