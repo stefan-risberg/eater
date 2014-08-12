@@ -227,4 +227,9 @@ bool DB_FoodItems::init()
     return db->createTable(tbl_fooditems, col_names, col_types);
 }
 
+bool DB_FoodItems::close()
+{
+    return true;
+}
+
 } /* Eater */

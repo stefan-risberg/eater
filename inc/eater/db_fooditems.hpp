@@ -124,10 +124,7 @@ class DB_FoodItems : TableHandler
     /**
      * Does nothing.
      */
-    virtual bool close()
-    {
-        return true;
-    }
+    virtual bool close();
 };
 } /* Eater */
 
