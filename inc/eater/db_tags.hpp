@@ -21,11 +21,45 @@ class DB_Tags : TableHandler
     static const char *col_tags_name;
     static const char *col_fooditem_id;
 
+    /**
+     * Initializes tags table.
+     *
+     * \return true if table was created.
+     */
+    bool initTagsTable();
+
+    /**
+     * Initializes fooditem tags table.
+     *
+     * \return true if table was created.
+     */
+    bool initFooditemTagsTable();
+
    public:
+
+    /**
+     * Does nothing except for passing the db pointer to parent class.
+     */
     DB_Tags(std::shared_ptr<DB_Driver> &db);
+
+    /**
+     * Does nothing, everything gets destrayed at destruction of object.
+     */
     virtual ~DB_Tags();
 
+    /**
+     * Initializes the tables needed to the tags database handeling.
+     *
+     * \return true if everything was initialized correctly, false even if
+     *         partially successfull.
+     */
     virtual bool init();
+
+    /**
+     * Does nothing for now.
+     *
+     * \return Always true.
+     */
     virtual bool close();
 };
 } /* Eater */
