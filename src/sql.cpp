@@ -85,8 +85,9 @@ bool Sql::createTable(const std::string &tbl_name,
         auto r = step();
 
         if (r != DONE) {
-            LOGG_ERROR(
-                "Faild to create table. Step ret code: " << E_MAGENTA(r));
+            LOGG_ERROR(__PRETTY_FUNCTION__
+                       << "Faild to create table. Step ret code: "
+                       << E_MAGENTA(r));
             created_table = false;
         } else {
             LOGG_MESSAGE("Created table: " << tbl_name);
