@@ -58,7 +58,8 @@
 #define CHECK_RESULT(b);                 \
     if (!b) {                            \
         LOGG_ERROR(__PRETTY_FUNCTION__); \
-        return false;
+        return false;                    \
+    }
 
 namespace Eater
 {
