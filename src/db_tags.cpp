@@ -98,4 +98,28 @@ bool DB_Tags::close()
 {
     return true;
 }
+
+bool DB_Tags::tagExists(const std::string &tag) const
+{
+    fmt::Writer where;
+    bool found = false;
+
+    where.Format("{}='{}'") << col_tags_name << tag;
+
+    std::function<void ()> func = [&]() {
+        auto s = db->step();
+
+        if (s == DB_Driver::ROW) {
+            found = true;
+        } else {
+            found = false;
+        }
+    };
+
+    CHECK_RESULT(db->select(tbl_tags, "*", where.str(), func));
+
+    return found;
+}
+
+
 } /* Eater */
