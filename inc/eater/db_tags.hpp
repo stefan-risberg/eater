@@ -61,6 +61,24 @@ class DB_Tags : TableHandler
      * \return Always true.
      */
     virtual bool close();
+
+    /**
+     * Check if tag exists in table.
+     *
+     * \param tag Tag to check if exists.
+     * \return true if it does, else false.
+     */
+    bool tagExists(const std::string &tag) const;
+
+    /**
+     * Creates a new tag.
+     *
+     * Dosn't care if duplicates will be added.
+     *
+     * \param tag New tag to create.
+     * \return true if addition was successfull. 
+     */
+    bool createTag(const std::string &tag);
 };
 } /* Eater */
 
