@@ -121,5 +121,15 @@ bool DB_Tags::tagExists(const std::string &tag) const
     return found;
 }
 
+bool DB_Tags::createTag(const std::string &tag)
+{
+    fmt::Writer names, values;
 
+    names.Format("{}") << col_tags_name;
+    values.Format("'{}'") << tag;
+
+    CHECK_RESULT(db->insert(tbl_tags, names.str(), values.str()));
+
+    return true;
+}
 } /* Eater */
