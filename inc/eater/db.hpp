@@ -7,6 +7,7 @@
 
 #include "eater/common.hpp"
 #include "eater/db_fooditems.hpp"
+#include "eater/db_tags.hpp"
 #include "eater/db_driver.hpp"
 #include "eater/sql.hpp"
 
@@ -25,6 +26,7 @@ class DB
 
    public:
     std::shared_ptr<DB_FoodItems> food_items;
+    std::shared_ptr<DB_Tags> tags;
 
    public:
     DB();

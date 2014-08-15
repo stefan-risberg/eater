@@ -43,10 +43,17 @@ bool DB::init()
         food_items = std::shared_ptr<DB_FoodItems>(new DB_FoodItems(db));
     }
 
-    bool r = food_items->init();
+    if (tags == nullptr) {
+        tags = std::shared_ptr<DB_Tags>(new DB_Tags(db));
+    }
 
-    if (!r) {
-        LOGG_ERROR(__PRETTY_FUNCTION__ << " - faild to initialize table fooditems.");
+    if (!food_items->init()) {
+        LOGG_ERROR(__PRETTY_FUNCTION__ << " - failed to initialize table fooditems.");
+        return false;
+    }
+
+    if (!tags->init()) {
+        LOGG_ERROR(__PRETTY_FUNCTION__ << " - failed to initialize table tags.");
         return false;
     }
 
