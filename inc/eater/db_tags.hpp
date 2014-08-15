@@ -79,6 +79,16 @@ class DB_Tags : TableHandler
      * \return true if addition was successfull. 
      */
     bool createTag(const std::string &tag);
+
+    /**
+     * Fetches name of tag.
+     *
+     * \param id Id of tag to fetch.
+     * \param tag Return string of tag.
+     * \return True if tag was found. False if it was not found or there was
+     *         an error.
+     */
+    bool getTag(id_t id, std::string &tag) const;
 };
 } /* Eater */
 
