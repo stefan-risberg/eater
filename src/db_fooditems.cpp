@@ -25,9 +25,7 @@ DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 
 DB_FoodItems::~DB_FoodItems()
 {
-    if (!close()) {
-        LOGG_ERROR(__PRETTY_FUNCTION__ << " Well this should not happen...");
-    }
+    close();
 }
 
 bool DB_FoodItems::exists(const id_t item) const
@@ -221,9 +219,11 @@ bool DB_FoodItems::init()
     return db->createTable(tbl_fooditems, col_names, col_types);
 }
 
-bool DB_FoodItems::close()
+void DB_FoodItems::close()
 {
-    return true;
+    if (db != nullptr) {
+        db.reset();
+    }
 }
 
 } /* Eater */

@@ -122,9 +122,9 @@ class DB_FoodItems : TableHandler
     virtual bool init();
 
     /**
-     * Does nothing.
+     * Releases owership of database.
      */
-    virtual bool close();
+    virtual void close();
 };
 } /* Eater */
 

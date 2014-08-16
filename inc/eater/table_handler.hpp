@@ -21,7 +21,7 @@ class TableHandler
     }
 
     virtual bool init() = 0;
-    virtual bool close() = 0;
+    virtual void close() = 0;
 };
 } /* Eater */
 
