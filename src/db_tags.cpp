@@ -121,16 +121,18 @@ bool DB_Tags::tagExists(const std::string &tag) const
     return found;
 }
 
-bool DB_Tags::createTag(const std::string &tag)
+int DB_Tags::createTag(const std::string &tag)
 {
-    fmt::Writer names, values;
+    fmt::Writer name, value;
 
-    names.Format("{}") << col_tags_name;
-    values.Format("'{}'") << tag;
+    name.Format("{}") << col_tags_name;
+    value.Format("'{}'") << tag;
 
-    CHECK_RESULT(db->insert(tbl_tags, names.str(), values.str()));
+    if (!db->insert(tbl_tags, name.str(), value.str())) {
+        return -1;
+    }
 
-    return true;
+    return db->getLastInsertRowId();
 }
 
 bool DB_Tags::getTag(id_t id, std::string &tag) const

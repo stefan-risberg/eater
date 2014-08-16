@@ -76,9 +76,9 @@ class DB_Tags : TableHandler
      * Dosn't care if duplicates will be added.
      *
      * \param tag New tag to create.
-     * \return true if addition was successfull. 
+     * \return Returns id of created tag. If creation faild, -1.
      */
-    bool createTag(const std::string &tag);
+    int createTag(const std::string &tag);
 
     /**
      * Fetches name of tag.
