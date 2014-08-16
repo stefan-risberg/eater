@@ -1,5 +1,6 @@
 #include "eater/common.hpp"
 #include "eater/date.hpp"
+#include "eater/db.hpp"
 #include <iostream>
 #include <string>
 
@@ -49,7 +50,31 @@ void doTest()
 
         test(7, d1.year() == 2014);
         test(8, d1.month() == 3);
-        test(9, d1.day() == 2);
+        test(9, d1.day() == 4);
+    }
+
+    printHeader("DB test.");
+    {
+        printHeader("DB_Tags tests.");
+        Eater::DB db;
+
+        db.open("test.sql");
+        auto id1 = db.tags->createTag("fisk");
+        test(10, id1 != -1);
+
+        auto id2 = db.tags->createTag("fågel");
+        test(11, id2 != -1);
+
+        auto id3 = db.tags->createTag("nöt");
+        test(12, id3 != -1);
+
+        test(13, db.tags->tagExists("fisk"));
+        test(14, db.tags->tagExists("fågel"));
+        test(15, db.tags->tagExists("nöt"));
+
+        test(16, db.tags->getTag(id1) == "fisk");
+        test(17, db.tags->getTag(id2) == "fågel");
+        test(18, db.tags->getTag(id3) == "nöt");
     }
 }
 
