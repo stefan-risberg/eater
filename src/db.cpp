@@ -70,7 +70,9 @@ bool DB::init()
 void DB::close()
 {
     food_items->close();
+    food_items.reset();
     tags->close();
+    tags.reset();
     db->close();
     db.reset();
 }
