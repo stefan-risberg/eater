@@ -78,9 +78,7 @@ DB_Tags::DB_Tags(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 
 DB_Tags::~DB_Tags()
 {
-    if (!close()) {
-        LOGG_LN("Well this should not happen....");
-    }
+    close();
 }
 
 bool DB_Tags::init()
@@ -94,9 +92,11 @@ bool DB_Tags::init()
     return true;
 }
 
-bool DB_Tags::close()
+void DB_Tags::close()
 {
-    return true;
+    if (db != nullptr) {
+        db.reset();
+    }
 }
 
 bool DB_Tags::tagExists(const std::string &tag) const

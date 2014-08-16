@@ -56,11 +56,9 @@ class DB_Tags : TableHandler
     virtual bool init();
 
     /**
-     * Does nothing for now.
-     *
-     * \return Always true.
+     * Releases database.
      */
-    virtual bool close();
+    virtual void close();
 
     /**
      * Check if tag exists in table.
