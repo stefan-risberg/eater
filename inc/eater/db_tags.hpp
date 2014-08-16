@@ -84,11 +84,9 @@ class DB_Tags : TableHandler
      * Fetches name of tag.
      *
      * \param id Id of tag to fetch.
-     * \param tag Return string of tag.
-     * \return True if tag was found. False if it was not found or there was
-     *         an error.
+     * \return Name of tag, if tag was not found an empty string is returned.
      */
-    bool getTag(id_t id, std::string &tag) const;
+    std::string getTag(id_t id) const;
 };
 } /* Eater */
 

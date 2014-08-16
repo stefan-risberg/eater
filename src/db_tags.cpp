@@ -135,10 +135,10 @@ int DB_Tags::createTag(const std::string &tag)
     return db->getLastInsertRowId();
 }
 
-bool DB_Tags::getTag(id_t id, std::string &tag) const
+std::string DB_Tags::getTag(id_t id) const
 {
     fmt::Writer where;
-    bool found = false;
+    std::string tag = "";
 
     where.Format("{}={}") << col_id << id;
 
@@ -147,11 +147,10 @@ bool DB_Tags::getTag(id_t id, std::string &tag) const
 
         if (s == DB_Driver::ROW) {
             tag = db->columnStr(0);
-            found = true;
         }
     };
 
-    return found;
+    return tag;
 }
 
 } /* Eater */
