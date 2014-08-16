@@ -111,6 +111,8 @@ class Sql : public DB_Driver
     double columnDouble(int col);
     int getLastInsertRowId();
 
+    void close();
+
    private:
     /**
      * Prepares a statement and runs a user function.

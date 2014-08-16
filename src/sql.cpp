@@ -264,5 +264,13 @@ int Sql::getLastInsertRowId()
 {
     return sqlite3_last_insert_rowid(sql_db.get());
 }
+
+void Sql::close()
+{
+    if (sql_db != nullptr) {
+        sql_db.reset();
+    }
+}
+
 } /* Eater
  */

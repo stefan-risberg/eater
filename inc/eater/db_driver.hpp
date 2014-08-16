@@ -143,6 +143,11 @@ class DB_Driver
      * \return id of last insertion.
      */
     virtual int getLastInsertRowId() = 0;
+
+    /**
+     * Closes the connection to the database.
+     */
+    virtual void close() = 0;
 };
 
 } /* Eater */
