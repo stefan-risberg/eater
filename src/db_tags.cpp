@@ -150,6 +150,10 @@ std::string DB_Tags::getTag(id_t id) const
         }
     };
 
+    if (!db->select(tbl_tags, col_tags_name, where.str(), func)) {
+        LOGG_ERROR(__PRETTY_FUNCTION__);
+    }
+
     return tag;
 }
 
