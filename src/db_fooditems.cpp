@@ -98,9 +98,9 @@ void DB_FoodItems::update(const FoodItem &item)
     to.Format(
         "{}={},"
         "{}={},"
-        "{}={},"
-        "{}={},"
-        "{}={},"
+        "{}='{}',"
+        "{}='{}',"
+        "{}='{}',"
         "{}={},"
         "{}={},"
         "{}={},"
@@ -113,7 +113,7 @@ void DB_FoodItems::update(const FoodItem &item)
 
     where.Format("{}={}") << col_id << item.id();
 
-    if (db->update(tbl_fooditems, to.str(), where.str())) {
+    if (!db->update(tbl_fooditems, to.str(), where.str())) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
         LOGG_ERROR("Faild to update an entry.");
     }
