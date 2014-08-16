@@ -32,6 +32,11 @@ class DB
     DB();
 
     /**
+     * Closes all connections to the database.
+     */
+    virtual ~DB();
+
+    /**
      * Opens a database connection and makes it ready.
      *
      * It initiates all tables that have to be there if they are not
@@ -43,6 +48,13 @@ class DB
      * \return True if everything opened sucessfully, else false.
      */
     bool open(const std::string &data_base);
+
+    /**
+     * Closes all connection to the database.
+     *
+     * To use it again, use open first.
+     */
+    void close();
 
    private:
     /**

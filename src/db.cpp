@@ -9,6 +9,11 @@ DB::DB() : food_items(nullptr)
 {
 }
 
+DB::~DB()
+{
+    close();
+}
+
 bool DB::open(const std::string &data_base)
 {
     if (db == nullptr) {
@@ -60,6 +65,14 @@ bool DB::init()
     LOGG_MESSAGE("Init was successfull.");
 
     return true;
+}
+
+void DB::close()
+{
+    food_items->close();
+    tags->close();
+    db->close();
+    db.reset();
 }
 
 } /* Eater */
