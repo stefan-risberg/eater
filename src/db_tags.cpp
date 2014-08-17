@@ -157,4 +157,30 @@ std::string DB_Tags::getTag(id_t id) const
     return tag;
 }
 
+Tags DB_Tags::getTags(id_t fi_id)
+{
+    fmt::Writer where;
+    Tags tags;
+    std::vector<int> tag_ids;
+
+    where.Format("{}={}") << col_fooditem_id << fi_id;
+
+    std::function<void()> func = [&] () {
+        while (db->step() == DB_Driver::ROW) {
+            tag_ids.push_back(db->columnInt(0));
+        }
+    };
+
+    if (!db->select(tbl_fooditem_tags, col_tags_id, where.str(), func)) {
+        LOGG_ERROR(__PRETTY_FUNCTION__ << " - faild to select all tags.");
+        return tags;
+    }
+
+    for (auto it = tag_ids.begin(); it != tag_ids.end(); it++) {
+        tags.addTag(getTag(*it));
+    }
+
+    return tags;
+}
+
 } /* Eater */
