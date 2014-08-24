@@ -85,6 +85,14 @@ class DB_Tags : TableHandler
      * \return Name of tag, if tag was not found an empty string is returned.
      */
     std::string getTag(id_t id) const;
+
+    /**
+     * Gets all tags for fooditem with id fi_id.
+     *
+     * \param fi_id Fooditem id to get tags for.
+     * \return All tags associated with fi_id.
+     */
+    Tags getTags(id_t fi_id);
 };
 } /* Eater */
 
