@@ -6,16 +6,16 @@
 
 namespace Eater
 {
-const char *DB_FoodItems::tbl_fooditems = "fooditems";
-const char *DB_FoodItems::col_id = "id";
-const char *DB_FoodItems::col_name = "name";
-const char *DB_FoodItems::col_brand = "brand";
-const char *DB_FoodItems::col_date = "date";
-const char *DB_FoodItems::col_time = "time";
-const char *DB_FoodItems::col_kcal = "kcal";
-const char *DB_FoodItems::col_proteins = "proteins";
+const char *DB_FoodItems::tbl_fooditems     = "fooditems";
+const char *DB_FoodItems::col_id            = "id";
+const char *DB_FoodItems::col_name          = "name";
+const char *DB_FoodItems::col_brand         = "brand";
+const char *DB_FoodItems::col_date          = "date";
+const char *DB_FoodItems::col_time          = "time";
+const char *DB_FoodItems::col_kcal          = "kcal";
+const char *DB_FoodItems::col_proteins      = "proteins";
 const char *DB_FoodItems::col_carbohydrates = "carbohydrates";
-const char *DB_FoodItems::col_fats = "fats";
+const char *DB_FoodItems::col_fats          = "fats";
 
 DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 {
