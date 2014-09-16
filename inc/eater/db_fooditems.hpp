@@ -25,8 +25,6 @@ class DB_FoodItems : TableHandler
     static const char *col_proteins;
     static const char *col_carbohydrates;
     static const char *col_fats;
-    static const char *col_tags;
-
 
    public:
     /**
@@ -116,7 +114,7 @@ class DB_FoodItems : TableHandler
      * Creates a table with correct values, will not chech if table already
      *exists.
      *
-     * \param tbl_name Table name. 
+     * \param tbl_name Table name.
      * \return true if database is ready to use, else false.
      */
     virtual bool init();

@@ -16,7 +16,6 @@ const char *DB_FoodItems::col_kcal = "kcal";
 const char *DB_FoodItems::col_proteins = "proteins";
 const char *DB_FoodItems::col_carbohydrates = "carbohydrates";
 const char *DB_FoodItems::col_fats = "fats";
-const char *DB_FoodItems::col_tags = "tags";
 
 DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 {
@@ -98,16 +97,26 @@ void DB_FoodItems::update(const FoodItem &item)
         "{}={},"
         "{}='{}',"
         "{}='{}',"
-        "{}='{}',"
         "{}={},"
         "{}={},"
         "{}={},"
         "{}={} ")
-        << col_date << item.ts.getDate() << col_time << item.ts.getTime()
-        << col_name << item.name() << col_brand << item.brand() << col_tags
-        << item.tags.toString() << col_kcal << item.mn.calories()
-        << col_proteins << item.mn.proteins() << col_carbohydrates
-        << item.mn.carbohydrates() << col_fats << item.mn.fats();
+        << col_date
+        << item.ts.getDate()
+        << col_time
+        << item.ts.getTime()
+        << col_name
+        << item.name()
+        << col_brand
+        << item.brand()
+        << col_kcal
+        << item.mn.calories()
+        << col_proteins
+        << item.mn.proteins()
+        << col_carbohydrates
+        << item.mn.carbohydrates()
+        << col_fats
+        << item.mn.fats();
 
     where.Format("{}={}") << col_id << item.id();
 
@@ -124,14 +133,25 @@ bool DB_FoodItems::save(FoodItem &item)
     fmt::Writer cols;
     fmt::Writer vals;
 
-    cols.Format("{}, {}, {}, {}, {}, {}, {}, {}, {}")
-        << col_date << col_time << col_name << col_brand << col_tags << col_kcal
-        << col_proteins << col_carbohydrates << col_fats;
+    cols.Format("{}, {}, {}, {}, {}, {}, {}, {}")
+        << col_date
+        << col_time
+        << col_name
+        << col_brand
+        << col_kcal
+        << col_proteins
+        << col_carbohydrates
+        << col_fats;
 
-    vals.Format("{}, {}, '{}', '{}', '{}', {}, {}, {}, {}")
-        << item.ts.getDate() << item.ts.getTime() << item.name() << item.brand()
-        << item.tags.toString() << item.mn.calories() << item.mn.proteins()
-        << item.mn.carbohydrates() << item.mn.fats();
+    vals.Format("{}, {}, '{}', '{}', {}, {}, {}, {}")
+        << item.ts.getDate()
+        << item.ts.getTime()
+        << item.name()
+        << item.brand()
+        << item.mn.calories()
+        << item.mn.proteins()
+        << item.mn.carbohydrates()
+        << item.mn.fats();
 
     CHECK_RESULT(db->insert(tbl_fooditems, cols.str(), vals.str()));
 
@@ -168,12 +188,11 @@ bool DB_FoodItems::find(const id_t id, FoodItem &item) const
 
             item.name(db->columnStr(3));
             item.brand(db->columnStr(4));
-            item.tags.fromString(db->columnStr(5));
 
-            item.mn.calories(db->columnInt(6));
-            item.mn.proteins(db->columnDouble(7));
-            item.mn.carbohydrates(db->columnDouble(8));
-            item.mn.fats(db->columnDouble(9));
+            item.mn.calories(db->columnInt(5));
+            item.mn.proteins(db->columnDouble(6));
+            item.mn.carbohydrates(db->columnDouble(7));
+            item.mn.fats(db->columnDouble(8));
 
             found = true;
         }
@@ -206,14 +225,28 @@ bool DB_FoodItems::init()
     }
 
     std::vector<std::string> col_names = {
-        col_id,   col_date, col_time,     col_name,          col_brand,
-        col_tags, col_kcal, col_proteins, col_carbohydrates, col_fats};
+        col_id,
+        col_date,
+        col_time,
+        col_name,
+        col_brand,
+        col_kcal,
+        col_proteins,
+        col_carbohydrates,
+        col_fats
+    };
 
     std::vector<std::string> col_types = {
-        "integer primary key", "integer not null", "integer not null",
-        "text not null",       "text not null",    "text",
-        "real",                "real",             "real",
-        "real"};
+        "integer primary key",
+        "integer not null",
+        "integer not null",
+        "text not null",
+        "text not null",
+        "real",
+        "real",
+        "real",
+        "real"
+    };
 
     LOGG_MESSAGE("Try to create table " << tbl_fooditems << ".");
     return db->createTable(tbl_fooditems, col_names, col_types);
