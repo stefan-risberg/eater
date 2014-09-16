@@ -12,7 +12,7 @@
 
 namespace Eater
 {
-class DB_FoodItems : TableHandler
+class TblFoodItems : TableHandler
 {
    private:
     static const char *tbl_fooditems;
@@ -34,12 +34,12 @@ class DB_FoodItems : TableHandler
      *
      * \param sql Database backend.
      */
-    DB_FoodItems(std::shared_ptr<DB_Driver> &db);
+    TblFoodItems(std::shared_ptr<DB_Driver> &db);
 
     /**
      * Calls close.
      */
-    virtual ~DB_FoodItems();
+    virtual ~TblFoodItems();
 
     /**
      * Check if a certain food item exists in database.

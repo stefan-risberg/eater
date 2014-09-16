@@ -45,11 +45,11 @@ bool DB::init()
     }
 
     if (food_items == nullptr) {
-        food_items = std::shared_ptr<DB_FoodItems>(new DB_FoodItems(db));
+        food_items = std::shared_ptr<TblFoodItems>(new TblFoodItems(db));
     }
 
     if (tags == nullptr) {
-        tags = std::shared_ptr<DB_Tags>(new DB_Tags(db));
+        tags = std::shared_ptr<TblTags>(new TblTags(db));
     }
 
     if (!food_items->init()) {
