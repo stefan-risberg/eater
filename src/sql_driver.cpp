@@ -1,11 +1,11 @@
-#include "eater/sql.hpp"
+#include "eater/sql_driver.hpp"
 #include "format.h"
 #include <string>
 
 namespace Eater
 {
 
-bool Sql::open(const std::string &location)
+bool SqlDriver::open(const std::string &location)
 {
     sqlite3 *tmp = nullptr;
     int r = sqlite3_open(location.c_str(), &tmp);
@@ -23,7 +23,7 @@ bool Sql::open(const std::string &location)
     return true;
 }
 
-bool Sql::tableExists(const std::string &tbl_name)
+bool SqlDriver::tableExists(const std::string &tbl_name)
 {
 
     fmt::Writer where;
@@ -56,9 +56,9 @@ bool Sql::tableExists(const std::string &tbl_name)
     return tbl_exists;
 }
 
-bool Sql::createTable(const std::string &tbl_name,
-                      const str_vec &col_names,
-                      const str_vec &col_types)
+bool SqlDriver::createTable(const std::string &tbl_name,
+    const str_vec &col_names,
+    const str_vec &col_types)
 {
     if (col_names.size() != col_types.size()) {
         LOGG_ERROR("Wrong number of elements in col_names and col_types");
@@ -86,8 +86,8 @@ bool Sql::createTable(const std::string &tbl_name,
 
         if (r != DONE) {
             LOGG_ERROR(__PRETTY_FUNCTION__
-                       << "Faild to create table. Step ret code: "
-                       << E_MAGENTA(r));
+                << "Faild to create table. Step ret code: "
+                << E_MAGENTA(r));
             created_table = false;
         } else {
             LOGG_MESSAGE("Created table: " << tbl_name);
@@ -102,10 +102,10 @@ bool Sql::createTable(const std::string &tbl_name,
     return created_table;
 }
 
-bool Sql::select(const std::string &tbl,
-                 const std::string &what,
-                 const std::string &where,
-                 std::function<void()> &func)
+bool SqlDriver::select(const std::string &tbl,
+    const std::string &what,
+    const std::string &where,
+    std::function<void()> &func)
 {
     fmt::Writer w;
     w.Format("select {} from {} where {};") << what << tbl << where;
@@ -118,9 +118,9 @@ bool Sql::select(const std::string &tbl,
     return true;
 }
 
-bool Sql::select(const std::string &tbl,
-                 const std::string &what,
-                 std::function<void()> &func)
+bool SqlDriver::select(const std::string &tbl,
+    const std::string &what,
+    std::function<void()> &func)
 {
     fmt::Writer w;
     w.Format("select {} from {};") << what << tbl;
@@ -133,9 +133,9 @@ bool Sql::select(const std::string &tbl,
     return true;
 }
 
-bool Sql::update(const std::string &tbl,
-                 const std::string &to,
-                 const std::string &where)
+bool SqlDriver::update(const std::string &tbl,
+    const std::string &to,
+    const std::string &where)
 {
     fmt::Writer w;
     w.Format("update {} set {} where {};") << tbl << to << where;
@@ -157,25 +157,25 @@ bool Sql::update(const std::string &tbl,
     return ret;
 }
 
-bool Sql::insert(const std::string &tbl,
-                 const std::string &col_names,
-                 const std::string &col_values)
+bool SqlDriver::insert(const std::string &tbl,
+    const std::string &col_names,
+    const std::string &col_values)
 {
     fmt::Writer w;
     w.Format("insert into {} ({}) values ({});") << tbl << col_names
-                                                 << col_values;
+        << col_values;
     bool ret = false;
 
     if (!prepare(w.str(), [&]() {
-             auto s = step();
-             if (s != DONE) {
-                 LOGG_ERROR("Failed to insert to table "
-                            << tbl << ". Error code: " << s);
-                 ret = false;
-             } else {
-                 ret = true;
-             }
-         })) {
+            auto s = step();
+            if (s != DONE) {
+            LOGG_ERROR("Failed to insert to table "
+                << tbl << ". Error code: " << s);
+            ret = false;
+            } else {
+            ret = true;
+            }
+            })) {
         return false;
     }
 
@@ -184,7 +184,7 @@ bool Sql::insert(const std::string &tbl,
     return ret;
 }
 
-DB_Driver::Status Sql::step()
+SqlDriver::Status SqlDriver::step()
 {
     if (st == nullptr) {
         LOGG_ERROR("Tried to get column on a non-existant statement.");
@@ -194,30 +194,30 @@ DB_Driver::Status Sql::step()
     auto r = sqlite3_step(st);
 
     switch (r) {
-        case SQLITE_OK:
-            return OK;
-        case SQLITE_ERROR:
-            return ERROR;
-        case SQLITE_BUSY:
-            return BUSY;
-        case SQLITE_FULL:
-            return FULL;
-        case SQLITE_ROW:
-            return ROW;
-        case SQLITE_DONE:
-            return DONE;
-        default:
-            return OTHER;
+    case SQLITE_OK:
+        return OK;
+    case SQLITE_ERROR:
+        return ERROR;
+    case SQLITE_BUSY:
+        return BUSY;
+    case SQLITE_FULL:
+        return FULL;
+    case SQLITE_ROW:
+        return ROW;
+    case SQLITE_DONE:
+        return DONE;
+    default:
+        return OTHER;
     }
 }
 
-bool Sql::prepare(const std::string &querry, const std::function<void()> &func)
+bool SqlDriver::prepare(const std::string &querry, const std::function<void()> &func)
 {
     int r = sqlite3_prepare_v2(sql_db.get(), querry.c_str(), -1, &st, nullptr);
 
     if (r != SQLITE_OK) {
         LOGG_ERROR(__PRETTY_FUNCTION__ << "Faild to prepare statement:\n"
-                                       << querry);
+            << querry);
         return false;
     }
 
@@ -228,7 +228,7 @@ bool Sql::prepare(const std::string &querry, const std::function<void()> &func)
     return true;
 }
 
-int Sql::columnInt(int col)
+int SqlDriver::columnInt(int col)
 {
     if (st == nullptr) {
         LOGG_ERROR("Tried to get column on a non-existant statement.");
@@ -239,7 +239,7 @@ int Sql::columnInt(int col)
     return r;
 }
 
-std::string Sql::columnStr(int col)
+std::string SqlDriver::columnStr(int col)
 {
     if (st == nullptr) {
         LOGG_ERROR("Tried to get column on a non-existant statement.");
@@ -250,7 +250,7 @@ std::string Sql::columnStr(int col)
         reinterpret_cast<const char *>(sqlite3_column_text(st, col)));
 }
 
-double Sql::columnDouble(int col)
+double SqlDriver::columnDouble(int col)
 {
     if (st == nullptr) {
         LOGG_ERROR("Tried to get column on a non-existant statement.");
@@ -260,12 +260,12 @@ double Sql::columnDouble(int col)
     return sqlite3_column_double(st, col);
 }
 
-int Sql::getLastInsertRowId()
+int SqlDriver::getLastInsertRowId()
 {
     return sqlite3_last_insert_rowid(sql_db.get());
 }
 
-void Sql::close()
+void SqlDriver::close()
 {
     if (sql_db != nullptr) {
         sql_db.reset();
@@ -273,4 +273,4 @@ void Sql::close()
 }
 
 } /* Eater
- */
+*/
