@@ -27,11 +27,6 @@ Recepies
         {f_id} (int) - Foods id.
         amount (float) - amount of f_id in grams.
 
-    kcal   (float)  - total amount of calories
-    protin (float)  - total amount of proteins
-    carb   (float)  - total amount of carbohydrates
-    fat    (float)  - total amount of fats
-
 Tags
 ====
     [id] (int)    - unique tag id.
@@ -46,29 +41,4 @@ RecepieTags
 ===========
     {tag_id}     (int) - tag id from tags.
     {recepie_id} (int) - recepie id.
-
-Eaten
-    Food Item
-        id - id of item eaten.
-        amount - amount of eaten food item.
-
-    Recepie
-        id - id of recepie.
-        foods - list of foods eaten.
-        amounts - list of amount of foods.
-
-Stored food
-    id - unique id
-    food - food id
-    amount - amount
-
-Stored recepies
-    id - unique id
-    recepie_id
-    foods - list of foods
-    amounts - of foods
-    calorie - total amount of calories
-    protein - total amount of proteins
-    carbohydrate - total amount of carbohydrates
-    fat - total amount of fats
 
