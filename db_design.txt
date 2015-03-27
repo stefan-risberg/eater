@@ -33,10 +33,19 @@ Recepies
     fat    (float)  - total amount of fats
 
 Tags
+====
     [id] (int)    - unique tag id.
     tag  (string) - tag name.
 
-TagList
+FoodTags
+========
+    {tag_id}  (int) - tag id from tags.
+    {food_id} (int) - food item id.
+
+RecepieTags
+===========
+    {tag_id}     (int) - tag id from tags.
+    {recepie_id} (int) - recepie id.
 
 Eaten
     Food Item
