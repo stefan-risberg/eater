@@ -56,7 +56,7 @@ void doTest()
 
     printHeader("DB test.");
     {
-        printHeader("DB_Tags tests.");
+        printHeader("TblTags tests.");
         Eater::DB db;
 
         db.open("test.sql");
@@ -78,7 +78,7 @@ void doTest()
             test(17, db.tags->getTag(id2) == "fågel");
             test(18, db.tags->getTag(id3) == "nöt");
         }
-        printHeader("DB_FoodItems tests.");
+        printHeader("TblFoodItems tests.");
         {
             Eater::FoodItem pepsi("Pepsi", "Pepsi");
             pepsi.mn.set(44, 11.1, 0, 0);

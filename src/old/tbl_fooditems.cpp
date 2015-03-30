@@ -1,4 +1,4 @@
-#include "eater/db_fooditems.hpp"
+#include "eater/tbl_fooditems.hpp"
 #include "eater/db.hpp"
 #include "format.h"
 #include <fstream>
@@ -6,28 +6,28 @@
 
 namespace Eater
 {
-const char *DB_FoodItems::tbl_fooditems = "fooditems";
-const char *DB_FoodItems::col_id = "id";
-const char *DB_FoodItems::col_name = "name";
-const char *DB_FoodItems::col_brand = "brand";
-const char *DB_FoodItems::col_date = "date";
-const char *DB_FoodItems::col_time = "time";
-const char *DB_FoodItems::col_kcal = "kcal";
-const char *DB_FoodItems::col_proteins = "proteins";
-const char *DB_FoodItems::col_carbohydrates = "carbohydrates";
-const char *DB_FoodItems::col_fats = "fats";
+const char *TblFoodItems::tbl_fooditems     = "fooditems";
+const char *TblFoodItems::col_id            = "id";
+const char *TblFoodItems::col_name          = "name";
+const char *TblFoodItems::col_brand         = "brand";
+const char *TblFoodItems::col_date          = "date";
+const char *TblFoodItems::col_time          = "time";
+const char *TblFoodItems::col_kcal          = "kcal";
+const char *TblFoodItems::col_proteins      = "proteins";
+const char *TblFoodItems::col_carbohydrates = "carbohydrates";
+const char *TblFoodItems::col_fats          = "fats";
 
-DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
+TblFoodItems::TblFoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 {
-    LOGG_MESSAGE("DB_FoodItems was created.");
+    LOGG_MESSAGE("TblFoodItems was created.");
 }
 
-DB_FoodItems::~DB_FoodItems()
+TblFoodItems::~TblFoodItems()
 {
     close();
 }
 
-bool DB_FoodItems::exists(const id_t item) const
+bool TblFoodItems::exists(const id_t item) const
 {
     LOGG_MESSAGE("Check if " << item << " exists.");
     bool result = false;
@@ -53,7 +53,7 @@ bool DB_FoodItems::exists(const id_t item) const
     return result;
 }
 
-bool DB_FoodItems::old(const FoodItem &item) const
+bool TblFoodItems::old(const FoodItem &item) const
 {
     LOGG_MESSAGE("Check if " << item.name() << " is old.");
 
@@ -85,7 +85,7 @@ bool DB_FoodItems::old(const FoodItem &item) const
     return result;
 }
 
-void DB_FoodItems::update(const FoodItem &item)
+void TblFoodItems::update(const FoodItem &item)
 {
     LOGG_MESSAGE("Try to update item " << item.name() << ".");
 
@@ -126,7 +126,7 @@ void DB_FoodItems::update(const FoodItem &item)
     }
 }
 
-bool DB_FoodItems::save(FoodItem &item)
+bool TblFoodItems::save(FoodItem &item)
 {
     LOGG_MESSAGE("Try to save item " << item.name() << ".");
 
@@ -143,7 +143,7 @@ bool DB_FoodItems::save(FoodItem &item)
         << col_carbohydrates
         << col_fats;
 
-    vals.Format("{}, {}, '{}', '{}', '{}', {}, {}, {}")
+    vals.Format("{}, {}, '{}', '{}', {}, {}, {}, {}")
         << item.ts.getDate()
         << item.ts.getTime()
         << item.name()
@@ -160,14 +160,14 @@ bool DB_FoodItems::save(FoodItem &item)
     return true;
 }
 
-void DB_FoodItems::save(food_vec &items)
+void TblFoodItems::save(food_vec &items)
 {
     for (FoodItem &it : items) {
         save(it);
     }
 }
 
-bool DB_FoodItems::find(const id_t id, FoodItem &item) const
+bool TblFoodItems::find(const id_t id, FoodItem &item) const
 {
     fmt::Writer where;
 
@@ -203,7 +203,7 @@ bool DB_FoodItems::find(const id_t id, FoodItem &item) const
     return found;
 }
 
-food_vec DB_FoodItems::find(const id_vec &ids) const
+food_vec TblFoodItems::find(const id_vec &ids) const
 {
     food_vec foods;
     FoodItem f;
@@ -217,7 +217,7 @@ food_vec DB_FoodItems::find(const id_vec &ids) const
     return foods;
 }
 
-bool DB_FoodItems::init()
+bool TblFoodItems::init()
 {
     if (db->tableExists(tbl_fooditems)) {
         LOGG_MESSAGE(tbl_fooditems << " exists.");
@@ -252,7 +252,7 @@ bool DB_FoodItems::init()
     return db->createTable(tbl_fooditems, col_names, col_types);
 }
 
-void DB_FoodItems::close()
+void TblFoodItems::close()
 {
     if (db != nullptr) {
         db.reset();

@@ -9,7 +9,7 @@
 
 namespace Eater
 {
-class DB_Tags : TableHandler
+class TblTags : TableHandler
 {
    private:
     static const char *col_id;
@@ -40,12 +40,12 @@ class DB_Tags : TableHandler
     /**
      * Does nothing except for passing the db pointer to parent class.
      */
-    DB_Tags(std::shared_ptr<DB_Driver> &db);
+    TblTags(std::shared_ptr<DB_Driver> &db);
 
     /**
      * Does nothing, everything gets destrayed at destruction of object.
      */
-    virtual ~DB_Tags();
+    virtual ~TblTags();
 
     /**
      * Initializes the tables needed to the tags database handeling.

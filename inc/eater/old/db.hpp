@@ -6,8 +6,8 @@
 #include <vector>
 
 #include "eater/common.hpp"
-#include "eater/db_fooditems.hpp"
-#include "eater/db_tags.hpp"
+#include "eater/tbl_fooditems.hpp"
+#include "eater/tbl_tags.hpp"
 #include "eater/db_driver.hpp"
 #include "eater/sql.hpp"
 
@@ -25,8 +25,8 @@ class DB
     std::shared_ptr<DB_Driver> db; /*< Shared pointer to database backend. */
 
    public:
-    std::shared_ptr<DB_FoodItems> food_items;
-    std::shared_ptr<DB_Tags> tags;
+    std::shared_ptr<TblFoodItems> food_items;
+    std::shared_ptr<TblTags> tags;
 
    public:
     DB();

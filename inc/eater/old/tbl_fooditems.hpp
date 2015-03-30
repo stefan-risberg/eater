@@ -12,7 +12,7 @@
 
 namespace Eater
 {
-class DB_FoodItems : TableHandler
+class TblFoodItems : TableHandler
 {
    private:
     static const char *tbl_fooditems;
@@ -25,8 +25,6 @@ class DB_FoodItems : TableHandler
     static const char *col_proteins;
     static const char *col_carbohydrates;
     static const char *col_fats;
-    static const char *col_tags;
-
 
    public:
     /**
@@ -36,12 +34,12 @@ class DB_FoodItems : TableHandler
      *
      * \param sql Database backend.
      */
-    DB_FoodItems(std::shared_ptr<DB_Driver> &db);
+    TblFoodItems(std::shared_ptr<DB_Driver> &db);
 
     /**
      * Calls close.
      */
-    virtual ~DB_FoodItems();
+    virtual ~TblFoodItems();
 
     /**
      * Check if a certain food item exists in database.
@@ -116,7 +114,7 @@ class DB_FoodItems : TableHandler
      * Creates a table with correct values, will not chech if table already
      *exists.
      *
-     * \param tbl_name Table name. 
+     * \param tbl_name Table name.
      * \return true if database is ready to use, else false.
      */
     virtual bool init();

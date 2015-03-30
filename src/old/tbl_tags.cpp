@@ -1,4 +1,4 @@
-#include "eater/db_tags.hpp"
+#include "eater/tbl_tags.hpp"
 #include "eater/db.hpp"
 #include "format.h"
 #include <cassert>
@@ -7,16 +7,16 @@
 
 namespace Eater
 {
-const char *DB_Tags::col_id = "id";
+const char *TblTags::col_id = "id";
 
-const char *DB_Tags::tbl_tags = "tags";
-const char *DB_Tags::tbl_fooditem_tags = "fooditem_tags";
+const char *TblTags::tbl_tags = "tags";
+const char *TblTags::tbl_fooditem_tags = "fooditem_tags";
 
-const char *DB_Tags::col_tags_id = "tag_id";
-const char *DB_Tags::col_tags_name = "name";
-const char *DB_Tags::col_fooditem_id = "fooditem_id";
+const char *TblTags::col_tags_id = "tag_id";
+const char *TblTags::col_tags_name = "name";
+const char *TblTags::col_fooditem_id = "fooditem_id";
 
-bool DB_Tags::initTagsTable()
+bool TblTags::initTagsTable()
 {
     if (db->tableExists(tbl_tags)) {
         LOGG_MESSAGE(tbl_tags << " exists.");
@@ -43,7 +43,7 @@ bool DB_Tags::initTagsTable()
     return true;
 }
 
-bool DB_Tags::initFooditemTagsTable()
+bool TblTags::initFooditemTagsTable()
 {
     if (db->tableExists(tbl_fooditem_tags)) {
         LOGG_MESSAGE(tbl_fooditem_tags << " exists.");
@@ -72,16 +72,16 @@ bool DB_Tags::initFooditemTagsTable()
     return true;
 }
 
-DB_Tags::DB_Tags(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
+TblTags::TblTags(std::shared_ptr<DB_Driver> &db) : TableHandler(db)
 {
 }
 
-DB_Tags::~DB_Tags()
+TblTags::~TblTags()
 {
     close();
 }
 
-bool DB_Tags::init()
+bool TblTags::init()
 {
     if (!initTagsTable() && !initFooditemTagsTable()) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
@@ -92,14 +92,14 @@ bool DB_Tags::init()
     return true;
 }
 
-void DB_Tags::close()
+void TblTags::close()
 {
     if (db != nullptr) {
         db.reset();
     }
 }
 
-bool DB_Tags::tagExists(const std::string &tag) const
+bool TblTags::tagExists(const std::string &tag) const
 {
     fmt::Writer where;
     bool found = false;
@@ -121,7 +121,7 @@ bool DB_Tags::tagExists(const std::string &tag) const
     return found;
 }
 
-int DB_Tags::createTag(const std::string &tag)
+int TblTags::createTag(const std::string &tag)
 {
     fmt::Writer name, value;
 
@@ -135,7 +135,7 @@ int DB_Tags::createTag(const std::string &tag)
     return db->getLastInsertRowId();
 }
 
-std::string DB_Tags::getTag(id_t id) const
+std::string TblTags::getTag(id_t id) const
 {
     fmt::Writer where;
     std::string tag = "";
@@ -157,7 +157,7 @@ std::string DB_Tags::getTag(id_t id) const
     return tag;
 }
 
-Tags DB_Tags::getTags(id_t fi_id)
+Tags TblTags::getTags(id_t fi_id)
 {
     fmt::Writer where;
     Tags tags;
