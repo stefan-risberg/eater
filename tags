@@ -1,0 +1,397 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BUSY	inc/eater/db_driver.hpp	/^        BUSY = 5,$/;"	e	enum:Eater::DB_Driver::Status
+CHECK_RESULT	inc/eater/common.hpp	58;"	d
+COLOR	inc/eater/common.hpp	14;"	d
+DB	inc/eater/db.hpp	/^class DB$/;"	c	namespace:Eater
+DB	src/db.cpp	/^DB::DB() : food_items(nullptr)$/;"	f	class:Eater::DB
+DB_Driver	inc/eater/db_driver.hpp	/^class DB_Driver$/;"	c	namespace:Eater
+DB_FoodItems	inc/eater/db_fooditems.hpp	/^class DB_FoodItems : TableHandler$/;"	c	namespace:Eater
+DB_FoodItems	src/db_fooditems.cpp	/^DB_FoodItems::DB_FoodItems(std::shared_ptr<DB_Driver> &db) : TableHandler(db)$/;"	f	class:Eater::DB_FoodItems
+DB_Recepies	inc/eater/db_recepies.hpp	/^class DB_Recepies$/;"	c	namespace:Eater
+DB_Recepies	src/db_recepies.cpp	/^DB_Recepies::DB_Recepies(shared_sqlite3 &db) : db(db)$/;"	f	class:Eater::DB_Recepies
+DB_Tags	inc/eater/db_tags.hpp	/^class DB_Tags : TableHandler$/;"	c	namespace:Eater
+DB_Tags	src/db_tags.cpp	/^DB_Tags::DB_Tags(std::shared_ptr<DB_Driver> &db) : TableHandler(db)$/;"	f	class:Eater::DB_Tags
+DEBUG	inc/eater/common.hpp	13;"	d
+DONE	inc/eater/db_driver.hpp	/^        DONE = 101,$/;"	e	enum:Eater::DB_Driver::Status
+DO_TEST	src/main.cpp	8;"	d	file:
+Date	inc/eater/date.hpp	/^class Date$/;"	c	namespace:Eater
+Date	src/date.cpp	/^Date::Date() : Date(0, 0, 0)$/;"	f	class:Eater::Date
+Date	src/date.cpp	/^Date::Date(const std::string &date)$/;"	f	class:Eater::Date
+Date	src/date.cpp	/^Date::Date(u16 y, u8 m, u8 d)$/;"	f	class:Eater::Date
+Date	src/date.cpp	/^Date::Date(u32 _date)$/;"	f	class:Eater::Date
+DirectoryOfThisScript	.ycm_extra_conf.py	/^def DirectoryOfThisScript():$/;"	f
+EATER_COMMON_HPP_	inc/eater/common.hpp	2;"	d
+EATER_DATE_HPP_	inc/eater/date.hpp	2;"	d
+EATER_DB_DRIVER_	inc/eater/db_driver.hpp	2;"	d
+EATER_DB_FOOD_ITEMS_HPP_	inc/eater/db_fooditems.hpp	2;"	d
+EATER_DB_HPP_	inc/eater/db.hpp	2;"	d
+EATER_DB_RECEPIES_HPP_	inc/eater/db_recepies.hpp	2;"	d
+EATER_DB_TAGS_HPP_	inc/eater/db_tags.hpp	2;"	d
+EATER_FOOD_ITEM_HPP	inc/eater/fooditem.hpp	2;"	d
+EATER_FROMSTRING_TRAIT_HPP_	inc/eater/traits/from_string_trait.hpp	2;"	d
+EATER_NUTRIENTS_HPP_	inc/eater/nutrients.hpp	2;"	d
+EATER_RECEPIE_HPP_	inc/eater/recepie.hpp	2;"	d
+EATER_SQL_HPP_	inc/eater/sql.hpp	2;"	d
+EATER_TABLE_HANDLER_HPP_	inc/eater/table_handler.hpp	2;"	d
+EATER_TAGS_HPP_	inc/eater/tags.hpp	2;"	d
+EATER_TIMESTAMP_HPP_	inc/eater/timestamp.hpp	2;"	d
+EATER_TIME_HPP_	inc/eater/time.hpp	2;"	d
+EATER_TOSTRING_TRAIT_HPP_	inc/eater/traits/to_string_trait.hpp	2;"	d
+ENABLE_ERROR	inc/eater/common.hpp	15;"	d
+ENABLE_MESSAGE	inc/eater/common.hpp	17;"	d
+ENABLE_WARNING	inc/eater/common.hpp	16;"	d
+ERROR	inc/eater/db_driver.hpp	/^        ERROR = 1,$/;"	e	enum:Eater::DB_Driver::Status
+E_BLACK	inc/eater/common.hpp	27;"	d
+E_BLUE	inc/eater/common.hpp	31;"	d
+E_BLUE	inc/eater/common.hpp	39;"	d
+E_CYAN	inc/eater/common.hpp	33;"	d
+E_CYAN	inc/eater/common.hpp	41;"	d
+E_Debug	inc/eater/common.hpp	20;"	d
+E_Debug	inc/eater/common.hpp	23;"	d
+E_GREEN	inc/eater/common.hpp	29;"	d
+E_GREEN	inc/eater/common.hpp	37;"	d
+E_MAGENTA	inc/eater/common.hpp	32;"	d
+E_MAGENTA	inc/eater/common.hpp	40;"	d
+E_RED	inc/eater/common.hpp	28;"	d
+E_RED	inc/eater/common.hpp	36;"	d
+E_WHITE	inc/eater/common.hpp	34;"	d
+E_WHITE	inc/eater/common.hpp	42;"	d
+E_YELLOW	inc/eater/common.hpp	30;"	d
+E_YELLOW	inc/eater/common.hpp	38;"	d
+Eater	inc/eater/common.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/date.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/db.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/db_driver.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/db_fooditems.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/db_recepies.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/db_tags.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/fooditem.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/nutrients.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/recepie.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/sql.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/table_handler.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/tags.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/time.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/timestamp.hpp	/^namespace Eater$/;"	n
+Eater	inc/eater/traits/from_string_trait.hpp	/^namespace Eater {$/;"	n
+Eater	inc/eater/traits/to_string_trait.hpp	/^namespace Eater {$/;"	n
+Eater	src/date.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/db.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/db_fooditems.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/db_recepies.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/db_tags.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/fooditem.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/nutrients.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/recepie.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/sql.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/table_handler.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/tags.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/time.cpp	/^namespace Eater$/;"	n	file:
+Eater	src/timestamp.cpp	/^namespace Eater$/;"	n	file:
+FULL	inc/eater/db_driver.hpp	/^        FULL = 13,$/;"	e	enum:Eater::DB_Driver::Status
+FlagsForFile	.ycm_extra_conf.py	/^def FlagsForFile( filename, **kwargs ):$/;"	f
+FoodItem	inc/eater/fooditem.hpp	/^class FoodItem$/;"	c	namespace:Eater
+FoodItem	src/fooditem.cpp	/^FoodItem::FoodItem() : _id(-1), _name(""), _brand("")$/;"	f	class:Eater::FoodItem
+FoodItem	src/fooditem.cpp	/^FoodItem::FoodItem(FoodItem &&item)$/;"	f	class:Eater::FoodItem
+FoodItem	src/fooditem.cpp	/^FoodItem::FoodItem(const FoodItem &item)$/;"	f	class:Eater::FoodItem
+FoodItem	src/fooditem.cpp	/^FoodItem::FoodItem(const std::string &_name, const std::string &_brand)$/;"	f	class:Eater::FoodItem
+FromString_trait	inc/eater/traits/from_string_trait.hpp	/^    class FromString_trait {$/;"	c	namespace:Eater
+GetCompilationInfoForFile	.ycm_extra_conf.py	/^def GetCompilationInfoForFile( filename ):$/;"	f
+IsHeaderFile	.ycm_extra_conf.py	/^def IsHeaderFile( filename ):$/;"	f
+LOGG	inc/eater/common.hpp	45;"	d
+LOGG_ERROR	inc/eater/common.hpp	49;"	d
+LOGG_LN	inc/eater/common.hpp	46;"	d
+LOGG_MESSAGE	inc/eater/common.hpp	53;"	d
+LOGG_WARNING	inc/eater/common.hpp	51;"	d
+MacroNutrients	inc/eater/nutrients.hpp	/^class MacroNutrients$/;"	c	namespace:Eater
+MacroNutrients	src/nutrients.cpp	/^MacroNutrients::MacroNutrients(f32 _calories,$/;"	f	class:Eater::MacroNutrients
+MakeRelativePathsInFlagsAbsolute	.ycm_extra_conf.py	/^def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):$/;"	f
+OK	inc/eater/db_driver.hpp	/^        OK = 0,$/;"	e	enum:Eater::DB_Driver::Status
+OTHER	inc/eater/db_driver.hpp	/^        OTHER$/;"	e	enum:Eater::DB_Driver::Status
+ROW	inc/eater/db_driver.hpp	/^        ROW = 100,$/;"	e	enum:Eater::DB_Driver::Status
+Recepie	inc/eater/recepie.hpp	/^class Recepie$/;"	c	namespace:Eater
+Recepie	src/recepie.cpp	/^Recepie::Recepie() : _id(-1), _name(""), mn(0.0, 0.0, 0.0, 0.0)$/;"	f	class:Eater::Recepie
+Recepie	src/recepie.cpp	/^Recepie::Recepie(Recepie &&rec)$/;"	f	class:Eater::Recepie
+Recepie	src/recepie.cpp	/^Recepie::Recepie(const Recepie &rec)$/;"	f	class:Eater::Recepie
+Recepie	src/recepie.cpp	/^Recepie::Recepie(id_t _id, const std::string &_name, const amount_vec &foods)$/;"	f	class:Eater::Recepie
+SOURCE_EXTENSIONS	.ycm_extra_conf.py	/^SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]$/;"	v
+Sql	inc/eater/sql.hpp	/^class Sql : public DB_Driver$/;"	c	namespace:Eater
+Status	inc/eater/db_driver.hpp	/^    enum Status {$/;"	g	class:Eater::DB_Driver
+TableHandler	inc/eater/table_handler.hpp	/^class TableHandler$/;"	c	namespace:Eater
+TableHandler	src/table_handler.cpp	/^TableHandler::TableHandler(std::shared_ptr<DB_Driver> &db) : db(db)$/;"	f	class:Eater::TableHandler
+Tags	inc/eater/tags.hpp	/^class Tags$/;"	c	namespace:Eater
+Tags	src/tags.cpp	/^Tags::Tags()$/;"	f	class:Eater::Tags
+Tags	src/tags.cpp	/^Tags::Tags(Tags &&tags) : _tags(std::move(tags._tags))$/;"	f	class:Eater::Tags
+Tags	src/tags.cpp	/^Tags::Tags(const Tags &tags) : _tags(tags._tags)$/;"	f	class:Eater::Tags
+Tags	src/tags.cpp	/^Tags::Tags(tags_vec &&tags, bool valid) : _tags(tags)$/;"	f	class:Eater::Tags
+Time	inc/eater/time.hpp	/^class Time$/;"	c	namespace:Eater
+Time	src/time.cpp	/^Time::Time() : Time(0, 0, 0, 0)$/;"	f	class:Eater::Time
+Time	src/time.cpp	/^Time::Time(const std::string &time)$/;"	f	class:Eater::Time
+Time	src/time.cpp	/^Time::Time(u32 t)$/;"	f	class:Eater::Time
+Time	src/time.cpp	/^Time::Time(u8 h, u8 m, u8 s, u8 ms)$/;"	f	class:Eater::Time
+TimeStamp	inc/eater/timestamp.hpp	/^class TimeStamp$/;"	c	namespace:Eater
+TimeStamp	src/timestamp.cpp	/^TimeStamp::TimeStamp() : _date(), _time()$/;"	f	class:Eater::TimeStamp
+TimeStamp	src/timestamp.cpp	/^TimeStamp::TimeStamp(const Date &d, const Time &t) : _date(d), _time(t)$/;"	f	class:Eater::TimeStamp
+TimeStamp	src/timestamp.cpp	/^TimeStamp::TimeStamp(u32 d, u32 t) : _date(d), _time(t)$/;"	f	class:Eater::TimeStamp
+TimeStamp	src/timestamp.cpp	/^TimeStamp::TimeStamp(u64 ts)$/;"	f	class:Eater::TimeStamp
+ToString_trait	inc/eater/traits/to_string_trait.hpp	/^    class ToString_trait {$/;"	c	namespace:Eater
+_brand	inc/eater/fooditem.hpp	/^    std::string _brand;$/;"	m	class:Eater::FoodItem
+_calories	inc/eater/nutrients.hpp	/^    f32 _calories;$/;"	m	class:Eater::MacroNutrients
+_carbohydrates	inc/eater/nutrients.hpp	/^    f32 _carbohydrates;$/;"	m	class:Eater::MacroNutrients
+_date	inc/eater/date.hpp	/^        u32 _date;$/;"	m	union:Eater::Date::__anon3
+_date	inc/eater/timestamp.hpp	/^    Date _date;  \/\/!< Date of time stamp.$/;"	m	class:Eater::TimeStamp
+_day	inc/eater/date.hpp	/^            u8 _day;$/;"	m	struct:Eater::Date::__anon3::__anon4
+_fats	inc/eater/nutrients.hpp	/^    f32 _fats;$/;"	m	class:Eater::MacroNutrients
+_foods	inc/eater/recepie.hpp	/^    amount_vec _foods;$/;"	m	class:Eater::Recepie
+_hours	inc/eater/time.hpp	/^            u8 _hours;$/;"	m	struct:Eater::Time::__anon1::__anon2
+_id	inc/eater/fooditem.hpp	/^    id_t _id;$/;"	m	class:Eater::FoodItem
+_id	inc/eater/recepie.hpp	/^    id_t _id;$/;"	m	class:Eater::Recepie
+_milli_seconds	inc/eater/time.hpp	/^            u8 _milli_seconds;$/;"	m	struct:Eater::Time::__anon1::__anon2
+_minutes	inc/eater/time.hpp	/^            u8 _minutes;$/;"	m	struct:Eater::Time::__anon1::__anon2
+_month	inc/eater/date.hpp	/^            u8 _month;$/;"	m	struct:Eater::Date::__anon3::__anon4
+_name	inc/eater/fooditem.hpp	/^    std::string _name;$/;"	m	class:Eater::FoodItem
+_name	inc/eater/recepie.hpp	/^    std::string _name;$/;"	m	class:Eater::Recepie
+_proteins	inc/eater/nutrients.hpp	/^    f32 _proteins;$/;"	m	class:Eater::MacroNutrients
+_seconds	inc/eater/time.hpp	/^            u8 _seconds;$/;"	m	struct:Eater::Time::__anon1::__anon2
+_tags	inc/eater/tags.hpp	/^    tags_vec _tags;$/;"	m	class:Eater::Tags
+_time	inc/eater/timestamp.hpp	/^    Time _time;  \/\/!< Time of time stamp.$/;"	m	class:Eater::TimeStamp
+_value	inc/eater/time.hpp	/^        u32 _value;$/;"	m	union:Eater::Time::__anon1
+_year	inc/eater/date.hpp	/^            u16 _year;$/;"	m	struct:Eater::Date::__anon3::__anon4
+addFood	src/recepie.cpp	/^bool Recepie::addFood(const amount_t &food)$/;"	f	class:Eater::Recepie
+addFoods	src/recepie.cpp	/^bool Recepie::addFoods(const amount_vec &foods)$/;"	f	class:Eater::Recepie
+addTag	src/tags.cpp	/^bool Tags::addTag(const std::string &tag)$/;"	f	class:Eater::Tags
+addTags	src/tags.cpp	/^bool Tags::addTags(const tags_vec &tags)$/;"	f	class:Eater::Tags
+amount	inc/eater/recepie.hpp	/^    u32 amount;$/;"	m	struct:Eater::amount_t
+amount_t	inc/eater/recepie.hpp	/^struct amount_t$/;"	s	namespace:Eater
+amount_vec	inc/eater/recepie.hpp	/^typedef std::vector<amount_t> amount_vec;$/;"	t	namespace:Eater
+begin	src/tags.cpp	/^tags_vec::const_iterator Tags::begin() const$/;"	f	class:Eater::Tags
+begin	src/tags.cpp	/^tags_vec::iterator Tags::begin()$/;"	f	class:Eater::Tags
+brand	src/fooditem.cpp	/^std::string FoodItem::brand() const$/;"	f	class:Eater::FoodItem
+brand	src/fooditem.cpp	/^void FoodItem::brand(const std::string &_brand)$/;"	f	class:Eater::FoodItem
+build	build.sh	/^function build {$/;"	f
+build_cppformat	build.sh	/^function build_cppformat {$/;"	f
+build_eater	build.sh	/^function build_eater {$/;"	f
+build_lib	build.sh	/^function build_lib {$/;"	f
+calories	src/nutrients.cpp	/^f32 MacroNutrients::calories() const$/;"	f	class:Eater::MacroNutrients
+calories	src/nutrients.cpp	/^void MacroNutrients::calories(f32 _calories)$/;"	f	class:Eater::MacroNutrients
+carbohydrates	src/nutrients.cpp	/^f32 MacroNutrients::carbohydrates() const$/;"	f	class:Eater::MacroNutrients
+carbohydrates	src/nutrients.cpp	/^void MacroNutrients::carbohydrates(f32 _carbohydrates)$/;"	f	class:Eater::MacroNutrients
+changeNutrients	src/recepie.cpp	/^void Recepie::changeNutrients(const FoodItem &item, u32 amount)$/;"	f	class:Eater::Recepie
+clean	build.sh	/^function clean {$/;"	f
+close	src/db.cpp	/^void DB::close()$/;"	f	class:Eater::DB
+close	src/db_fooditems.cpp	/^void DB_FoodItems::close()$/;"	f	class:Eater::DB_FoodItems
+close	src/db_tags.cpp	/^void DB_Tags::close()$/;"	f	class:Eater::DB_Tags
+close	src/sql.cpp	/^void Sql::close()$/;"	f	class:Eater::Sql
+col_brand	inc/eater/db_fooditems.hpp	/^    static const char *col_brand;$/;"	m	class:Eater::DB_FoodItems
+col_brand	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_brand = "brand";$/;"	m	class:Eater::DB_FoodItems	file:
+col_carbohydrates	inc/eater/db_fooditems.hpp	/^    static const char *col_carbohydrates;$/;"	m	class:Eater::DB_FoodItems
+col_carbohydrates	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_carbohydrates = "carbohydrates";$/;"	m	class:Eater::DB_FoodItems	file:
+col_date	inc/eater/db_fooditems.hpp	/^    static const char *col_date;$/;"	m	class:Eater::DB_FoodItems
+col_date	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_date = "date";$/;"	m	class:Eater::DB_FoodItems	file:
+col_fats	inc/eater/db_fooditems.hpp	/^    static const char *col_fats;$/;"	m	class:Eater::DB_FoodItems
+col_fats	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_fats = "fats";$/;"	m	class:Eater::DB_FoodItems	file:
+col_fooditem_id	inc/eater/db_tags.hpp	/^    static const char *col_fooditem_id;$/;"	m	class:Eater::DB_Tags
+col_fooditem_id	src/db_tags.cpp	/^const char *DB_Tags::col_fooditem_id = "fooditem_id";$/;"	m	class:Eater::DB_Tags	file:
+col_id	inc/eater/db_fooditems.hpp	/^    static const char *col_id;$/;"	m	class:Eater::DB_FoodItems
+col_id	inc/eater/db_tags.hpp	/^    static const char *col_id;$/;"	m	class:Eater::DB_Tags
+col_id	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_id = "id";$/;"	m	class:Eater::DB_FoodItems	file:
+col_id	src/db_tags.cpp	/^const char *DB_Tags::col_id = "id";$/;"	m	class:Eater::DB_Tags	file:
+col_kcal	inc/eater/db_fooditems.hpp	/^    static const char *col_kcal;$/;"	m	class:Eater::DB_FoodItems
+col_kcal	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_kcal = "kcal";$/;"	m	class:Eater::DB_FoodItems	file:
+col_name	inc/eater/db_fooditems.hpp	/^    static const char *col_name;$/;"	m	class:Eater::DB_FoodItems
+col_name	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_name = "name";$/;"	m	class:Eater::DB_FoodItems	file:
+col_proteins	inc/eater/db_fooditems.hpp	/^    static const char *col_proteins;$/;"	m	class:Eater::DB_FoodItems
+col_proteins	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_proteins = "proteins";$/;"	m	class:Eater::DB_FoodItems	file:
+col_tags	inc/eater/db_fooditems.hpp	/^    static const char *col_tags;$/;"	m	class:Eater::DB_FoodItems
+col_tags_id	inc/eater/db_tags.hpp	/^    static const char *col_tags_id;$/;"	m	class:Eater::DB_Tags
+col_tags_id	src/db_tags.cpp	/^const char *DB_Tags::col_tags_id = "tag_id";$/;"	m	class:Eater::DB_Tags	file:
+col_tags_name	inc/eater/db_tags.hpp	/^    static const char *col_tags_name;$/;"	m	class:Eater::DB_Tags
+col_tags_name	src/db_tags.cpp	/^const char *DB_Tags::col_tags_name = "name";$/;"	m	class:Eater::DB_Tags	file:
+col_time	inc/eater/db_fooditems.hpp	/^    static const char *col_time;$/;"	m	class:Eater::DB_FoodItems
+col_time	src/db_fooditems.cpp	/^const char *DB_FoodItems::col_time = "time";$/;"	m	class:Eater::DB_FoodItems	file:
+columnDouble	src/sql.cpp	/^double Sql::columnDouble(int col)$/;"	f	class:Eater::Sql
+columnInt	src/sql.cpp	/^int Sql::columnInt(int col)$/;"	f	class:Eater::Sql
+columnStr	src/sql.cpp	/^std::string Sql::columnStr(int col)$/;"	f	class:Eater::Sql
+compilation_database_folder	.ycm_extra_conf.py	/^compilation_database_folder = ''$/;"	v
+convStrToInt	inc/eater/common.hpp	/^T convStrToInt(const std::string &number)$/;"	f	namespace:Eater
+createTable	src/sql.cpp	/^bool Sql::createTable(const std::string &tbl_name,$/;"	f	class:Eater::Sql
+createTag	src/db_tags.cpp	/^int DB_Tags::createTag(const std::string &tag)$/;"	f	class:Eater::DB_Tags
+database	.ycm_extra_conf.py	/^  database = None$/;"	v
+database	.ycm_extra_conf.py	/^  database = ycm_core.CompilationDatabase( compilation_database_folder )$/;"	v
+day	src/date.cpp	/^u8 Date::day() const$/;"	f	class:Eater::Date
+day	src/date.cpp	/^void Date::day(const u8 d)$/;"	f	class:Eater::Date
+db	inc/eater/db.hpp	/^    std::shared_ptr<DB_Driver> db; \/*< Shared pointer to database backend. *\/$/;"	m	class:Eater::DB
+db	inc/eater/db_recepies.hpp	/^    shared_sqlite3 db;$/;"	m	class:Eater::DB_Recepies
+db	inc/eater/table_handler.hpp	/^    std::shared_ptr<DB_Driver> db;$/;"	m	class:Eater::TableHandler
+doTest	src/main.cpp	/^void doTest()$/;"	f
+end	src/tags.cpp	/^tags_vec::const_iterator Tags::end() const$/;"	f	class:Eater::Tags
+end	src/tags.cpp	/^tags_vec::iterator Tags::end()$/;"	f	class:Eater::Tags
+exists	src/db_fooditems.cpp	/^bool DB_FoodItems::exists(const id_t item) const$/;"	f	class:Eater::DB_FoodItems
+exists	src/db_recepies.cpp	/^bool DB_Recepies::exists(const id_t item) const$/;"	f	class:Eater::DB_Recepies
+f32	inc/eater/common.hpp	/^typedef float f32;$/;"	t	namespace:Eater
+f64	inc/eater/common.hpp	/^typedef double f64;$/;"	t	namespace:Eater
+fats	src/nutrients.cpp	/^f32 MacroNutrients::fats() const$/;"	f	class:Eater::MacroNutrients
+fats	src/nutrients.cpp	/^void MacroNutrients::fats(f32 _fats)$/;"	f	class:Eater::MacroNutrients
+find	src/db_fooditems.cpp	/^bool DB_FoodItems::find(const id_t id, FoodItem &item) const$/;"	f	class:Eater::DB_FoodItems
+find	src/db_fooditems.cpp	/^food_vec DB_FoodItems::find(const id_vec &ids) const$/;"	f	class:Eater::DB_FoodItems
+find	src/db_recepies.cpp	/^bool DB_Recepies::find(const id_t id, FoodItem &item) const$/;"	f	class:Eater::DB_Recepies
+find	src/db_recepies.cpp	/^food_vec DB_Recepies::find(const id_vec &ids) const$/;"	f	class:Eater::DB_Recepies
+find	src/tags.cpp	/^bool Tags::find(const std::string &tag)$/;"	f	class:Eater::Tags
+flags	.ycm_extra_conf.py	/^flags = [$/;"	v
+foodExists	src/recepie.cpp	/^bool Recepie::foodExists(const FoodItem &food) const$/;"	f	class:Eater::Recepie
+food_items	inc/eater/db.hpp	/^    std::shared_ptr<DB_FoodItems> food_items;$/;"	m	class:Eater::DB
+food_vec	inc/eater/fooditem.hpp	/^typedef std::vector<FoodItem> food_vec;$/;"	t	namespace:Eater
+fromString	src/date.cpp	/^bool Date::fromString(const std::string &date)$/;"	f	class:Eater::Date
+fromString	src/tags.cpp	/^void Tags::fromString(const std::string &tags)$/;"	f	class:Eater::Tags
+fromString	src/time.cpp	/^bool Time::fromString(const std::string &time)$/;"	f	class:Eater::Time
+getDate	src/date.cpp	/^u32 Date::getDate() const$/;"	f	class:Eater::Date
+getDate	src/timestamp.cpp	/^u32 TimeStamp::getDate() const$/;"	f	class:Eater::TimeStamp
+getLastInsertRowId	src/sql.cpp	/^int Sql::getLastInsertRowId()$/;"	f	class:Eater::Sql
+getTag	src/db_tags.cpp	/^std::string DB_Tags::getTag(id_t id) const$/;"	f	class:Eater::DB_Tags
+getTags	src/db_tags.cpp	/^Tags DB_Tags::getTags(id_t fi_id)$/;"	f	class:Eater::DB_Tags
+getTime	src/time.cpp	/^u32 Time::getTime() const$/;"	f	class:Eater::Time
+getTime	src/timestamp.cpp	/^u32 TimeStamp::getTime() const$/;"	f	class:Eater::TimeStamp
+getTimeStamp	src/timestamp.cpp	/^u64 TimeStamp::getTimeStamp() const$/;"	f	class:Eater::TimeStamp
+hours	src/time.cpp	/^u8 Time::hours() const$/;"	f	class:Eater::Time
+hours	src/time.cpp	/^void Time::hours(u8 h)$/;"	f	class:Eater::Time
+i16	inc/eater/common.hpp	/^typedef int16_t i16;$/;"	t	namespace:Eater
+i32	inc/eater/common.hpp	/^typedef int32_t i32;$/;"	t	namespace:Eater
+i64	inc/eater/common.hpp	/^typedef int64_t i64;$/;"	t	namespace:Eater
+i8	inc/eater/common.hpp	/^typedef int8_t i8;$/;"	t	namespace:Eater
+id	src/fooditem.cpp	/^id_t FoodItem::id() const$/;"	f	class:Eater::FoodItem
+id	src/fooditem.cpp	/^void FoodItem::id(const id_t _id)$/;"	f	class:Eater::FoodItem
+id	src/recepie.cpp	/^id_t Recepie::id() const$/;"	f	class:Eater::Recepie
+id	src/recepie.cpp	/^void Recepie::id(const id_t _id)$/;"	f	class:Eater::Recepie
+id_t	inc/eater/common.hpp	/^typedef i32 id_t;$/;"	t	namespace:Eater
+id_vec	inc/eater/common.hpp	/^typedef std::vector<id_t> id_vec;$/;"	t	namespace:Eater
+init	src/db.cpp	/^bool DB::init()$/;"	f	class:Eater::DB
+init	src/db_fooditems.cpp	/^bool DB_FoodItems::init()$/;"	f	class:Eater::DB_FoodItems
+init	src/db_tags.cpp	/^bool DB_Tags::init()$/;"	f	class:Eater::DB_Tags
+initFooditemTagsTable	src/db_tags.cpp	/^bool DB_Tags::initFooditemTagsTable()$/;"	f	class:Eater::DB_Tags
+initTagsTable	src/db_tags.cpp	/^bool DB_Tags::initTagsTable()$/;"	f	class:Eater::DB_Tags
+insert	src/sql.cpp	/^bool Sql::insert(const std::string &tbl,$/;"	f	class:Eater::Sql
+item	inc/eater/recepie.hpp	/^    FoodItem item;$/;"	m	struct:Eater::amount_t
+main	src/main.cpp	/^int main()$/;"	f
+milliSeconds	src/time.cpp	/^u8 Time::milliSeconds() const$/;"	f	class:Eater::Time
+milliSeconds	src/time.cpp	/^void Time::milliSeconds(u8 ms)$/;"	f	class:Eater::Time
+minutes	src/time.cpp	/^u8 Time::minutes() const$/;"	f	class:Eater::Time
+minutes	src/time.cpp	/^void Time::minutes(u8 m)$/;"	f	class:Eater::Time
+mn	inc/eater/fooditem.hpp	/^    MacroNutrients mn;  \/\/!< Macro nutrient of Food Item.$/;"	m	class:Eater::FoodItem
+mn	inc/eater/recepie.hpp	/^    MacroNutrients mn;  \/\/!< Nutrients of the recepie.$/;"	m	class:Eater::Recepie
+modifyFood	src/recepie.cpp	/^bool Recepie::modifyFood(const FoodItem &food, const u32 amount)$/;"	f	class:Eater::Recepie
+month	src/date.cpp	/^u8 Date::month() const$/;"	f	class:Eater::Date
+month	src/date.cpp	/^void Date::month(const u8 m)$/;"	f	class:Eater::Date
+name	src/fooditem.cpp	/^std::string FoodItem::name() const$/;"	f	class:Eater::FoodItem
+name	src/fooditem.cpp	/^void FoodItem::name(const std::string &_name)$/;"	f	class:Eater::FoodItem
+name	src/recepie.cpp	/^std::string Recepie::name() const$/;"	f	class:Eater::Recepie
+name	src/recepie.cpp	/^void Recepie::name(const std::string &_name)$/;"	f	class:Eater::Recepie
+old	src/db_fooditems.cpp	/^bool DB_FoodItems::old(const FoodItem &item) const$/;"	f	class:Eater::DB_FoodItems
+old	src/db_recepies.cpp	/^bool DB_Recepies::old(const Recepie &rec) const$/;"	f	class:Eater::DB_Recepies
+open	src/db.cpp	/^bool DB::open(const std::string &data_base)$/;"	f	class:Eater::DB
+open	src/sql.cpp	/^bool Sql::open(const std::string &location)$/;"	f	class:Eater::Sql
+operator !=	src/date.cpp	/^bool Date::operator!=(const Date &d) const$/;"	f	class:Eater::Date
+operator !=	src/time.cpp	/^bool Time::operator!=(const Time &t) const$/;"	f	class:Eater::Time
+operator !=	src/timestamp.cpp	/^bool TimeStamp::operator!=(const TimeStamp &ts) const$/;"	f	class:Eater::TimeStamp
+operator <	src/date.cpp	/^bool Date::operator<(const Date &d) const$/;"	f	class:Eater::Date
+operator <	src/time.cpp	/^bool Time::operator<(const Time &t) const$/;"	f	class:Eater::Time
+operator <	src/timestamp.cpp	/^bool TimeStamp::operator<(const TimeStamp &ts) const$/;"	f	class:Eater::TimeStamp
+operator <<	src/fooditem.cpp	/^std::ostream &operator<<(std::ostream &os, const Eater::FoodItem &it)$/;"	f
+operator <<	src/nutrients.cpp	/^std::ostream &operator<<(std::ostream &os, const Eater::MacroNutrients &mn)$/;"	f
+operator <<	src/tags.cpp	/^std::ostream &operator<<(std::ostream &os, const Eater::Tags &tags)$/;"	f
+operator <<	src/timestamp.cpp	/^std::ostream &operator<<(std::ostream &os, const Eater::TimeStamp &ts)$/;"	f
+operator <=	src/date.cpp	/^bool Date::operator<=(const Date &d) const$/;"	f	class:Eater::Date
+operator <=	src/time.cpp	/^bool Time::operator<=(const Time &t) const$/;"	f	class:Eater::Time
+operator <=	src/timestamp.cpp	/^bool TimeStamp::operator<=(const TimeStamp &ts) const$/;"	f	class:Eater::TimeStamp
+operator =	src/fooditem.cpp	/^FoodItem &FoodItem::operator=(const FoodItem &it)$/;"	f	class:Eater::FoodItem
+operator =	src/tags.cpp	/^Tags &Tags::operator=(const Tags &t)$/;"	f	class:Eater::Tags
+operator ==	src/date.cpp	/^bool Date::operator==(const Date &d) const$/;"	f	class:Eater::Date
+operator ==	src/time.cpp	/^bool Time::operator==(const Time &t) const$/;"	f	class:Eater::Time
+operator ==	src/timestamp.cpp	/^bool TimeStamp::operator==(const TimeStamp &ts) const$/;"	f	class:Eater::TimeStamp
+operator >	src/date.cpp	/^bool Date::operator>(const Date &d) const$/;"	f	class:Eater::Date
+operator >	src/time.cpp	/^bool Time::operator>(const Time &t) const$/;"	f	class:Eater::Time
+operator >	src/timestamp.cpp	/^bool TimeStamp::operator>(const TimeStamp &ts) const$/;"	f	class:Eater::TimeStamp
+operator >=	src/date.cpp	/^bool Date::operator>=(const Date &d) const$/;"	f	class:Eater::Date
+operator >=	src/time.cpp	/^bool Time::operator>=(const Time &t) const$/;"	f	class:Eater::Time
+operator >=	src/timestamp.cpp	/^bool TimeStamp::operator>=(const TimeStamp &ts) const$/;"	f	class:Eater::TimeStamp
+operator >>	src/fooditem.cpp	/^std::istream &operator>>(std::istream &is, Eater::FoodItem &it)$/;"	f
+operator >>	src/nutrients.cpp	/^std::istream &operator>>(std::istream &is, Eater::MacroNutrients &mn)$/;"	f
+operator >>	src/tags.cpp	/^std::istream &operator>>(std::istream &is, Eater::Tags &tags)$/;"	f
+operator >>	src/timestamp.cpp	/^std::istream &operator>>(std::istream &is, Eater::TimeStamp &ts)$/;"	f
+os	.ycm_extra_conf.py	/^import os$/;"	i
+prepare	src/sql.cpp	/^bool Sql::prepare(const std::string &querry, const std::function<void()> &func)$/;"	f	class:Eater::Sql
+printHeader	src/main.cpp	/^void printHeader(const std::string &header)$/;"	f
+proteins	src/nutrients.cpp	/^f32 MacroNutrients::proteins() const$/;"	f	class:Eater::MacroNutrients
+proteins	src/nutrients.cpp	/^void MacroNutrients::proteins(f32 _proteins)$/;"	f	class:Eater::MacroNutrients
+recepie_vec	inc/eater/recepie.hpp	/^typedef std::vector<Recepie> recepie_vec;$/;"	t	namespace:Eater
+removeFood	src/recepie.cpp	/^bool Recepie::removeFood(const FoodItem &food)$/;"	f	class:Eater::Recepie
+removeFoods	src/recepie.cpp	/^bool Recepie::removeFoods(const food_vec &_foods)$/;"	f	class:Eater::Recepie
+removeTag	src/tags.cpp	/^bool Tags::removeTag(const std::string &tag)$/;"	f	class:Eater::Tags
+removeTag	src/tags.cpp	/^tags_vec::iterator Tags::removeTag(tags_vec::iterator &it)$/;"	f	class:Eater::Tags
+removeTags	src/tags.cpp	/^bool Tags::removeTags(const tags_vec &tags)$/;"	f	class:Eater::Tags
+run	build.sh	/^function run {$/;"	f
+save	src/db_fooditems.cpp	/^bool DB_FoodItems::save(FoodItem &item)$/;"	f	class:Eater::DB_FoodItems
+save	src/db_fooditems.cpp	/^void DB_FoodItems::save(food_vec &items)$/;"	f	class:Eater::DB_FoodItems
+save	src/db_recepies.cpp	/^void DB_Recepies::save(Recepie &rec)$/;"	f	class:Eater::DB_Recepies
+seconds	src/time.cpp	/^u8 Time::seconds() const$/;"	f	class:Eater::Time
+seconds	src/time.cpp	/^void Time::seconds(u8 s)$/;"	f	class:Eater::Time
+select	src/sql.cpp	/^bool Sql::select(const std::string &tbl,$/;"	f	class:Eater::Sql
+set	src/nutrients.cpp	/^void MacroNutrients::set(f32 _calories,$/;"	f	class:Eater::MacroNutrients
+setCurrent	src/timestamp.cpp	/^void TimeStamp::setCurrent()$/;"	f	class:Eater::TimeStamp
+setDate	src/date.cpp	/^void Date::setDate(u16 y, u8 m, u8 d)$/;"	f	class:Eater::Date
+setDate	src/date.cpp	/^void Date::setDate(u32 _date)$/;"	f	class:Eater::Date
+setDate	src/timestamp.cpp	/^void TimeStamp::setDate(const Date &d)$/;"	f	class:Eater::TimeStamp
+setDate	src/timestamp.cpp	/^void TimeStamp::setDate(u32 d)$/;"	f	class:Eater::TimeStamp
+setTime	src/time.cpp	/^void Time::setTime(u32 t)$/;"	f	class:Eater::Time
+setTime	src/time.cpp	/^void Time::setTime(u8 h, u8 m, u8 s, u8 ms)$/;"	f	class:Eater::Time
+setTime	src/timestamp.cpp	/^void TimeStamp::setTime(const Time &t)$/;"	f	class:Eater::TimeStamp
+setTime	src/timestamp.cpp	/^void TimeStamp::setTime(u32 t)$/;"	f	class:Eater::TimeStamp
+setTimeStamp	src/timestamp.cpp	/^void TimeStamp::setTimeStamp(const TimeStamp &ts)$/;"	f	class:Eater::TimeStamp
+setTimeStamp	src/timestamp.cpp	/^void TimeStamp::setTimeStamp(u32 d, u32 t)$/;"	f	class:Eater::TimeStamp
+setTimeStamp	src/timestamp.cpp	/^void TimeStamp::setTimeStamp(u64 ts)$/;"	f	class:Eater::TimeStamp
+shared_sqlite3	inc/eater/common.hpp	/^typedef std::shared_ptr<sqlite3> shared_sqlite3;$/;"	t	namespace:Eater
+sql_db	inc/eater/sql.hpp	/^    shared_sqlite3 sql_db;$/;"	m	class:Eater::Sql
+st	inc/eater/sql.hpp	/^    sqlite3_stmt *st = nullptr;$/;"	m	class:Eater::Sql
+step	src/sql.cpp	/^DB_Driver::Status Sql::step()$/;"	f	class:Eater::Sql
+str_vec	inc/eater/common.hpp	/^typedef std::vector<std::string> str_vec;$/;"	t	namespace:Eater
+tableExists	src/sql.cpp	/^bool Sql::tableExists(const std::string &tbl_name)$/;"	f	class:Eater::Sql
+tagExists	src/db_tags.cpp	/^bool DB_Tags::tagExists(const std::string &tag) const$/;"	f	class:Eater::DB_Tags
+tags	inc/eater/db.hpp	/^    std::shared_ptr<DB_Tags> tags;$/;"	m	class:Eater::DB
+tags	inc/eater/fooditem.hpp	/^    Tags tags;          \/\/!< Tags for the food item.$/;"	m	class:Eater::FoodItem
+tags	inc/eater/recepie.hpp	/^    Tags tags;          \/\/!< Tags of the recepie.$/;"	m	class:Eater::Recepie
+tags_vec	inc/eater/tags.hpp	/^typedef std::vector<std::string> tags_vec;$/;"	t	namespace:Eater
+tbl_fooditem_tags	inc/eater/db_tags.hpp	/^    static const char *tbl_fooditem_tags;$/;"	m	class:Eater::DB_Tags
+tbl_fooditem_tags	src/db_tags.cpp	/^const char *DB_Tags::tbl_fooditem_tags = "fooditem_tags";$/;"	m	class:Eater::DB_Tags	file:
+tbl_fooditems	inc/eater/db_fooditems.hpp	/^    static const char *tbl_fooditems;$/;"	m	class:Eater::DB_FoodItems
+tbl_fooditems	src/db_fooditems.cpp	/^const char *DB_FoodItems::tbl_fooditems = "fooditems";$/;"	m	class:Eater::DB_FoodItems	file:
+tbl_tags	inc/eater/db_tags.hpp	/^    static const char *tbl_tags;$/;"	m	class:Eater::DB_Tags
+tbl_tags	src/db_tags.cpp	/^const char *DB_Tags::tbl_tags = "tags";$/;"	m	class:Eater::DB_Tags	file:
+test	src/main.cpp	/^bool test(int n,$/;"	f
+toString	src/date.cpp	/^std::string Date::toString() const$/;"	f	class:Eater::Date
+toString	src/fooditem.cpp	/^std::string FoodItem::toString() const$/;"	f	class:Eater::FoodItem
+toString	src/nutrients.cpp	/^std::string MacroNutrients::toString() const$/;"	f	class:Eater::MacroNutrients
+toString	src/tags.cpp	/^std::string Tags::toString() const$/;"	f	class:Eater::Tags
+toString	src/time.cpp	/^std::string Time::toString() const$/;"	f	class:Eater::Time
+toString	src/timestamp.cpp	/^std::string TimeStamp::toString() const$/;"	f	class:Eater::TimeStamp
+ts	inc/eater/fooditem.hpp	/^    TimeStamp ts;       \/\/!< Timestamp of the item.$/;"	m	class:Eater::FoodItem
+ts	inc/eater/recepie.hpp	/^    TimeStamp ts;       \/\/!< Time stamp of recepie.$/;"	m	class:Eater::Recepie
+u16	inc/eater/common.hpp	/^typedef uint16_t u16;$/;"	t	namespace:Eater
+u32	inc/eater/common.hpp	/^typedef uint32_t u32;$/;"	t	namespace:Eater
+u64	inc/eater/common.hpp	/^typedef uint64_t u64;$/;"	t	namespace:Eater
+u8	inc/eater/common.hpp	/^typedef uint8_t u8;$/;"	t	namespace:Eater
+update	src/db_fooditems.cpp	/^void DB_FoodItems::update(const FoodItem &item)$/;"	f	class:Eater::DB_FoodItems
+update	src/db_recepies.cpp	/^void DB_Recepies::update(const Recepie &rec)$/;"	f	class:Eater::DB_Recepies
+update	src/sql.cpp	/^bool Sql::update(const std::string &tbl,$/;"	f	class:Eater::Sql
+usage	build.sh	/^function usage {$/;"	f
+weak_sqlite3	inc/eater/common.hpp	/^typedef std::weak_ptr<sqlite3> weak_sqlite3;$/;"	t	namespace:Eater
+ycm_core	.ycm_extra_conf.py	/^import ycm_core$/;"	i
+year	src/date.cpp	/^u16 Date::year() const$/;"	f	class:Eater::Date
+year	src/date.cpp	/^void Date::year(const u16 y)$/;"	f	class:Eater::Date
+~DB	src/db.cpp	/^DB::~DB()$/;"	f	class:Eater::DB
+~DB_FoodItems	src/db_fooditems.cpp	/^DB_FoodItems::~DB_FoodItems()$/;"	f	class:Eater::DB_FoodItems
+~DB_Tags	src/db_tags.cpp	/^DB_Tags::~DB_Tags()$/;"	f	class:Eater::DB_Tags
+~TableHandler	inc/eater/table_handler.hpp	/^    virtual ~TableHandler()$/;"	f	class:Eater::TableHandler
