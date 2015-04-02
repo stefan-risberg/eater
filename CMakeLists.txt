@@ -24,11 +24,6 @@ add_executable (eater
     src/time.cpp
     src/timestamp.cpp
     src/tags.cpp
-    src/db.cpp
-    src/table_handler.cpp
-    src/tbl_fooditems.cpp
-    src/tbl_tags.cpp
-    src/sql.cpp
 )
 
 add_library(format STATIC IMPORTED)
@@ -47,8 +42,6 @@ link_directories(eater
 
 target_link_libraries(eater
     ${SQLITE3_LIBRARIES}
-)
-target_link_libraries(eater
     format
 )
 
