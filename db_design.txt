@@ -5,16 +5,37 @@
 if one or more of [] or one or more {}, or a mixture of them both, they make
 the primary key.
 
-Foods
-=====
-    [id]    (int)    - unique id.
-    name    (string) - Name of product.
-    brand   (string) - Brand of product.
-    kcal    (float)  - calorie amount for 100g in kcal.
-    protein (float)  - protein amount for 100g in g.
-    carb    (float)  - carbs amount for 100g in g.
-    fat     (float)  - fats amount for 100g in g.
-
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Foods                                                 ┃
+┣━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ [id]    │ (int)    │ unique id.                       ┃
+┠─────────┼──────────┼──────────────────────────────────┨
+┃ name    │ (string) │ Name of product.                 ┃
+┃ brand   │ (string) │ Brand of product.                ┃
+┃ kcal    │ (float)  │ calorie amount for 100g in kcal. ┃
+┃ protein │ (float)  │ protein amount for 100g in g.    ┃
+┃ carb    │ (float)  │ carbs amount for 100g in g.      ┃
+┃ fat     │ (float)  │ fats amount for 100g in g.       ┃
+┗━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ Tags                             ┃
+┣━━━━━━┯━━━━━━━━━━┯━━━━━━━━━━━━━━━━┫
+┃ [id] │ (int)    │ unique tag id. ┃
+┠──────┼──────────┼────────────────┨
+┃ tag  │ (string) │ tag name.      ┃
+┗━━━━━━┷━━━━━━━━━━┷━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ FoodTags                              ┃
+┣━━━━━━━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━┫
+┃ {tag_id}  │ (int) │ tag id from tags. ┃
+┃ {food_id} │ (int) │ food item id.     ┃
+┗━━━━━━━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ RecepieTags                              ┃
+┣━━━━━━━━━━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━┫
+┃ {tag_id}     │ (int) │ tag id from tags. ┃
+┃ {recepie_id} │ (int) │ recepie id.       ┃
+┗━━━━━━━━━━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━┛
 
 Recepies
 ========
@@ -27,18 +48,13 @@ Recepies
         {f_id} (int) - Foods id.
         amount (float) - amount of f_id in grams.
 
-Tags
-====
-    [id] (int)    - unique tag id.
-    tag  (string) - tag name.
+┃━ ┏┓ ┗┛ ┣┫ ┳ ┻ ╋
 
-FoodTags
-========
-    {tag_id}  (int) - tag id from tags.
-    {food_id} (int) - food item id.
-
-RecepieTags
-===========
-    {tag_id}     (int) - tag id from tags.
-    {recepie_id} (int) - recepie id.
-
+─ ┠┨
+┏━┓
+┃ ┃
+┣━┫
+┃ ┃
+┠─┨
+┃ ┃
+┗━┛
