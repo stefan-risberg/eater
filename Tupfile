@@ -1,0 +1,15 @@
+include_rules
+INCLUDES += -I./inc
+INCLUDES += -I./lib/cppformat
+FLAGS += $(CXXFLAGS) $(INCLUDES)
+PROJECT_NAME = eater
+BUILD += $(BUILD_DIR)/eater
+
+: src/main.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: src/time.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: src/date.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: src/timestamp.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: src/fooditem.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: src/tags.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: src/nutrients.cpp |> !cc $(FLAGS) |> $(BUILD)/%B.o
+: $(BUILD)/*.o |> $(CXX) %f -o %o |> $(OUTPUT_DIR)/$(PROJECT_NAME)

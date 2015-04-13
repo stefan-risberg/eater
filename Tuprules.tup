@@ -1,0 +1,9 @@
+CXXFLAGS += -std=c++11
+CXXFLAGS += -Wall
+CXXFLAGS += -Werror
+CXX = clang++
+BUILD_DIR = $(TUP_CWD)/build
+OUTPUT_DIR = $(TUP_CWD)/bin
+
+!cc = |> $(CXX) $(CXXFLAGS) %f -c -o %o |>
+

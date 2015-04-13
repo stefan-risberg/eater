@@ -3,4 +3,4 @@ build
 doc
 *.swp
 *.pyc
-lib
+.tup
