@@ -217,10 +217,11 @@ std::ostream &operator<<(std::ostream &os, const Eater::Date &d)
 std::istream &operator>>(std::istream &is, Eater::Date &d)
 {
     auto at = YEAR;
-    std::string y = "", m = "", _d = "";
-    while(!is.failbit) {
-        char c = 0;
-        is.get(c);
+    std::string y = "", m = "", _d = "", date;
+    is >> date;
+
+    for (size_t i = 0; i < date.length(); i++) {
+        char c = date[i];
 
         if (c == '-') {
             at = inc(at);
@@ -254,13 +255,11 @@ std::istream &operator>>(std::istream &is, Eater::Date &d)
     }
 
     try {
-        d.year(std::stoi(y));
-        d.month(std::stoi(m));
-        d.day(std::stoi(_d));
+        d.set(std::stoi(y),
+              std::stoi(m),
+              std::stoi(_d));
     } catch (std::exception const &e) {
-        std::cerr
-            << e.what()
-            << std::endl;
+        std::cerr << "Faild to convert string: " << e.what() << std::endl;
     }
 
     return is;
