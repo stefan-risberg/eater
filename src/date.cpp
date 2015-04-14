@@ -2,6 +2,7 @@
 #include <string>
 #include <exception>
 #include <format.h>
+#include <ctime>
 
 namespace Eater
 {
@@ -57,6 +58,16 @@ void Date::month(const u8 m)
 void Date::day(const u8 d)
 {
     d > 31 ? _day = 31 : _day = d;
+}
+
+void Date::now()
+{
+    std::time_t t = std::time(0);
+    struct std::tm *n = std::localtime(&t);
+
+    set(n->tm_year + 1900,
+        n->tm_mon + 1,
+        n->tm_mday);
 }
 
 u32 Date::get() const

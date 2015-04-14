@@ -8,8 +8,7 @@ namespace Eater
 /**
  * Holds a date and modifing functions.
  */
-class Date
-{
+class Date {
    private:
     union
     {
@@ -91,6 +90,11 @@ class Date
      * \param d New day.
      */
     void day(const u8 d);
+
+    /**
+     * Sets the date to now.
+     */
+    void now();
 
     /**
      * Get whole date.

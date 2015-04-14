@@ -52,6 +52,7 @@ class Time {
     void milliSeconds(u8 ms);
     void set(u32 t);
     void set(u8 h, u8 m, u8 s = 0, u8 ms = 0);
+    void now();
 
     u8 hours() const;
     u8 minutes() const;

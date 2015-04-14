@@ -48,8 +48,7 @@ class TimeStamp
     /**
      * Set timestamp to current time.
      */
-    void setCurrent();
-
+    void now();
 
     /**
      * Set new timestamp.

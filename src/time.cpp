@@ -2,6 +2,7 @@
 #include <string>
 #include <exception>
 #include <format.h>
+#include <ctime>
 
 namespace Eater
 {
@@ -72,6 +73,16 @@ void Time::set(u8 h, u8 m, u8 s, u8 ms)
     minutes(m);
     seconds(s);
     milliSeconds(ms);
+}
+
+void Time::now()
+{
+    std::time_t t = std::time(0);
+    struct std::tm *n = std::localtime(&t);
+
+    set(n->tm_hour,
+        n->tm_min,
+        n->tm_sec);
 }
 
 u8 Time::hours() const

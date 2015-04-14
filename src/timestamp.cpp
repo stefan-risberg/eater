@@ -20,13 +20,10 @@ TimeStamp::TimeStamp(u64 ts)
     setTimeStamp(ts);
 }
 
-void TimeStamp::setCurrent()
+void TimeStamp::now()
 {
-    std::time_t t = std::time(0);
-    struct std::tm *now = std::localtime(&t);
-
-    date.set(now->tm_year + 1900, now->tm_mon + 1, now->tm_mday);
-    time.set(now->tm_hour, now->tm_min, now->tm_sec, 0);
+    date.now();
+    time.now();
 }
 
 
