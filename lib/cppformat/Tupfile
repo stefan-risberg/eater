@@ -1,5 +1,5 @@
 include_rules
-BUILD = $(BUILD_DIR)/format
-: format.cc |> !cc |> $(BUILD)/%B.o
-: $(BUILD)/*.o |> ar rcs %o %f |> $(OUTPUT_DIR)/libformat.a
+
+: format.cc |> !cc |>
+: $(BUILD_DIR)/*.o |> ar rcs %o %f |> libformat.a
 
