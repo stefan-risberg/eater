@@ -222,57 +222,65 @@ std::ostream &operator<<(std::ostream &os, const Eater::Time &t)
     return os << t.toString();
 }
 
+namespace
+{
+enum state {
+    HOUR,
+    MINUTE,
+    SECOND,
+    OTHER
+};
+
+state inc(state const i)
+{
+    switch(i) {
+    case HOUR: return MINUTE;
+    case MINUTE: return SECOND;
+    case SECOND: return OTHER;
+    default: return OTHER;
+    }
+}
+
+}
+
 std::istream &operator>>(std::istream &is, Eater::Time &t)
 {
-    // TODO: Fix error handeling.
-    std::string h,m,s;
-    int at = 0;
+    auto at = HOUR;
+    std::string time, h = "", m = "", s = "";
+    is >> time;
 
-    // Parse until end of stream or a space.
-    while(!is.failbit) {
-        char c = 0;
-        is.get(c);
+    for (size_t i = 0; i < time.length(); i++) {
+        char c = time[i];
 
-        if (c == ':') {
-            at++;
-        } else if (c >= '0' || c <= '9') {
-            switch (at) {
-            case 0: h += c; break;
-            case 1: m += c; break;
-            case 2: s += c; break;
+        if (c >= '0' && c <= '9') {
+            switch(at) {
+            case HOUR: h += c; break;
+            case MINUTE: m += c; break;
+            case SECOND: s += c; break;
             default:
-                    std::cerr
-                        << "To many colon separators in input stream."
-                        << std::endl;
-                    return is;
+                         std::cerr
+                             << "To meny time parts."
+                             << std::endl;
+                         return is;
             }
-        } else if (c == ' ') {
-            // Check if we are parsing/parsed seconds in string.
-            if (at == 2) {
-                break;
-            } else {
-                std::cerr
-                    << "Incomplete time string."
-                    << std::endl;
-                return is;
-            }
+        } else if (c == ':') {
+            at = inc(at);
         } else {
-            // if we found invalid character.
             std::cerr
-                << "Expected : or a number but got: "
-                << c
-                << std::endl;
+                << "Expected : or [0-9], got: "
+                << c << "." << std::endl;
             return is;
         }
     }
 
     try {
-        t.hours(std::stoi(h));
-        t.minutes(std::stoi(m));
-        t.seconds(std::stoi(s));
+        t.set(std::stoi(h),
+              std::stoi(m),
+              std::stoi(s));
     } catch (std::exception const &e) {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "Faild to convert: " << e.what() << std::endl;
     }
 
     return is;
 }
+
