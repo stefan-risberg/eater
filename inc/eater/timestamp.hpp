@@ -12,9 +12,9 @@ namespace Eater
  */
 class TimeStamp
 {
-   private:
-    Date _date;  //!< Date of time stamp.
-    Time _time;  //!< Time of time stamp.
+   public:
+    Date date;  //!< Date of time stamp.
+    Time time;  //!< Time of time stamp.
 
    public:
     /**
@@ -50,33 +50,6 @@ class TimeStamp
      */
     void setCurrent();
 
-    /**
-     * Set new date for timestamp.
-     *
-     * \param d New date.
-     */
-    void setDate(u32 d);
-
-    /**
-     * Set new date for timestamp.
-     *
-     * \param d New date.
-     */
-    void setDate(const Date &d);
-
-    /**
-     * Set new time for timestamp.
-     *
-     * \param t New time.
-     */
-    void setTime(u32 t);
-
-    /**
-     * Set new time for timestamp.
-     *
-     * \param t New time.
-     */
-    void setTime(const Time &t);
 
     /**
      * Set new timestamp.
@@ -99,22 +72,6 @@ class TimeStamp
      * \param t New Time.
      */
     void setTimeStamp(u32 d, u32 t);
-
-    /**
-     * Query the time.
-     *
-     * \return The time as a 32 bit integer.
-     * \see Time
-     */
-    u32 getTime() const;
-
-    /**
-     * Query the date.
-     *
-     * \return The date as a 32 bit integer.
-     * \see Date
-     */
-    u32 getDate() const;
 
     /**
      * Query the timestamp as a 64 bit integer.

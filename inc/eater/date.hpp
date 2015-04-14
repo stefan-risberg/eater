@@ -62,14 +62,14 @@ class Date
      * \param m New month.
      * \param d New day.
      */
-    void setDate(u16 y, u8 m, u8 d);
+    void set(u16 y, u8 m, u8 d);
 
     /**
      * Set new date.
      *
      * \param _date Date with format: 16bit year 8bit month 8bit day.
      */
-    void setDate(u32 _date);
+    void set(u32 _date);
 
     /**
      * Set new year.
@@ -97,7 +97,7 @@ class Date
      *
      * \return Current date.
      */
-    u32 getDate() const;
+    u32 get() const;
 
     /**
      * Get year.
@@ -143,5 +143,8 @@ class Date
     bool operator!=(const Date &t) const;
 };
 }
+
+std::ostream &operator<<(std::ostream &os, const Eater::Date &d);
+std::istream &operator>>(std::istream &is, Eater::Date &d);
 
 #endif /* EATER_DATE_HPP_ */

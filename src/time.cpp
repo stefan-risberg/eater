@@ -8,18 +8,18 @@ namespace Eater
 Time::Time(const std::string &time)
 {
     if (!fromString(time)) {
-        setTime(0, 0, 0, 0);
+        set(0, 0, 0, 0);
     }
 }
 
 Time::Time(u8 h, u8 m, u8 s, u8 ms)
 {
-    setTime(h, m, s, ms);
+    set(h, m, s, ms);
 }
 
 Time::Time(u32 t)
 {
-    setTime(t);
+    set(t);
 }
 
 Time::Time() : Time(0, 0, 0, 0)
@@ -57,7 +57,7 @@ void Time::milliSeconds(u8 ms)
     _milli_seconds = ms;
 }
 
-void Time::setTime(u32 t)
+void Time::set(u32 t)
 {
     _value = t;
     hours(_hours);
@@ -66,7 +66,7 @@ void Time::setTime(u32 t)
     milliSeconds(_milli_seconds);
 }
 
-void Time::setTime(u8 h, u8 m, u8 s, u8 ms)
+void Time::set(u8 h, u8 m, u8 s, u8 ms)
 {
     hours(h);
     minutes(m);
@@ -94,7 +94,7 @@ u8 Time::milliSeconds() const
     return _milli_seconds;
 }
 
-u32 Time::getTime() const
+u32 Time::get() const
 {
     return _value;
 }
@@ -165,7 +165,13 @@ bool Time::fromString(const std::string &time)
 std::string Time::toString() const
 {
     fmt::Writer f;
-    f.Format("{}:{}:{}") << hours() << minutes() << seconds();
+    auto add = [&f] (i32 in) {
+        in < 10 ? f.Format(":0{}") << in : f.Format(":{}") << in;
+    };
+
+    f.Format("{}") << (i32)hours();
+    add(minutes());
+    add(seconds());
     return f.str();
 }
 

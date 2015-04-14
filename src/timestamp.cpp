@@ -3,15 +3,15 @@
 
 namespace Eater
 {
-TimeStamp::TimeStamp() : _date(), _time()
+TimeStamp::TimeStamp() : date(), time()
 {
 }
 
-TimeStamp::TimeStamp(const Date &d, const Time &t) : _date(d), _time(t)
+TimeStamp::TimeStamp(const Date &d, const Time &t) : date(d), time(t)
 {
 }
 
-TimeStamp::TimeStamp(u32 d, u32 t) : _date(d), _time(t)
+TimeStamp::TimeStamp(u32 d, u32 t) : date(d), time(t)
 {
 }
 
@@ -25,78 +25,50 @@ void TimeStamp::setCurrent()
     std::time_t t = std::time(0);
     struct std::tm *now = std::localtime(&t);
 
-    _date.setDate(now->tm_year + 1900, now->tm_mon + 1, now->tm_mday);
-    _time.setTime(now->tm_hour, now->tm_min, now->tm_sec, 0);
+    date.set(now->tm_year + 1900, now->tm_mon + 1, now->tm_mday);
+    time.set(now->tm_hour, now->tm_min, now->tm_sec, 0);
 }
 
-void TimeStamp::setDate(u32 d)
-{
-    _date.setDate(d);
-}
-
-void TimeStamp::setDate(const Date &d)
-{
-    _date.setDate(d.getDate());
-}
-
-void TimeStamp::setTime(const Time &t)
-{
-    _time.setTime(t.getTime());
-}
-
-void TimeStamp::setTime(u32 t)
-{
-    _time.setTime(t);
-}
 
 void TimeStamp::setTimeStamp(u64 ts)
 {
-    u32 time = 0x00000000FFFFFFFF & ts;
-    u32 date = ts >> 32;
-    _date.setDate(date);
-    _time.setTime(time);
+    u32 t = 0x00000000FFFFFFFF & ts;
+    u32 d = ts >> 32;
+    date.set(d);
+    time.set(t);
 }
 
 void TimeStamp::setTimeStamp(const TimeStamp &ts)
 {
-    setDate(ts.getDate());
-    setTime(ts.getTime());
+    date = ts.date;
+    time = ts.time;
 }
 
 void TimeStamp::setTimeStamp(u32 d, u32 t)
 {
-    setDate(d);
-    setTime(t);
+    date.set(d);
+    time.set(t);
 }
 
-u32 TimeStamp::getTime() const
-{
-    return _time.getTime();
-}
-
-u32 TimeStamp::getDate() const
-{
-    return _date.getDate();
-}
 
 u64 TimeStamp::getTimeStamp() const
 {
-    u64 ts = _date.getDate();
+    u64 ts = date.get();
     ts = ts << 32;
-    ts += _time.getTime();
+    ts += time.get();
     return ts;
 }
 
 std::string TimeStamp::toString() const
 {
-    return _date.toString() + " " + _time.toString();
+    return date.toString() + " " + time.toString();
 }
 
 bool TimeStamp::operator<(const TimeStamp &ts) const
 {
-    if (_date < ts._date) {
+    if (date < ts.date) {
         return true;
-    } else if (_date == ts._date && _time < ts._time) {
+    } else if (date == ts.date && time < ts.time) {
         return true;
     }
 
@@ -105,9 +77,9 @@ bool TimeStamp::operator<(const TimeStamp &ts) const
 
 bool TimeStamp::operator<=(const TimeStamp &ts) const
 {
-    if (_date <= ts._date) {
+    if (date <= ts.date) {
         return true;
-    } else if (_date == ts._date && _time <= ts._time) {
+    } else if (date == ts.date && time <= ts.time) {
         return true;
     }
 
@@ -116,9 +88,9 @@ bool TimeStamp::operator<=(const TimeStamp &ts) const
 
 bool TimeStamp::operator>(const TimeStamp &ts) const
 {
-    if (_date > ts._date) {
+    if (date > ts.date) {
         return true;
-    } else if (_date == ts._date && _time > ts._time) {
+    } else if (date == ts.date && time > ts.time) {
         return true;
     }
 
@@ -127,9 +99,9 @@ bool TimeStamp::operator>(const TimeStamp &ts) const
 
 bool TimeStamp::operator>=(const TimeStamp &ts) const
 {
-    if (_date >= ts._date) {
+    if (date >= ts.date) {
         return true;
-    } else if (_date == ts._date && _time >= ts._time) {
+    } else if (date == ts.date && time >= ts.time) {
         return true;
     }
 
@@ -138,7 +110,7 @@ bool TimeStamp::operator>=(const TimeStamp &ts) const
 
 bool TimeStamp::operator==(const TimeStamp &ts) const
 {
-    if (_date == ts._date && _time == ts._time) {
+    if (date == ts.date && time == ts.time) {
         return true;
     }
 
@@ -147,7 +119,7 @@ bool TimeStamp::operator==(const TimeStamp &ts) const
 
 bool TimeStamp::operator!=(const TimeStamp &ts) const
 {
-    if (_date != ts._date || _time != ts._time) {
+    if (date != ts.date || time != ts.time) {
         return true;
     }
 
@@ -157,14 +129,10 @@ bool TimeStamp::operator!=(const TimeStamp &ts) const
 
 std::ostream &operator<<(std::ostream &os, const Eater::TimeStamp &ts)
 {
-    return os << ts.getTimeStamp();
+    return os << ts.date << " " << ts.time;
 }
 
 std::istream &operator>>(std::istream &is, Eater::TimeStamp &ts)
 {
-    Eater::u64 tmp;
-    is >> tmp;
-
-    ts.setTimeStamp(tmp);
-    return is;
+    return is >> ts.date >> ts.time;
 }

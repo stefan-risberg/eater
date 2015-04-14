@@ -1,4 +1,7 @@
 #include "eater/date.hpp"
+#include <string>
+#include <exception>
+#include <format.h>
 
 namespace Eater
 {
@@ -15,24 +18,24 @@ Date::Date(u16 y, u8 m, u8 d)
 
 Date::Date(u32 _date)
 {
-    setDate(_date);
+    set(_date);
 }
 
 Date::Date(const std::string &date)
 {
     if (!fromString(date)) {
-        setDate(0, 0, 0);
+        set(0, 0, 0);
     }
 }
 
-void Date::setDate(u16 y, u8 m, u8 d)
+void Date::set(u16 y, u8 m, u8 d)
 {
     year(y);
     month(m);
     day(d);
 }
 
-void Date::setDate(u32 _date)
+void Date::set(u32 _date)
 {
     this->_date = _date;
 
@@ -53,10 +56,10 @@ void Date::month(const u8 m)
 
 void Date::day(const u8 d)
 {
-    d > 35 ? _day = 35 : _day = d;
+    d > 31 ? _day = 31 : _day = d;
 }
 
-u32 Date::getDate() const
+u32 Date::get() const
 {
     return _date;
 }
@@ -127,21 +130,23 @@ bool Date::fromString(const std::string &date)
 
 std::string Date::toString() const
 {
-    u32 y = year();
-    u32 m = month();
-    u32 d = day();
 
-    std::stringstream ss;
+    fmt::Writer f;
 
-    ss << y << "-";
+    auto add = [&f] (i32 in) {
+        if (in < 10) {
+            f.Format("-0{}", in);
+        } else {
+            f.Format("-{}", in);
+        }
+    };
 
-    if (m < 10) ss << "0";
-    ss << m << "-";
+    f.Format("{}")
+        << (i32)year();
+    add(month());
+    add(day());
 
-    if (d < 10) ss << "0";
-    ss << d;
-
-    return ss.str();
+    return f.str();
 }
 
 bool Date::operator<(const Date &d) const
@@ -174,3 +179,79 @@ bool Date::operator!=(const Date &d) const
     return _date != d._date;
 }
 }
+
+namespace {
+enum ParsingState {
+    YEAR = 0,
+    MONTH = 1,
+    DAY = 2,
+    OTHER
+};
+
+ParsingState inc(ParsingState p) {
+    switch(p) {
+    case YEAR: return MONTH;
+    case MONTH: return DAY;
+    case DAY: return OTHER;
+    default: return OTHER;
+    }
+}
+}
+
+std::ostream &operator<<(std::ostream &os, const Eater::Date &d)
+{
+    return os << d.toString();
+}
+
+std::istream &operator>>(std::istream &is, Eater::Date &d)
+{
+    auto at = YEAR;
+    std::string y = "", m = "", _d = "";
+    while(!is.failbit) {
+        char c = 0;
+        is.get(c);
+
+        if (c == '-') {
+            at = inc(at);
+        } else if (c == ' ') {
+            if (at == DAY) {
+                break;
+            } else {
+                std::cerr
+                    << "Faild to parse whole date stream."
+                    << std::endl;
+                return is;
+            }
+        } else if (c >= '0' && c <= '9') {
+            switch(at) {
+            case YEAR: y += c; break;
+            case MONTH: m += c; break;
+            case DAY: _d += c; break;
+            default:
+                      std::cerr
+                          << "To many elements in date format stream."
+                          << std::endl;
+                      return is;
+            }
+        } else {
+            std::cerr
+                << "Expected - or [0-9] but found: "
+                << c
+                << "." << std::endl;
+            return is;
+        }
+    }
+
+    try {
+        d.year(std::stoi(y));
+        d.month(std::stoi(m));
+        d.day(std::stoi(_d));
+    } catch (std::exception const &e) {
+        std::cerr
+            << e.what()
+            << std::endl;
+    }
+
+    return is;
+}
+

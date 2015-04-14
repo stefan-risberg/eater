@@ -50,14 +50,14 @@ class Time {
     void minutes(u8 m);
     void seconds(u8 s);
     void milliSeconds(u8 ms);
-    void setTime(u32 t);
-    void setTime(u8 h, u8 m, u8 s = 0, u8 ms = 0);
+    void set(u32 t);
+    void set(u8 h, u8 m, u8 s = 0, u8 ms = 0);
 
     u8 hours() const;
     u8 minutes() const;
     u8 seconds() const;
     u8 milliSeconds() const;
-    u32 getTime() const;
+    u32 get() const;
 
     bool fromString(const std::string &time);
     std::string toString() const;
