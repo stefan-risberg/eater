@@ -17,4 +17,5 @@ PROJECT_NAME = eater
 : src/fooditem.cpp |> !cc $(FLAGS) |>
 : src/tags.cpp |> !cc $(FLAGS) |>
 : src/nutrients.cpp |> !cc $(FLAGS) |>
+: src/db.cpp |> !cc $(FLAGS) |>
 : $(BUILD_DIR)/*.o $(LIBS) |> $(CXX) -o %o %f $(GLOBAL_LIBS) |> $(PROJECT_NAME)
