@@ -5,9 +5,8 @@
 
 namespace Eater
 {
-class Time
-{
-   private:
+class Time {
+ private:
     union
     {
         u32 _value;
@@ -21,7 +20,7 @@ class Time
         };
     };
 
-   public:
+ public:
     Time(const std::string &time);
     /**
      * Set all time values.
@@ -71,5 +70,8 @@ class Time
     bool operator!=(const Time &t) const;
 };
 }
+
+std::ostream &operator<<(std::ostream &os, const Eater::Time &t);
+std::istream &operator>>(std::istream &is, Eater::Time &t);
 
 #endif /* EATER_TIME_HPP_ */

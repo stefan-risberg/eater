@@ -1,4 +1,7 @@
 #include "eater/time.hpp"
+#include <string>
+#include <exception>
+#include <format.h>
 
 namespace Eater
 {
@@ -161,19 +164,9 @@ bool Time::fromString(const std::string &time)
 
 std::string Time::toString() const
 {
-    std::stringstream ss;
-
-    auto t = [&ss](u32 v, char sep) {
-        if (v < 10) ss << 0;
-        ss << v << sep;
-    };
-
-    t(hours(), ':');
-    t(minutes(), ':');
-    t(seconds(), '.');
-    ss << (u32)milliSeconds();
-
-    return ss.str();
+    fmt::Writer f;
+    f.Format("{}:{}:{}") << hours() << minutes() << seconds();
+    return f.str();
 }
 
 bool Time::operator<(const Time &t) const
@@ -207,3 +200,62 @@ bool Time::operator!=(const Time &t) const
 }
 }
 
+std::ostream &operator<<(std::ostream &os, const Eater::Time &t)
+{
+    return os << t.toString();
+}
+
+std::istream &operator>>(std::istream &is, Eater::Time &t)
+{
+    // TODO: Fix error handeling.
+    std::string h,m,s;
+    int at = 0;
+
+    // Parse until end of stream or a space.
+    while(!is.failbit) {
+        char c = 0;
+        is.get(c);
+
+        if (c == ':') {
+            at++;
+        } else if (c >= '0' || c <= '9') {
+            switch (at) {
+            case 0: h += c; break;
+            case 1: m += c; break;
+            case 2: s += c; break;
+            default:
+                    std::cerr
+                        << "To many colon separators in input stream."
+                        << std::endl;
+                    return is;
+            }
+        } else if (c == ' ') {
+            // Check if we are parsing/parsed seconds in string.
+            if (at == 2) {
+                break;
+            } else {
+                std::cerr
+                    << "Incomplete time string."
+                    << std::endl;
+                return is;
+            }
+        } else {
+            // if we found invalid character.
+            std::cerr
+                << "Expected : or a number but got: "
+                << c
+                << std::endl;
+            return is;
+        }
+    }
+
+    try {
+        t.hours(std::stoi(h));
+        t.minutes(std::stoi(m));
+        t.seconds(std::stoi(s));
+    } catch (std::exception const &e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    return is;
+}
