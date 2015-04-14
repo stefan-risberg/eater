@@ -1,6 +1,8 @@
-bin
 build
 doc
 *.swp
 *.pyc
 .tup
+*.lib
+*.o
+eater
