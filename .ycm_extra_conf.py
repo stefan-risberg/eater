@@ -60,6 +60,7 @@ flags = [
 'c++',
 '-I./inc',
 '-I/usr/include',
+'-I/usr/include/soci',
 '-I./lib/cppformat',
 ]
 
