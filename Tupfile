@@ -1,21 +1,21 @@
 include_rules
-INCLUDES += -I./inc
-INCLUDES += -I./lib/cppformat
-INCLUDES += -I/usr/include/soci
+CXXFLAGS += -I./inc
+CXXFLAGS += -I./lib/cppformat
+CXXFLAGS += -I/usr/include/soci
 
-GLOBAL_LIBS += -lsoci_core -lsoci_sqlite3
+GLOBAL_LIBS += -lsoci_core -lsoci_sqlite3 -lsqlite3 -lsqlite3
 LIBS += ./lib/cppformat/libformat.a
 #LIBS += ./bin/libformat.a
 
-FLAGS += $(CXXFLAGS) $(INCLUDES)
 PROJECT_NAME = eater
 
-: src/main.cpp |> !cc $(FLAGS) |>
-: src/time.cpp |> !cc $(FLAGS) |>
-: src/date.cpp |> !cc $(FLAGS) |>
-: src/timestamp.cpp |> !cc $(FLAGS) |>
-: src/fooditem.cpp |> !cc $(FLAGS) |>
-: src/tags.cpp |> !cc $(FLAGS) |>
-: src/nutrients.cpp |> !cc $(FLAGS) |>
-: src/db.cpp |> !cc $(FLAGS) |>
+: src/main.cpp |> !cc |>
+: src/time.cpp |> !cc |>
+: src/date.cpp |> !cc |>
+: src/timestamp.cpp |> !cc |>
+: src/fooditem.cpp |> !cc |>
+: src/tags.cpp |> !cc |>
+: src/nutrients.cpp |> !cc |>
+: src/db.cpp |> !cc |>
+: src/sqlinterface.cpp |> !cc |>
 : $(BUILD_DIR)/*.o $(LIBS) |> $(CXX) -o %o %f $(GLOBAL_LIBS) |> $(PROJECT_NAME)
