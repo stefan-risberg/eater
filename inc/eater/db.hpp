@@ -3,9 +3,7 @@
 
 #include <string>
 #include "eater/common.hpp"
-#include <soci.h>
-#include <sqlite3/soci-sqlite3.h>
-#include <fstream>
+#include "eater/sqlinterface.hpp"
 
 namespace Eater
 {
@@ -15,10 +13,9 @@ class DB {
 
     bool tableExists(const std::string &tbl_name);
     bool init();
-    ~DB();
 
  private:
-    soci::session sql;
+    Session sql;
 
     std::string col_id        = "id";
     std::string col_name      = "name";
@@ -36,7 +33,6 @@ class DB {
     std::string tbl_food_tags = "food_tags";
     std::string col_tag_id    = "tag_id";
     std::string col_food_id   = "food_id";
-    std::ofstream file;
 };
 } /* Eater */
 

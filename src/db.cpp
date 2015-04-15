@@ -9,32 +9,24 @@ namespace Eater
 DB::DB(const std::string &location)
 {
     try {
-        sql.open(soci::sqlite3, location);
+        sql.open(location);
     } catch (std::exception const &e) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
         LOGG_ERROR("Faild to open database, reason: " << E_MAGENTA(e.what()));
     }
 
-    file.open("logg.txt");
-    sql.set_log_stream(&file);
-    LOGG_MESSAGE("Opened database: " << E_MAGENTA(location));
-}
-
-DB::~DB()
-{
-    sql.close();
+    LOGG_MESSAGE("Opened database: " << E_MAGENTA(location) << ".");
 }
 
 bool DB::tableExists(const std::string &tbl_name)
 {
-    int count = 0;
-    soci::indicator ind;
-    sql << "select count(*) from sqlite_master where type='table' and name=':tbl'",
-        soci::use(tbl_name),
-        soci::into(count, ind);
+    fmt::Writer w;
+    w.Format("select count(*) from sqlite_master where type='table' and name='{}'") << tbl_name;
 
-    if (sql.got_data() && ind == soci::i_ok) {
-        if (count > 0) {
+    Statement st = sql.prepare(w.str());
+
+    while(st.step() == Sql::ROW) {
+        if (st.getInt(0) > 0) {
             return true;
         }
     }
