@@ -7,12 +7,21 @@
 
 namespace Eater
 {
+class FoodItem;
+class Tags;
+
 class DB {
  public:
     DB(const std::string &location);
 
     bool tableExists(const std::string &tbl_name);
     bool init();
+
+    bool tagExists(const std::string &tag);
+    bool tagsExists(const Tags &tags);
+
+    void insertTag(const std::string &tag);
+    void insertTags(const Tags &tags);
 
  private:
     Session sql;

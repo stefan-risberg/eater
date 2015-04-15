@@ -1,6 +1,8 @@
 #include "eater/db.hpp"
 #include <exception>
 #include "format.h"
+#include "eater/tags.hpp"
+#include "eater/fooditem.hpp"
 
 namespace Eater
 {
@@ -74,8 +76,8 @@ bool DB::init()
                  "{} integer primary key,"
                  "{} text not null)")
             << tbl_tags
-            << col_tag_id
-            << col_food_id;
+            << col_id
+            << col_name;
 
         sql << w.str();
 
@@ -117,5 +119,63 @@ bool DB::init()
     return true;
 }
 
+bool DB::tagExists(const std::string &tag)
+{
+    fmt::Writer q;
+    q.Format("select count({}) from {} where {}='{}';")
+        << col_id
+        << tbl_tags
+        << col_name
+        << tag;
+
+    try {
+        auto st = sql.prepare(q.str());
+
+        while (st.step() == Sql::ROW) {
+            if (st.getInt(0) > 0) {
+                return true;
+            }
+        }
+    } catch (const std::exception &e) {
+        LOGG_ERROR(__PRETTY_FUNCTION__);
+        LOGG_ERROR("Faild to check for a tag: " << tag << ".");
+        LOGG_ERROR("Reason: " << e.what());
+    }
+
+    return false;
 }
+
+bool DB::tagsExists(const Tags &tags)
+{
+    for (auto it = tags.begin(); it != tags.end(); it++) {
+        if (!tagExists(*it)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void DB::insertTag(const std::string &tag)
+{
+    fmt::Writer q;
+    q.Format("insert into {} ({}) values ('{}');")
+        << tbl_tags
+        << col_name
+        << tag;
+
+    try {
+        sql << q.str();
+    } catch (const std::exception &e) {
+        LOGG_ERROR(__PRETTY_FUNCTION__);
+        LOGG_ERROR("Faild to insert a tag. Reason: " << e.what());
+    }
+}
+
+void DB::insertTags(const Tags &tags) {
+    for (auto it = tags.begin(); it != tags.end(); it++) {
+        insertTag(*it);
+    }
+}
+
+} /* Eater */
 
