@@ -106,6 +106,5 @@ class FoodItem
 }
 
 std::ostream &operator<<(std::ostream &os, const Eater::FoodItem &it);
-std::istream &operator>>(std::istream &is, Eater::FoodItem &it);
 
 #endif /* end of include guard: EATER_FOOD_ITEM_HPP */

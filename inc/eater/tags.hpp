@@ -5,7 +5,30 @@
 
 namespace Eater
 {
-typedef std::vector<std::string> tags_vec;
+/**
+ * Holds a tag with its id.
+ */
+class Tag {
+ private:
+    id_t _id;
+    std::string _name;
+
+ public:
+    Tag();
+    Tag(const std::string &name);
+    Tag(id_t id, const std::string &name);
+
+    void id(id_t id);
+    id_t id() const;
+
+    void name(const std::string &name);
+    std::string name() const;
+
+    bool operator==(const Tag &t) const;
+};
+
+typedef std::vector<Tag> tags_vec;
+
 /**
  * Holds only unique tags.
  */
@@ -46,7 +69,15 @@ class Tags
      * \param tag Tag to find.
      * \return True if found else false.
      */
-    bool find(const std::string &tag);
+    bool exists(const std::string &name);
+
+    /**
+     * Checks if a tag with id exists.
+     *
+     * \param id Id to search by.
+     * \return True if found, else false.
+     */
+    bool exists(id_t id);
 
     /**
      * Adds a tag.
@@ -56,7 +87,7 @@ class Tags
      * \param tag Tag to add.
      * \return If tag exists, false. Else true.
      */
-    bool addTag(const std::string &tag);
+    bool addTag(const Tag &tag);
 
     /**
      * Adds tags.
@@ -64,7 +95,7 @@ class Tags
      * Will not add duplicates.
      *
      * \param tags Tags to be added.
-     * \return If one, some or all are already presant, false. Else true.
+     * \return If all, some or one where added, true else false.
      */
     bool addTags(const tags_vec &tags);
 
@@ -74,7 +105,7 @@ class Tags
      * \param tag Tag to remove
      * \return Ture if tag was removed, else false.
      */
-    bool removeTag(const std::string &tag);
+    bool removeTag(const Tag &tag);
 
     /**
      * Removes a tag.
@@ -127,21 +158,11 @@ class Tags
      */
     std::string toString() const;
 
-    /**
-     * Converst a string to tags.
-     *
-     * The format of that tags string is: tag,tag,tag,tag,
-     *
-     * \param tags Tags to parse.
-     */
-    void fromString(const std::string &tags);
-
     Tags &operator=(const Tags &t);
 };
 } /* Eater */
 
 std::ostream &operator<<(std::ostream &os, const Eater::Tags &tags);
-std::istream &operator>>(std::istream &is, Eater::Tags &tags);
 
 #endif /* end of include guard: EATER_TAGS_HPP_ */
 

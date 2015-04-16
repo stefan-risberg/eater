@@ -1,7 +1,50 @@
 #include "eater/tags.hpp"
+#include <format.h>
 
 namespace Eater
 {
+Tag::Tag() :
+    _id(-1),
+    _name("")
+{}
+
+Tag::Tag(const std::string &name) :
+    _name(name)
+{}
+
+Tag::Tag(id_t id, const std::string &name) :
+    _id(id),
+    _name(name)
+{}
+
+void Tag::id(id_t id)
+{
+    _id = id;
+}
+
+id_t Tag::id() const
+{
+    return _id;
+}
+
+void Tag::name(const std::string &name)
+{
+    _name = name;
+}
+
+std::string Tag::name() const
+{
+    return _name;
+}
+
+bool Tag::operator==(const Tag &t) const
+{
+    if (this->id () == t.id() && this->name() == t.name()) {
+        return true;
+    }
+    return false;
+}
+
 Tags::Tags(tags_vec &&tags, bool valid) : _tags(tags)
 {
     if (!valid) {
@@ -28,10 +71,10 @@ Tags::Tags(Tags &&tags) : _tags(std::move(tags._tags))
 {
 }
 
-bool Tags::find(const std::string &tag)
+bool Tags::exists(const std::string &name)
 {
     for (auto &it : _tags) {
-        if (it == tag) {
+        if (it.name() == name) {
             return true;
         }
     }
@@ -39,8 +82,23 @@ bool Tags::find(const std::string &tag)
     return false;
 }
 
-bool Tags::addTag(const std::string &tag)
+bool Tags::exists(id_t id)
 {
+    for (auto &it : _tags) {
+        if (it.id() == id) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Tags::addTag(const Tag &tag)
+{
+    if (tag.id() == -1) {
+        return false;
+    }
+
     for (auto it = begin(); it != end(); it++) {
         if (*it == tag) {
             return false;
@@ -53,20 +111,19 @@ bool Tags::addTag(const std::string &tag)
 
 bool Tags::addTags(const tags_vec &tags)
 {
-    bool found_dup = false;
+    bool added_one = false;
 
-    for (auto it = tags.begin(); it != tags.end(); it++) {
-        bool r = addTag(*it);
-
-        if (!r) {
-            found_dup = true;
+    for (auto &it : tags) {
+        bool r = addTag(it);
+        if (r) {
+            added_one = true;
         }
     }
 
-    return !found_dup;
+    return added_one;
 }
 
-bool Tags::removeTag(const std::string &tag)
+bool Tags::removeTag(const Tag &tag)
 {
     for (auto it = begin(); it != end(); it++) {
         if (*it == tag) {
@@ -120,32 +177,23 @@ tags_vec::const_iterator Tags::end() const
 
 std::string Tags::toString() const
 {
-    std::string str = "";
-    for (auto it = begin(); it != end(); it++) {
-        str += *it;
-        if (it + 1 != end()) {
-            str += ',';
-        }
-    }
-
-    return str;
-}
-
-// TODO: Make syntax check on tags string (14.03.16 - steffenomak)
-void Tags::fromString(const std::string &tags)
-{
-    _tags.clear();
-
-    std::string tag = "";
-
-    for (auto it = tags.begin(); it != tags.end(); it++) {
-        if (*it == ',') {
-            addTag(tag);
-            tag = "";
+    fmt::Writer w;
+    bool first = false;
+    for (auto &it : _tags) {
+        if (first) {
+            w.Format("[{}: {}")
+                << std::to_string(it.id())
+                << it.name();
         } else {
-            tag += *it;
+            w.Format(", {}: {}")
+                << std::to_string(it.id())
+                << it.name();
         }
     }
+
+    w.Format("]");
+
+    return w.str();
 }
 
 Tags &Tags::operator=(const Tags &t)
@@ -161,12 +209,3 @@ std::ostream &operator<<(std::ostream &os, const Eater::Tags &tags)
     return os << tags.toString();
 }
 
-std::istream &operator>>(std::istream &is, Eater::Tags &tags)
-{
-    std::string str;
-    is >> str;
-
-    tags.fromString(str);
-
-    return is;
-}

@@ -93,23 +93,3 @@ std::ostream &operator<<(std::ostream &os, const Eater::FoodItem &it)
               << it.mn << " " << it.ts << " " << it.tags;
 }
 
-std::istream &operator>>(std::istream &is, Eater::FoodItem &it)
-{
-    Eater::id_t id;
-    std::string name, brand;
-    Eater::MacroNutrients mn;
-    Eater::TimeStamp ts;
-    Eater::Tags tags;
-
-    is >> id >> name >> brand >> mn >> ts >> tags;
-
-    it.id(id);
-    it.name(name);
-    it.brand(brand);
-    it.mn = mn;
-    it.tags = tags;
-    it.ts = ts;
-
-    return is;
-}
-
