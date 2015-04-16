@@ -9,6 +9,7 @@ namespace Eater
 {
 class FoodItem;
 class Tags;
+class Tag;
 
 class DB {
  public:
@@ -18,9 +19,16 @@ class DB {
     bool init();
 
     bool tagExists(const std::string &tag);
-    bool tagsExists(const Tags &tags);
+    bool tagExists(id_t id);
 
-    void insertTag(const std::string &tag);
+    /**
+     * Inserts a tag and returns its id.
+     *
+     * \param tag New tag to insert.
+     * \return If insertion faild -1 otherwise the id.
+     */
+    id_t insertTag(const Tag &tag);
+
     void insertTags(const Tags &tags);
 
  private:

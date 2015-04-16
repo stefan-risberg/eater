@@ -145,30 +145,49 @@ bool DB::tagExists(const std::string &tag)
     return false;
 }
 
-bool DB::tagsExists(const Tags &tags)
+bool DB::tagExists(id_t id)
 {
-    for (auto it = tags.begin(); it != tags.end(); it++) {
-        if (!tagExists(*it)) {
-            return false;
+    fmt::Writer q;
+    q.Format("select count({}) from {} where {}={};")
+        << col_id
+        << tbl_tags
+        << col_id
+        << id;
+
+    try {
+        auto st = sql.prepare(q.str());
+
+        while (st.step() == Sql::ROW) {
+            if (st.getInt(0) > 0) {
+                return true;
+            }
         }
+    } catch (const std::exception &e) {
+        LOGG_ERROR(__PRETTY_FUNCTION__);
+        LOGG_ERROR("Faild to check for a tag: " << id << ".");
+        LOGG_ERROR("Reason: " << e.what());
     }
-    return true;
+
+    return false;
 }
 
-void DB::insertTag(const std::string &tag)
+id_t DB::insertTag(const Tag &tag)
 {
     fmt::Writer q;
     q.Format("insert into {} ({}) values ('{}');")
         << tbl_tags
         << col_name
-        << tag;
+        << tag.name();
 
     try {
         sql << q.str();
+        return sql.lastRowInsertRowId();
     } catch (const std::exception &e) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
         LOGG_ERROR("Faild to insert a tag. Reason: " << e.what());
     }
+
+    return -1;
 }
 
 void DB::insertTags(const Tags &tags) {
