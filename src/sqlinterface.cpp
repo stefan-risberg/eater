@@ -122,6 +122,11 @@ Statement Session::prepare(const std::string &query)
     return Statement(db, st);
 }
 
+i64 Session::lastRowInsertRowId()
+{
+    return sqlite3_last_insert_rowid(db.get());
+}
+
 void Session::operator<< (const std::string &query)
 {
     auto s = prepare(query);

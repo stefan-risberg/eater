@@ -123,6 +123,7 @@ class Session {
     bool open(const std::string &db);
 
     Statement prepare(const std::string &query);
+    i64 lastRowInsertRowId();
 
     void operator<< (const std::string &query);
 
