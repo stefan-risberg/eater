@@ -3,19 +3,11 @@ CXXFLAGS += -I./inc
 CXXFLAGS += -I./lib/cppformat
 CXXFLAGS += -I/usr/include/soci
 
-GLOBAL_LIBS += -lsoci_core -lsoci_sqlite3 -lsqlite3 -lsqlite3
+GLOBAL_LIBS += -lsqlite3
 LIBS += ./lib/cppformat/libformat.a
 #LIBS += ./bin/libformat.a
 
 PROJECT_NAME = eater
 
-: src/main.cpp |> !cc |>
-: src/time.cpp |> !cc |>
-: src/date.cpp |> !cc |>
-: src/timestamp.cpp |> !cc |>
-: src/fooditem.cpp |> !cc |>
-: src/tags.cpp |> !cc |>
-: src/nutrients.cpp |> !cc |>
-: src/db.cpp |> !cc |>
-: src/sqlinterface.cpp |> !cc |>
+: foreach src/*.cpp |> !cc |>
 : $(BUILD_DIR)/*.o $(LIBS) |> $(CXX) -o %o %f $(GLOBAL_LIBS) |> $(PROJECT_NAME)
