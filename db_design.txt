@@ -38,17 +38,6 @@ the primary key.
 ┃ {recepie_id} │ (int) │ recepie id.       ┃
 ┗━━━━━━━━━━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━┛
 
-Recepies
-========
-    [id]   (int)    - unique id.
-    name   (string) - name of recepie.
-
-    Recepies_content
-    ================
-        {r_id} (int) - Recepies id.
-        {f_id} (int) - Foods id.
-        amount (float) - amount of f_id in grams.
-
 ┃━ ┏┓ ┗┛ ┣┫ ┳ ┻ ╋
 
 ─ ┠┨
