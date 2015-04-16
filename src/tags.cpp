@@ -9,6 +9,7 @@ Tag::Tag() :
 {}
 
 Tag::Tag(const std::string &name) :
+    _id(-1),
     _name(name)
 {}
 
