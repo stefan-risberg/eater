@@ -1,8 +1,8 @@
 #include "eater/nutrients.hpp"
 
-namespace Eater
+namespace eater
 {
-MacroNutrients::MacroNutrients(f32 _calories,
+macro_nutrients_t::macro_nutrients_t(f32 _calories,
                                f32 _carbohydrates,
                                f32 _proteins,
                                f32 _fats)
@@ -13,7 +13,7 @@ MacroNutrients::MacroNutrients(f32 _calories,
 {
 }
 
-void MacroNutrients::set(f32 _calories,
+void macro_nutrients_t::set(f32 _calories,
                          f32 _carbohydrates,
                          f32 _proteins,
                          f32 _fats)
@@ -24,7 +24,7 @@ void MacroNutrients::set(f32 _calories,
     fats(_fats);
 }
 
-void MacroNutrients::calories(f32 _calories)
+void macro_nutrients_t::calories(f32 _calories)
 {
     if (_calories < 0.0) {
         _calories = 0.0;
@@ -32,7 +32,7 @@ void MacroNutrients::calories(f32 _calories)
     this->_calories = _calories;
 }
 
-void MacroNutrients::carbohydrates(f32 _carbohydrates)
+void macro_nutrients_t::carbohydrates(f32 _carbohydrates)
 {
     if (_carbohydrates < 0.0) {
         _carbohydrates = 0.0;
@@ -40,7 +40,7 @@ void MacroNutrients::carbohydrates(f32 _carbohydrates)
     this->_carbohydrates = _carbohydrates;
 }
 
-void MacroNutrients::proteins(f32 _proteins)
+void macro_nutrients_t::proteins(f32 _proteins)
 {
     if (_proteins < 0.0) {
         _proteins = 0.0;
@@ -48,7 +48,7 @@ void MacroNutrients::proteins(f32 _proteins)
     this->_proteins = _proteins;
 }
 
-void MacroNutrients::fats(f32 _fats)
+void macro_nutrients_t::fats(f32 _fats)
 {
     if (_fats < 0.0) {
         _fats = 0.0;
@@ -56,27 +56,27 @@ void MacroNutrients::fats(f32 _fats)
     this->_fats = _fats;
 }
 
-f32 MacroNutrients::calories() const
+f32 macro_nutrients_t::calories() const
 {
     return _calories;
 }
 
-f32 MacroNutrients::proteins() const
+f32 macro_nutrients_t::proteins() const
 {
     return _proteins;
 }
 
-f32 MacroNutrients::carbohydrates() const
+f32 macro_nutrients_t::carbohydrates() const
 {
     return _carbohydrates;
 }
 
-f32 MacroNutrients::fats() const
+f32 macro_nutrients_t::fats() const
 {
     return _fats;
 }
 
-std::string MacroNutrients::toString() const
+std::string macro_nutrients_t::to_string() const
 {
     std::stringstream ss;
     ss << "Kcal: " << calories() << " Proteins: " << proteins()
@@ -86,7 +86,7 @@ std::string MacroNutrients::toString() const
 }
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::MacroNutrients &mn)
+std::ostream &operator<<(std::ostream &os, const eater::macro_nutrients_t &mn)
 {
     os << mn.calories() << " " << mn.carbohydrates() << " " << mn.proteins()
        << " " << mn.fats();
@@ -94,9 +94,9 @@ std::ostream &operator<<(std::ostream &os, const Eater::MacroNutrients &mn)
     return os;
 }
 
-std::istream &operator>>(std::istream &is, Eater::MacroNutrients &mn)
+std::istream &operator>>(std::istream &is, eater::macro_nutrients_t &mn)
 {
-    Eater::f32 cal, carb, prot, fat;
+    eater::f32 cal, carb, prot, fat;
     is >> cal >> carb >> prot >> fat;
 
     mn.calories(cal);

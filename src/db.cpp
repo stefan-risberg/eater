@@ -3,22 +3,22 @@
 #include "eater/tags.hpp"
 #include "eater/fooditem.hpp"
 
-namespace Eater
+namespace eater
 {
 
-DB::Unsafe::Unsafe () :
+db_t::unsafe_t::unsafe_t () :
     _db(nullptr)
 {}
 
-void DB::Unsafe::init(DB *db)
+void db_t::unsafe_t::init(db_t *db)
 {
     _db = db;
 }
 
-void DB::Unsafe::insertTag(Tag *tag)
+void db_t::unsafe_t::insert(tag_t *tag)
 {
     if (tag->id() == -1) {
-        tag->id(_db->getLastId(_db->tbl_tags, _db->col_id) + 1);
+        tag->id(_db->get_last_id(_db->tbl_tags, _db->col_id) + 1);
     }
 
     fmt::Writer q;
@@ -32,10 +32,10 @@ void DB::Unsafe::insertTag(Tag *tag)
 
 }
 
-void DB::Unsafe::insertFood(FoodItem *it)
+void db_t::unsafe_t::insert(food_item_t *it)
 {
     if (it->id() == -1) {
-        it->id(_db->getLastId(_db->tbl_fooditems, _db->col_id) + 1);
+        it->id(_db->get_last_id(_db->tbl_fooditems, _db->col_id) + 1);
     }
 
     fmt::Writer q;
@@ -52,7 +52,7 @@ void DB::Unsafe::insertFood(FoodItem *it)
         << _db->col_proteins
         << _db->col_fats
         << it->id()
-        << it->ts.toString()
+        << it->ts.to_string()
         << it->name()
         << it->brand()
         << it->mn.calories()
@@ -63,51 +63,51 @@ void DB::Unsafe::insertFood(FoodItem *it)
     _db->sql << q.str();
 }
 
-DB::Safe::Safe() :
+db_t::safe_t::safe_t() :
     _db(nullptr)
 {}
 
-void DB::Safe::init(DB *db)
+void db_t::safe_t::init(db_t *db)
 {
     _db = db;
 }
 
-void DB::Safe::inserTag(Tag *tag)
+void db_t::safe_t::insert(tag_t *tag)
 {
     if (tag->id() == -1) {
-        if (_db->tagExists(tag->name())) {
-            throw ExistsAlready("The tag " + tag->name() + " already exists.");
+        if (_db->tag_exists(tag->name())) {
+            throw exists_already("The tag " + tag->name() + " already exists.");
         }
     } else {
-        if(_db->tagExists(tag->id())) {
-            throw ExistsAlready("A tag with id: "
+        if(_db->tag_exists(tag->id())) {
+            throw exists_already("A tag with id: "
                                 + std::to_string(tag->id())
                                 + " exists already.");
         }
     }
 
-    _db->unsafe.insertTag(tag);
+    _db->unsafe.insert(tag);
 }
 
-void DB::Safe::insertFood(FoodItem *it)
+void db_t::safe_t::insert(food_item_t *it)
 {
     if (it->id() == -1) {
-        if (_db->foodExists(*it)) {
-            throw ExistsAlready("An item with the same name and brand exists "
+        if (_db->food_exists(*it)) {
+            throw exists_already("An item with the same name and brand exists "
                                 "already.");
         }
     } else {
-        if (_db->foodExists(it->id())) {
-            throw ExistsAlready("A food item with id: "
+        if (_db->food_exists(it->id())) {
+            throw exists_already("A food item with id: "
                                 + std::to_string(it->id())
                                 + " exists alreadu.");
         }
     }
 
-    _db->unsafe.insertFood(it);
+    _db->unsafe.insert(it);
 }
 
-DB::DB(const std::string &location)
+db_t::db_t(const std::string &location)
 {
     try {
         sql.open(location);
@@ -119,15 +119,15 @@ DB::DB(const std::string &location)
     LOGG_MESSAGE("Opened database: " << E_MAGENTA(location) << ".");
 }
 
-bool DB::tableExists(const std::string &tbl_name)
+bool db_t::table_exists(const std::string &tbl_name)
 {
     fmt::Writer w;
     w.Format("select count(*) from sqlite_master where type='table' and name='{}'") << tbl_name;
 
-    Statement st = sql.prepare(w.str());
+    auto st = sql.prepare(w.str());
 
-    while(st.step() == Sql::ROW) {
-        if (st.getInt(0) > 0) {
+    while(st.step() == sql::ROW) {
+        if (st.get_int(0) > 0) {
             return true;
         }
     }
@@ -135,7 +135,7 @@ bool DB::tableExists(const std::string &tbl_name)
     return false;
 }
 
-bool DB::init()
+bool db_t::init()
 {
     try {
         fmt::Writer w;
@@ -221,8 +221,8 @@ bool DB::init()
     return true;
 }
 
-id_t DB::getLastId(const std::string &tbl,
-                   const std::string &col)
+id_t db_t::get_last_id(const std::string &tbl,
+                       const std::string &col)
 {
     fmt::Writer q;
     q.Format("select {0} from {1} order by {0} desc limit 1;")
@@ -233,14 +233,14 @@ id_t DB::getLastId(const std::string &tbl,
 
     auto r = st.step();
 
-    if (r == Sql::ROW) {
-        return st.getInt(0);
+    if (r == sql::ROW) {
+        return st.get_int(0);
     }
 
     return -1;
 }
 
-bool DB::tagExists(const std::string &tag)
+bool db_t::tag_exists(const std::string &tag)
 {
     fmt::Writer q;
     q.Format("select count({}) from {} where {}='{}';")
@@ -252,8 +252,8 @@ bool DB::tagExists(const std::string &tag)
     try {
         auto st = sql.prepare(q.str());
 
-        while (st.step() == Sql::ROW) {
-            if (st.getInt(0) > 0) {
+        while (st.step() == sql::ROW) {
+            if (st.get_int(0) > 0) {
                 return true;
             }
         }
@@ -266,7 +266,7 @@ bool DB::tagExists(const std::string &tag)
     return false;
 }
 
-bool DB::tagExists(id_t id)
+bool db_t::tag_exists(id_t id)
 {
     fmt::Writer q;
     q.Format("select count({}) from {} where {}={};")
@@ -278,8 +278,8 @@ bool DB::tagExists(id_t id)
     try {
         auto st = sql.prepare(q.str());
 
-        while (st.step() == Sql::ROW) {
-            if (st.getInt(0) > 0) {
+        while (st.step() == sql::ROW) {
+            if (st.get_int(0) > 0) {
                 return true;
             }
         }
@@ -292,7 +292,7 @@ bool DB::tagExists(id_t id)
     return false;
 }
 
-id_t DB::getTagId(const std::string &tag)
+id_t db_t::get_tag_id(const std::string &tag)
 {
     fmt::Writer q;
     q.Format("select {} from {} where {}='{}';")
@@ -304,8 +304,8 @@ id_t DB::getTagId(const std::string &tag)
         auto st = sql.prepare(q.str());
         auto r = st.step();
 
-        if (r == Sql::ROW) {
-            return st.getInt(0);
+        if (r == sql::ROW) {
+            return st.get_int(0);
         }
     } catch (const std::exception &e) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
@@ -313,10 +313,10 @@ id_t DB::getTagId(const std::string &tag)
         LOGG_ERROR("Reason: " << e.what());
     }
 
-    throw NotFound("Did not find tag: " + tag + ".");
+    throw not_found("Did not find tag: " + tag + ".");
 }
 
-std::string DB::getTagName(id_t id)
+std::string db_t::get_tag_name(id_t id)
 {
     fmt::Writer q;
     q.Format("select {} from {} where {}={};")
@@ -328,8 +328,8 @@ std::string DB::getTagName(id_t id)
         auto st = sql.prepare(q.str());
         auto r = st.step();
 
-        if (r == Sql::ROW) {
-            return st.getStr(0);
+        if (r == sql::ROW) {
+            return st.get_str(0);
         }
     } catch (const std::exception &e) {
         LOGG_ERROR(__PRETTY_FUNCTION__);
@@ -337,10 +337,10 @@ std::string DB::getTagName(id_t id)
         LOGG_ERROR("Reason: " << e.what());
     }
 
-    throw NotFound("Did not find tag: " + std::to_string(id) + ".");
+    throw not_found("Did not find tag: " + std::to_string(id) + ".");
 }
 
-void DB::removeTag(id_t id)
+void db_t::remove_tag(id_t id)
 {
     fmt::Writer q;
     q.Format("delete from {} where {}={};")
@@ -356,7 +356,7 @@ void DB::removeTag(id_t id)
     }
 }
 
-void DB::renameTag(const Tag &tag)
+void db_t::rename_tag(const tag_t &tag)
 {
     fmt::Writer q;
     q.Format("update {} set {}='{}' where {}={};")
@@ -374,7 +374,7 @@ void DB::renameTag(const Tag &tag)
     }
 }
 
-bool DB::foodExists(id_t id)
+bool db_t::food_exists(id_t id)
 {
     fmt::Writer q;
     q.Format("select count({}) from {} where {}={};")
@@ -388,8 +388,8 @@ bool DB::foodExists(id_t id)
 
         auto r = st.step();
 
-        if (r == Sql::ROW) {
-            if (st.getInt(0) > 0) {
+        if (r == sql::ROW) {
+            if (st.get_int(0) > 0) {
                 return true;
             }
         }
@@ -402,7 +402,7 @@ bool DB::foodExists(id_t id)
     return false;
 }
 
-bool DB::foodExists(const FoodItem &it)
+bool db_t::food_exists(const food_item_t &it)
 {
     fmt::Writer q;
     q.Format("select count({}) from {} where {}='{}' and {}='{}';")
@@ -418,8 +418,8 @@ bool DB::foodExists(const FoodItem &it)
 
         auto r = st.step();
 
-        if (r == Sql::ROW) {
-            if (st.getInt(0) > 0) {
+        if (r == sql::ROW) {
+            if (st.get_int(0) > 0) {
                 return true;
             }
         }
@@ -432,5 +432,5 @@ bool DB::foodExists(const FoodItem &it)
     return false;
 }
 
-} /* Eater */
+} /* eater */
 

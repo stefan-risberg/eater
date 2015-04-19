@@ -9,11 +9,11 @@
 #include "eater/timestamp.hpp"
 #include "eater/tags.hpp"
 
-namespace Eater
+namespace eater
 {
 struct amount_t
 {
-    FoodItem item;
+    food_item_t item;
     u32 amount;
 };
 
@@ -32,9 +32,9 @@ class Recepie
 
     // Public data.
    public:
-    MacroNutrients mn;  //!< Nutrients of the recepie.
-    TimeStamp ts;       //!< Time stamp of recepie.
-    Tags tags;          //!< Tags of the recepie.
+    macro_nutrients_t mn;  //!< Nutrients of the recepie.
+    time_stamp_t ts;       //!< Time stamp of recepie.
+    tag_vec tags;          //!< Tags of the recepie.
 
    public:
     /**
@@ -96,7 +96,7 @@ class Recepie
      * \param food Food to check if it is in the recepie,
      * \return True if it does else false.
      */
-    bool foodExists(const FoodItem &food) const;
+    bool foodExists(const food_item_t &food) const;
 
     /**
      * Adds a food item to the recepie.
@@ -125,7 +125,7 @@ class Recepie
      * \param[in] food Food item to remove.
      * \return True if food was removed otherwise false.
      */
-    bool removeFood(const FoodItem &food);
+    bool removeFood(const food_item_t &food);
 
     /**
      * Removes food items from recepie.
@@ -142,7 +142,7 @@ class Recepie
      * \param[in] amount New amount of the food item.
      * \return If food item was modified true else false.
      */
-    bool modifyFood(const FoodItem &food, const u32 amount);
+    bool modifyFood(const food_item_t &food, const u32 amount);
 
    private:
     /**
@@ -151,7 +151,7 @@ class Recepie
      * \param[in] item Nutrient item to change by.
      * \param[in] amount Amount of the nutrient item.
      */
-    void changeNutrients(const FoodItem &item, u32 amount);
+    void changeNutrients(const food_item_t &item, u32 amount);
 };
 }
 

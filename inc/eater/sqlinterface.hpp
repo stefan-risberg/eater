@@ -8,29 +8,29 @@
 
 #include "eater/common.hpp"
 
-namespace Eater
+namespace eater
 {
 
-class SqlException : public std::exception {
+class sql_exception : public std::exception {
  public:
-    explicit SqlException(const std::string &msg)
+    explicit sql_exception(const str &msg)
     {
-        this->msg = msg;
+        this->_msg = msg;
     }
 
     virtual const char* what() const throw()
     {
-        return msg.c_str();
+        return _msg.c_str();
     }
 
  private:
-    std::string msg;
+    str _msg;
 };
 
-namespace Sql
+namespace sql
 {
 
-enum Status {
+enum status_t {
     OK,
     ERROR,
     BUSY,
@@ -40,7 +40,7 @@ enum Status {
     OTHER
 };
 
-enum Type {
+enum type_t {
     INTEGER,
     DOUBLE,
     TEXT,
@@ -49,13 +49,13 @@ enum Type {
 };
 
 } /* sql */
-class Session;
+class session_t;
 
 /**
  * A prepared sql statement.
  */
-class Statement {
-    friend class Session;
+class statement_t {
+    friend class session_t;
  private:
     /**
      * Default constructor. It takes over st.
@@ -63,19 +63,19 @@ class Statement {
      * \param db - Pointer to database that owns the statement.
      * \param st - A statement.
      */
-    Statement(std::shared_ptr<sqlite3> &db, sqlite3_stmt *st);
+    statement_t(std::shared_ptr<sqlite3> &db, sqlite3_stmt *st);
 
  public:
 
     /**
      * Cleans up the statement.
      */
-    ~Statement();
+    ~statement_t();
 
     /**
      * Steps the statement by one step.
      */
-    Sql::Status step();
+    sql::status_t step();
 
     /**
      * Gets the type of a row.
@@ -83,55 +83,55 @@ class Statement {
      * \param col - Column to get type of.
      * \return The type of the column col.
      */
-    Sql::Type getType(i32 col);
+    sql::type_t get_type(i32 col);
 
     /**
      * Get the int from column col.
      * \param col - Column to query.
      * \return integer containd in the column.
      */
-    i32 getInt(i32 col);
+    i32 get_int(i32 col);
 
     /**
      * Get the double from column col.
      * \param col - Column to query.
      * \return double containd in the column.
      */
-    f64 getDouble(i32 col);
+    f64 get_double(i32 col);
 
     /**
      * Get the text from column col.
      * \param col - Column to query.
      * \return text containd in the column.
      */
-    str getStr(i32 col);
+    str get_str(i32 col);
 
  private:
     sqlite3_stmt *st = nullptr;
-    Sql::Status last_status = Sql::OK;
+    sql::status_t last_status = sql::OK;
     i32 col_count = 0;
     std::shared_ptr<sqlite3> db;
 
-    inline void validateBeforeGet(i32 col);
+    inline void val_before_get(i32 col);
 };
 
-class Session {
+class session_t {
  public:
-    Session();
-    Session(const std::string &db);
+    session_t();
+    session_t(const str &db);
 
-    bool open(const std::string &db);
+    bool open(const str &db);
 
-    Statement prepare(const std::string &query);
+    statement_t prepare(const str &query);
     i64 lastRowInsertRowId();
 
-    void operator<< (const std::string &query);
+    void operator<< (const str &query);
 
  private:
     std::shared_ptr<sqlite3> db = nullptr;
 };
 
-} /* Eater */
+} /* eater */
 
 #endif /* end of include guard: EATER_SQL_INTERFACE_HPP_ */
 

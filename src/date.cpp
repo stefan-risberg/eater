@@ -4,63 +4,63 @@
 #include <format.h>
 #include <ctime>
 
-namespace Eater
+namespace eater
 {
-Date::Date() : Date(0, 0, 0)
+date_t::date_t() : date_t(0, 0, 0)
 {
 }
 
-Date::Date(u16 y, u8 m, u8 d)
+date_t::date_t(u16 y, u8 m, u8 d)
 {
-    year(y);
-    month(m);
-    day(d);
+    this->y(y);
+    this->m(m);
+    this->d(d);
 }
 
-Date::Date(u32 _date)
+date_t::date_t(u32 _date)
 {
     set(_date);
 }
 
-Date::Date(const std::string &date)
+date_t::date_t(const std::string &date)
 {
-    if (!fromString(date)) {
+    if (!from_string(date)) {
         set(0, 0, 0);
     }
 }
 
-void Date::set(u16 y, u8 m, u8 d)
+void date_t::set(u16 y, u8 m, u8 d)
 {
-    year(y);
-    month(m);
-    day(d);
+    this->y(y);
+    this->m(m);
+    this->d(d);
 }
 
-void Date::set(u32 _date)
+void date_t::set(u32 _date)
 {
     this->_date = _date;
 
-    year(_year);
-    month(_month);
-    day(_day);
+    y(_year);
+    m(_month);
+    d(_day);
 }
 
-void Date::year(const u16 y)
+void date_t::y(const u16 y)
 {
     _year = y;
 }
 
-void Date::month(const u8 m)
+void date_t::m(const u8 m)
 {
     m > 12 ? _month = 12 : _month = m;
 }
 
-void Date::day(const u8 d)
+void date_t::d(const u8 d)
 {
     d > 31 ? _day = 31 : _day = d;
 }
 
-void Date::now()
+void date_t::now()
 {
     std::time_t t = std::time(0);
     struct std::tm *n = std::localtime(&t);
@@ -70,44 +70,44 @@ void Date::now()
         n->tm_mday);
 }
 
-u32 Date::get() const
+u32 date_t::get() const
 {
     return _date;
 }
 
-u16 Date::year() const
+u16 date_t::y() const
 {
     return _year;
 }
 
-u8 Date::month() const
+u8 date_t::m() const
 {
     return _month;
 }
 
-u8 Date::day() const
+u8 date_t::d() const
 {
     return _day;
 }
 
-bool Date::fromString(const std::string &date)
+bool date_t::from_string(const std::string &date)
 {
     std::string d = "";
     u8 state = 0;
 
     for (auto c : date) {
         if (c == '-') {
-            u32 val = convStrToInt<u32>(d);
+            u32 val = std::stoi(d);
 
             d = "";
 
             switch (state) {
                 case 0:
-                    year(val);
+                    y(val);
                     state++;
                     break;
                 case 1:
-                    month(val);
+                    m(val);
                     state++;
                     break;
                 case 2:
@@ -128,8 +128,8 @@ bool Date::fromString(const std::string &date)
     }
 
     if (state == 2) {
-        u32 val = convStrToInt<u32>(d);
-        day(val);
+        u32 val = std::stoi(d);
+        this->d(val);
     } else {
         E_Debug(E_RED("BUG: ") "Report it pleas.\n");
 
@@ -139,7 +139,7 @@ bool Date::fromString(const std::string &date)
     return true;
 }
 
-std::string Date::toString() const
+std::string date_t::to_string() const
 {
 
     fmt::Writer f;
@@ -153,39 +153,39 @@ std::string Date::toString() const
     };
 
     f.Format("{}")
-        << (i32)year();
-    add(month());
-    add(day());
+        << (i32)y();
+    add(m());
+    add(d());
 
     return f.str();
 }
 
-bool Date::operator<(const Date &d) const
+bool date_t::operator<(const date_t &d) const
 {
     return _date < d._date;
 }
 
-bool Date::operator<=(const Date &d) const
+bool date_t::operator<=(const date_t &d) const
 {
     return _date <= d._date;
 }
 
-bool Date::operator>(const Date &d) const
+bool date_t::operator>(const date_t &d) const
 {
     return _date > d._date;
 }
 
-bool Date::operator>=(const Date &d) const
+bool date_t::operator>=(const date_t &d) const
 {
     return _date >= d._date;
 }
 
-bool Date::operator==(const Date &d) const
+bool date_t::operator==(const date_t &d) const
 {
     return _date == d._date;
 }
 
-bool Date::operator!=(const Date &d) const
+bool date_t::operator!=(const date_t &d) const
 {
     return _date != d._date;
 }
@@ -209,12 +209,12 @@ ParsingState inc(ParsingState p) {
 }
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::Date &d)
+std::ostream &operator<<(std::ostream &os, const eater::date_t &d)
 {
-    return os << d.toString();
+    return os << d.to_string();
 }
 
-std::istream &operator>>(std::istream &is, Eater::Date &d)
+std::istream &operator>>(std::istream &is, eater::date_t &d)
 {
     auto at = YEAR;
     std::string y = "", m = "", _d = "", date;

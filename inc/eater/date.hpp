@@ -3,12 +3,12 @@
 
 #include "eater/common.hpp"
 
-namespace Eater
+namespace eater
 {
 /**
  * Holds a date and modifing functions.
  */
-class Date {
+class date_t {
    private:
     union
     {
@@ -25,7 +25,7 @@ class Date {
     /**
      * Default constructor.
      */
-    Date();
+    date_t();
 
     /**
      * Constructs a date.
@@ -34,7 +34,7 @@ class Date {
      * \param m Month.
      * \param d Day.
      */
-    Date(u16 y, u8 m, u8 d);
+    date_t(u16 y, u8 m, u8 d);
 
     /**
      * Constructs a date.
@@ -42,7 +42,7 @@ class Date {
      * The first 16 bits in _date are the year, next 8 are month and
      * last are day.
      */
-    Date(u32 _date);
+    date_t(u32 _date);
 
     /**
      * Constructs a date from a string.
@@ -50,9 +50,9 @@ class Date {
      * If the string is incorrect the date will be set to the beginning
      * of time.
      *
-     * \param date Date.
+     * \param date date.
      */
-    Date(const std::string &date);
+    date_t(const std::string &date);
 
     /**
      * Set new date.
@@ -66,7 +66,7 @@ class Date {
     /**
      * Set new date.
      *
-     * \param _date Date with format: 16bit year 8bit month 8bit day.
+     * \param _date date with format: 16bit year 8bit month 8bit day.
      */
     void set(u32 _date);
 
@@ -75,21 +75,21 @@ class Date {
      *
      * \param y New year.
      */
-    void year(const u16 y);
+    void y(const u16 y);
 
     /**
      * Set new month.
      *
      * \param m New month.
      */
-    void month(const u8 m);
+    void m(const u8 m);
 
     /**
      * Set new day
      *
      * \param d New day.
      */
-    void day(const u8 d);
+    void d(const u8 d);
 
     /**
      * Sets the date to now.
@@ -108,21 +108,21 @@ class Date {
      *
      * \return Year.
      */
-    u16 year() const;
+    u16 y() const;
 
     /**
      * Get month.
      *
      * \return Month.
      */
-    u8 month() const;
+    u8 m() const;
 
     /**
      * Get day.
      *
      * \return Day.
      */
-    u8 day() const;
+    u8 d() const;
 
     /**
      * Set a new date with a string format of yyyy-mm-dd.
@@ -130,25 +130,25 @@ class Date {
      * \param d New date.
      * \return False if date was in wrong format.
      */
-    bool fromString(const std::string &date);
+    bool from_string(const std::string &date);
 
     /**
      * Resturn date as a string.
      *
-     * \return Date.
+     * \return date.
      */
-    std::string toString() const;
+    std::string to_string() const;
 
-    bool operator<(const Date &t) const;
-    bool operator<=(const Date &t) const;
-    bool operator>(const Date &t) const;
-    bool operator>=(const Date &t) const;
-    bool operator==(const Date &t) const;
-    bool operator!=(const Date &t) const;
+    bool operator<(const date_t &t) const;
+    bool operator<=(const date_t &t) const;
+    bool operator>(const date_t &t) const;
+    bool operator>=(const date_t &t) const;
+    bool operator==(const date_t &t) const;
+    bool operator!=(const date_t &t) const;
 };
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::Date &d);
-std::istream &operator>>(std::istream &is, Eater::Date &d);
+std::ostream &operator<<(std::ostream &os, const eater::date_t &d);
+std::istream &operator>>(std::istream &is, eater::date_t &d);
 
 #endif /* EATER_DATE_HPP_ */

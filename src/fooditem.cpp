@@ -1,18 +1,18 @@
 #include "eater/fooditem.hpp"
 #include "eater/timestamp.hpp"
 
-namespace Eater
+namespace eater
 {
-FoodItem::FoodItem() : _id(-1), _name(""), _brand("")
+food_item_t::food_item_t() : _id(-1), _name(""), _brand("")
 {
 }
 
-FoodItem::FoodItem(const std::string &_name, const std::string &_brand)
+food_item_t::food_item_t(const std::string &_name, const std::string &_brand)
     : _id(-1), _name(_name), _brand(_brand)
 {
 }
 
-FoodItem::FoodItem(FoodItem &&item)
+food_item_t::food_item_t(food_item_t &&item)
     : _id(std::move(item._id))
     , _name(std::move(item._name))
     , _brand(std::move(item._brand))
@@ -22,7 +22,7 @@ FoodItem::FoodItem(FoodItem &&item)
 {
 }
 
-FoodItem::FoodItem(const FoodItem &item)
+food_item_t::food_item_t(const food_item_t &item)
     : _id(item._id)
     , _name(item._name)
     , _brand(item._brand)
@@ -32,49 +32,49 @@ FoodItem::FoodItem(const FoodItem &item)
 {
 }
 
-void FoodItem::id(const id_t _id)
+void food_item_t::id(const id_t _id)
 {
     this->_id = _id;
 }
 
-void FoodItem::name(const std::string &_name)
+void food_item_t::name(const std::string &_name)
 {
     this->_name = _name;
 }
 
-void FoodItem::brand(const std::string &_brand)
+void food_item_t::brand(const std::string &_brand)
 {
     this->_brand = _brand;
 }
 
-id_t FoodItem::id() const
+id_t food_item_t::id() const
 {
     return _id;
 }
 
-std::string FoodItem::name() const
+std::string food_item_t::name() const
 {
     return _name;
 }
 
-std::string FoodItem::brand() const
+std::string food_item_t::brand() const
 {
     return _brand;
 }
 
-std::string FoodItem::toString() const
+std::string food_item_t::to_string() const
 {
     std::stringstream ss;
-    ss << id() << " - " << ts.toString() << "\n\t"
+    ss << id() << " - " << ts.to_string() << "\n\t"
        << "Name: " << name() << "\n\t"
        << "Brand: " << brand() << "\n\t"
-       << "Tags: " << tags.toString() << "\n\t"
-       << "Macro: " << mn.toString();
+       << "Tags: " << tags.to_string() << "\n\t"
+       << "Macro: " << mn.to_string();
 
     return ss.str();
 }
 
-FoodItem &FoodItem::operator=(const FoodItem &it)
+food_item_t &food_item_t::operator=(const food_item_t &it)
 {
     _id = it._id;
     _name = it._name;
@@ -87,7 +87,7 @@ FoodItem &FoodItem::operator=(const FoodItem &it)
 }
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::FoodItem &it)
+std::ostream &operator<<(std::ostream &os, const eater::food_item_t &it)
 {
     return os << it.id() << " " << it.name() << " " << it.brand() << " "
               << it.mn << " " << it.ts << " " << it.tags;

@@ -8,13 +8,13 @@
 #include "eater/timestamp.hpp"
 #include "eater/tags.hpp"
 
-namespace Eater
+namespace eater
 {
-class FoodItem;
+class food_item_t;
 
-typedef std::vector<FoodItem> food_vec;
+typedef std::vector<food_item_t> food_vec;
 
-class FoodItem
+class food_item_t
 {
     // Private data.
    private:
@@ -24,15 +24,15 @@ class FoodItem
 
     // Public data.
    public:
-    MacroNutrients mn;  //!< Macro nutrient of Food Item.
-    TimeStamp ts;       //!< Timestamp of the item.
-    Tags tags;          //!< Tags for the food item.
+    macro_nutrients_t mn;  //!< Macro nutrient of Food Item.
+    time_stamp_t ts;       //!< Timestamp of the item.
+    tag_vec tags;          //!< Tags for the food item.
 
    public:
     /**
      * Default constructor.
      */
-    FoodItem();
+    food_item_t();
 
     /**
      * Constructor that initializes a default food item.
@@ -40,17 +40,17 @@ class FoodItem
      * \param _name Name of food.
      * \param _brand Brand of food item.
      */
-    FoodItem(const std::string &_name, const std::string &_brand);
+    food_item_t(const std::string &_name, const std::string &_brand);
 
     /**
      * Move constructor.
      */
-    FoodItem(FoodItem &&item);
+    food_item_t(food_item_t &&item);
 
     /**
      * Copy constructor.
      */
-    FoodItem(const FoodItem &item);
+    food_item_t(const food_item_t &item);
 
     /**
      * Sets food item id.
@@ -99,12 +99,12 @@ class FoodItem
      *
      * \return String representation of item.
      */
-    std::string toString() const;
+    std::string to_string() const;
 
-    FoodItem &operator=(const FoodItem &it);
+    food_item_t &operator=(const food_item_t &it);
 };
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::FoodItem &it);
+std::ostream &operator<<(std::ostream &os, const eater::food_item_t &it);
 
 #endif /* end of include guard: EATER_FOOD_ITEM_HPP */

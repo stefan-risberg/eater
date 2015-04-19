@@ -1,44 +1,44 @@
 #include "eater/tags.hpp"
 #include <format.h>
 
-namespace Eater
+namespace eater
 {
-Tag::Tag() :
+tag_t::tag_t() :
     _id(-1),
     _name("")
 {}
 
-Tag::Tag(const std::string &name) :
+tag_t::tag_t(const std::string &name) :
     _id(-1),
     _name(name)
 {}
 
-Tag::Tag(id_t id, const std::string &name) :
+tag_t::tag_t(id_t id, const std::string &name) :
     _id(id),
     _name(name)
 {}
 
-void Tag::id(id_t id)
+void tag_t::id(id_t id)
 {
     _id = id;
 }
 
-id_t Tag::id() const
+id_t tag_t::id() const
 {
     return _id;
 }
 
-void Tag::name(const std::string &name)
+void tag_t::name(const std::string &name)
 {
     _name = name;
 }
 
-std::string Tag::name() const
+std::string tag_t::name() const
 {
     return _name;
 }
 
-bool Tag::operator==(const Tag &t) const
+bool tag_t::operator==(const tag_t &t) const
 {
     if (this->id () == t.id() && this->name() == t.name()) {
         return true;
@@ -46,33 +46,16 @@ bool Tag::operator==(const Tag &t) const
     return false;
 }
 
-Tags::Tags(tags_vec &&tags, bool valid) : _tags(tags)
-{
-    if (!valid) {
-        for (auto i = _tags.begin(); i != _tags.end(); i++) {
-            for (auto j = i + 1; j != _tags.end(); j++) {
-                if (*j == *i) {
-                    _tags.erase(j);
-                    j--;
-                }
-            }
-        }
-    }
-}
+tag_vec::tag_vec()
+{}
 
-Tags::Tags()
-{
-}
+tag_vec::tag_vec(const tag_vec &tags) : _tags(tags._tags)
+{}
 
-Tags::Tags(const Tags &tags) : _tags(tags._tags)
-{
-}
+tag_vec::tag_vec(tag_vec &&tags) : _tags(std::move(tags._tags))
+{}
 
-Tags::Tags(Tags &&tags) : _tags(std::move(tags._tags))
-{
-}
-
-bool Tags::exists(const std::string &name)
+bool tag_vec::exists(const std::string &name)
 {
     for (auto &it : _tags) {
         if (it.name() == name) {
@@ -83,7 +66,7 @@ bool Tags::exists(const std::string &name)
     return false;
 }
 
-bool Tags::exists(id_t id)
+bool tag_vec::exists(id_t id)
 {
     for (auto &it : _tags) {
         if (it.id() == id) {
@@ -94,7 +77,7 @@ bool Tags::exists(id_t id)
     return false;
 }
 
-bool Tags::addTag(const Tag &tag)
+bool tag_vec::add(const tag_t &tag)
 {
     if (tag.id() == -1) {
         return false;
@@ -110,21 +93,7 @@ bool Tags::addTag(const Tag &tag)
     return true;
 }
 
-bool Tags::addTags(const tags_vec &tags)
-{
-    bool added_one = false;
-
-    for (auto &it : tags) {
-        bool r = addTag(it);
-        if (r) {
-            added_one = true;
-        }
-    }
-
-    return added_one;
-}
-
-bool Tags::removeTag(const Tag &tag)
+bool tag_vec::remove(const tag_t &tag)
 {
     for (auto it = begin(); it != end(); it++) {
         if (*it == tag) {
@@ -136,55 +105,44 @@ bool Tags::removeTag(const Tag &tag)
     return false;
 }
 
-tags_vec::iterator Tags::removeTag(tags_vec::iterator &it)
+tag_vec::iterator tag_vec::remove(tag_vec::iterator &it)
 {
     return _tags.erase(it);
 }
 
-bool Tags::removeTags(const tags_vec &tags)
-{
-    bool one_failed = false;
-
-    for (auto it = tags.begin(); it != tags.end(); it++) {
-        bool r = removeTag(*it);
-
-        if (!r) {
-            one_failed = true;
-        }
-    }
-
-    return !one_failed;
-}
-
-tags_vec::iterator Tags::begin()
+tag_vec::iterator tag_vec::begin()
 {
     return _tags.begin();
 }
 
-tags_vec::const_iterator Tags::begin() const
+tag_vec::const_iterator tag_vec::begin() const
 {
     return _tags.cbegin();
 }
 
-tags_vec::iterator Tags::end()
+tag_vec::iterator tag_vec::end()
 {
     return _tags.end();
 }
 
-tags_vec::const_iterator Tags::end() const
+tag_vec::const_iterator tag_vec::end() const
 {
     return _tags.cend();
 }
 
-std::string Tags::toString() const
+std::string tag_vec::to_string() const
 {
     fmt::Writer w;
-    bool first = false;
+    bool first = true;
+
+    w.Format("[");
+
     for (auto &it : _tags) {
         if (first) {
-            w.Format("[{}: {}")
+            w.Format("{}: {}")
                 << std::to_string(it.id())
                 << it.name();
+            first = false;
         } else {
             w.Format(", {}: {}")
                 << std::to_string(it.id())
@@ -197,16 +155,16 @@ std::string Tags::toString() const
     return w.str();
 }
 
-Tags &Tags::operator=(const Tags &t)
+tag_vec &tag_vec::operator=(const tag_vec &t)
 {
     _tags = t._tags;
 
     return *this;
 }
-} /* Eater */
+} /* eater */
 
-std::ostream &operator<<(std::ostream &os, const Eater::Tags &tags)
+std::ostream &operator<<(std::ostream &os, const eater::tag_vec &tag_vec)
 {
-    return os << tags.toString();
+    return os << tag_vec.to_string();
 }
 

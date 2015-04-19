@@ -1,41 +1,41 @@
-#ifndef EATER_DB_HPP_
-#define EATER_DB_HPP_
+#ifndef EATER_db_t_HPP_
+#define EATER_db_t_HPP_
 
 #include <string>
 #include <exception>
 #include "eater/common.hpp"
 #include "eater/sqlinterface.hpp"
 
-namespace Eater
+namespace eater
 {
-class FoodItem;
-class Tags;
-class Tag;
+class food_item_t;
+class tag_vec;
+class tag_t;
 
 /**
  * Database handeling for eater.
  *
  * Functions inside of Unsafe are as the name implies are unsafe, the same goes fore Safe.
  */
-class DB {
+class db_t {
  public:
-    class BaseException : public std::exception {
+    class base_exception : public std::exception {
      private:
-        std::string _msg;
+        str _msg;
 
      public:
-        explicit BaseException(const std::string &msg);
+        explicit base_exception(const str &msg);
         virtual const char* what() const throw();
     };
 
-    class NotFound : public BaseException {
+    class not_found : public base_exception {
      public:
-        explicit NotFound(const std::string &msg);
+        explicit not_found(const str &msg);
     };
 
-    class ExistsAlready : public BaseException {
+    class exists_already : public base_exception {
      public:
-        explicit ExistsAlready(const std::string &msg);
+        explicit exists_already(const str &msg);
     };
 
     /**
@@ -46,11 +46,11 @@ class DB {
      * An example can be that inserts can and will insert duplicates and if id to the
      * item already exists in the database, breakage will insure.
      */
-    class Unsafe {
-        friend class DB;
+    class unsafe_t {
+        friend class db_t;
      private:
-        Unsafe();
-        void init(DB *db);
+        unsafe_t();
+        void init(db_t *db);
      public:
         /**
          * Inserts a tag.
@@ -60,7 +60,7 @@ class DB {
          *
          * \param tag Tag to insert.
          */
-        void insertTag(Tag *tag);
+        void insert(tag_t *tag);
 
         /**
          * Insert fooditem.
@@ -69,32 +69,31 @@ class DB {
          *
          * \param it Item to insert.
          */
-        void insertFood(FoodItem *it);
+        void insert(food_item_t *it);
 
      private:
-        DB *_db;
+        db_t *_db;
 
     } unsafe;
 
-    class Safe {
-        friend class DB;
+    class safe_t {
+        friend class db_t;
      private:
-        Safe();
-        void init(DB *db);
+        safe_t();
+        void init(db_t *db);
 
      public:
-        void inserTag(Tag *tag);
-        void insertFood(FoodItem *it);
+        void insert(tag_t *tag);
+        void insert(food_item_t *it);
 
      private:
-        DB *_db;
+        db_t *_db;
     } safe;
 
 
-    friend class Safe;
-    friend class Unsafe;
+    friend class unsafe_t;
+    friend class safe_t;
  public:
-
 
  public:
     /**
@@ -103,14 +102,14 @@ class DB {
      * \see init
      * \param location Location of database.
      */
-    DB(const std::string &location);
+    db_t(const str &location);
 
     /**
      * Check if a table exists.
      *
      * \param tbl_name Table name.
      */
-    bool tableExists(const std::string &tbl_name);
+    bool table_exists(const str &tbl_name);
 
     /**
      * Initializes all tables.
@@ -126,8 +125,8 @@ class DB {
      * \param col Column.
      * \return If the column is not a id we get undefined behavior.
      */
-    id_t getLastId(const std::string &tbl,
-                   const std::string &col);
+    id_t get_last_id(const str &tbl,
+                     const str &col);
 
     /**** Tag *****************************************************************/
 
@@ -136,39 +135,39 @@ class DB {
      *
      * \param tag Name of tag.
      */
-    bool tagExists(const std::string &tag);
+    bool tag_exists(const str &tag);
 
     /**
      * Query if a tag exists by its id.
      *
      * \param id Id of tag.
      */
-    bool tagExists(id_t id);
+    bool tag_exists(id_t id);
 
     /**
      * Gets the tags id by its name.
      *
      * \param tag Name of tag.
-     * \throws DBNotFound
+     * \throws db_tNotFound
      * \return id of tag.
      */
-    id_t getTagId(const std::string &tag);
+    id_t get_tag_id(const str &tag);
 
     /**
      * Gets the tags name from its id.
      *
      * \param id Id of tag.
-     * \throws DBNotFound
+     * \throws db_tNotFound
      * \return name of the tag.
      */
-    std::string getTagName(id_t id);
+    str get_tag_name(id_t id);
 
     /**
      * Removes a tag.
      *
      * \param id Id of tag to remove.
      */
-    void removeTag(id_t id);
+    void remove_tag(id_t id);
 
     /**
      * Rename tag.
@@ -178,12 +177,12 @@ class DB {
      *
      * \param tag Tag to rename.
      */
-    void renameTag(const Tag &tag);
+    void rename_tag(const tag_t &tag);
 
     /**** End of tags *********************************************************/
 
     /**** Fooditem ************************************************************/
-    bool foodExists(id_t id);
+    bool food_exists(id_t id);
 
     /**
      * Searches for a food by its name and brand.
@@ -191,31 +190,31 @@ class DB {
      * \param it Item to search for.
      * \return true if a food item with the same name and brand exists.
      */
-    bool foodExists(const FoodItem &it);
+    bool food_exists(const food_item_t &it);
 
 
 
  private:
-    Session sql;
+    session_t sql;
 
-    std::string col_id        = "id"; //!< Generic id column.
-    std::string col_name      = "name"; //!< Genereic name column.
+    str col_id        = "id"; //!< Generic id column.
+    str col_name      = "name"; //!< Genereic name column.
 
-    std::string tbl_fooditems = "food_items";
-    std::string col_brand     = "brand";
-    std::string col_date_time = "date_time";
-    std::string col_kcal      = "kcal";
-    std::string col_carbs     = "carbs";
-    std::string col_proteins  = "proteins";
-    std::string col_fats      = "fats";
+    str tbl_fooditems = "food_items";
+    str col_brand     = "brand";
+    str col_date_time = "date_time";
+    str col_kcal      = "kcal";
+    str col_carbs     = "carbs";
+    str col_proteins  = "proteins";
+    str col_fats      = "fats";
 
-    std::string tbl_tags      = "tags";
+    str tbl_tags      = "tags";
 
-    std::string tbl_food_tags = "food_tags";
-    std::string col_tag_id    = "tag_id";
-    std::string col_food_id   = "food_id";
+    str tbl_food_tags = "food_tags";
+    str col_tag_id    = "tag_id";
+    str col_food_id   = "food_id";
 };
-} /* Eater */
+} /* eater */
 
-#endif /* end of include guard: EATER_DB_HPP_ */
+#endif /* end of include guard: EATER_db_t_HPP_ */
 

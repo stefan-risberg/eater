@@ -7,8 +7,6 @@
 #include <sstream>
 #include <vector>
 #include <memory>
-//#include <sqlite3.h>
-#include <fstream>
 
 #define DEBUG
 #define COLOR
@@ -61,7 +59,7 @@
         return false;                    \
     }
 
-namespace Eater
+namespace eater
 {
 typedef uint64_t u64;
 typedef uint32_t u32;

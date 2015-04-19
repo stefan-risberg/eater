@@ -3,9 +3,9 @@
 
 #include "eater/common.hpp"
 
-namespace Eater
+namespace eater
 {
-class Time {
+class time_t {
  private:
     union
     {
@@ -16,12 +16,12 @@ class Time {
             u8 _hours;
             u8 _minutes;
             u8 _seconds;
-            u8 _milli_seconds;
+            u8 _ms;
         };
     };
 
  public:
-    Time(const std::string &time);
+    time_t(const std::string &time);
     /**
      * Set all time values.
      *
@@ -30,49 +30,49 @@ class Time {
      * \param s Seconds.
      * \param ms Milliseconds.
      */
-    Time(u8 h, u8 m, u8 s = 0, u8 ms = 0);
+    time_t(u8 h, u8 m, u8 s = 0, u8 ms = 0);
 
     /**
-     * Timeformat is 8 bits for all time values and they are in order:
+     * time_tformat is 8 bits for all time values and they are in order:
      *
      * 8-bit hour : 8-bit minute : 8-bit second : 8-bit millisecond
      *
-     * \param t Time.
+     * \param t time_t.
      */
-    Time(u32 t);
+    time_t(u32 t);
 
     /**
      * Default constructor.
      */
-    Time();
+    time_t();
 
-    void hours(u8 h);
-    void minutes(u8 m);
-    void seconds(u8 s);
-    void milliSeconds(u8 ms);
+    void h(u8 h);
+    void m(u8 m);
+    void s(u8 s);
+    void ms(u8 ms);
     void set(u32 t);
     void set(u8 h, u8 m, u8 s = 0, u8 ms = 0);
     void now();
 
-    u8 hours() const;
-    u8 minutes() const;
-    u8 seconds() const;
-    u8 milliSeconds() const;
+    u8 h() const;
+    u8 m() const;
+    u8 s() const;
+    u8 ms() const;
     u32 get() const;
 
-    bool fromString(const std::string &time);
-    std::string toString() const;
+    bool from_string(const std::string &time);
+    std::string to_string() const;
 
-    bool operator<(const Time &t) const;
-    bool operator<=(const Time &t) const;
-    bool operator>(const Time &t) const;
-    bool operator>=(const Time &t) const;
-    bool operator==(const Time &t) const;
-    bool operator!=(const Time &t) const;
+    bool operator<(const time_t &t) const;
+    bool operator<=(const time_t &t) const;
+    bool operator>(const time_t &t) const;
+    bool operator>=(const time_t &t) const;
+    bool operator==(const time_t &t) const;
+    bool operator!=(const time_t &t) const;
 };
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::Time &t);
-std::istream &operator>>(std::istream &is, Eater::Time &t);
+std::ostream &operator<<(std::ostream &os, const eater::time_t &t);
+std::istream &operator>>(std::istream &is, eater::time_t &t);
 
 #endif /* EATER_TIME_HPP_ */

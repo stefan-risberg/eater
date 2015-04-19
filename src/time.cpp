@@ -4,78 +4,78 @@
 #include <format.h>
 #include <ctime>
 
-namespace Eater
+namespace eater
 {
-Time::Time(const std::string &time)
+time_t::time_t(const std::string &time)
 {
-    if (!fromString(time)) {
+    if (!from_string(time)) {
         set(0, 0, 0, 0);
     }
 }
 
-Time::Time(u8 h, u8 m, u8 s, u8 ms)
+time_t::time_t(u8 h, u8 m, u8 s, u8 ms)
 {
     set(h, m, s, ms);
 }
 
-Time::Time(u32 t)
+time_t::time_t(u32 t)
 {
     set(t);
 }
 
-Time::Time() : Time(0, 0, 0, 0)
+time_t::time_t() : time_t(0, 0, 0, 0)
 {
 }
 
-void Time::hours(u8 h)
+void time_t::h(u8 h)
 {
     _hours = h;
 }
 
-void Time::minutes(u8 m)
+void time_t::m(u8 m)
 {
-    for (; m >= 60; hours(hours() + 1)) {
+    for (; m >= 60; h(h() + 1)) {
         m -= 60;
     }
     _minutes = m;
 }
 
-void Time::seconds(u8 s)
+void time_t::s(u8 s)
 {
-    for (; s >= 60; minutes(minutes() + 1)) {
+    for (; s >= 60; m(m() + 1)) {
         s -= 60;
     }
 
     _seconds = s;
 }
 
-void Time::milliSeconds(u8 ms)
+void time_t::ms(u8 ms)
 {
-    for (; ms >= 10; seconds(seconds() + 1)) {
+    for (; ms >= 10; s(s() + 1)) {
         ms -= 10;
     }
 
-    _milli_seconds = ms;
+    _ms = ms;
 }
 
-void Time::set(u32 t)
+void time_t::set(u32 t)
 {
     _value = t;
-    hours(_hours);
-    minutes(_minutes);
-    seconds(_seconds);
-    milliSeconds(_milli_seconds);
+    // We do this to validate so that minutes isn't bigger then 60.
+    m(_minutes);
+    s(_seconds);
+    ms(_ms);
 }
 
-void Time::set(u8 h, u8 m, u8 s, u8 ms)
+void time_t::set(u8 h, u8 m, u8 s, u8 ms)
 {
-    hours(h);
-    minutes(m);
-    seconds(s);
-    milliSeconds(ms);
+    this->h(h);
+    this->m(m);
+    this->s(s);
+    this->ms(ms);
 }
 
-void Time::now()
+void time_t::now()
 {
     std::time_t t = std::time(0);
     struct std::tm *n = std::localtime(&t);
@@ -85,56 +85,56 @@ void Time::now()
         n->tm_sec);
 }
 
-u8 Time::hours() const
+u8 time_t::h() const
 {
     return _hours;
 }
 
-u8 Time::minutes() const
+u8 time_t::m() const
 {
     return _minutes;
 }
 
-u8 Time::seconds() const
+u8 time_t::s() const
 {
     return _seconds;
 }
 
-u8 Time::milliSeconds() const
+u8 time_t::ms() const
 {
-    return _milli_seconds;
+    return _ms;
 }
 
-u32 Time::get() const
+u32 time_t::get() const
 {
     return _value;
 }
 
-bool Time::fromString(const std::string &time)
+bool time_t::from_string(const std::string &time)
 {
     std::string t = "";
     u32 state = 0;
 
     for (auto c : time) {
         if (c == ':' || c == '.') {
-            u32 val = convStrToInt<u32>(t);
+            u32 val = std::stoi(t);
             t = "";
 
             switch (state) {
                 case 0:
-                    hours(val);
+                    h(val);
                     state++;
                     break;
                 case 1:
-                    minutes(val);
+                    m(val);
                     state++;
                     break;
                 case 2:
-                    seconds(val);
+                    s(val);
                     state++;
                     break;
                 case 3:
-                    std::cout << "Time format was wrong.\n";
+                    std::cout << "time_t format was wrong.\n";
                     std::cout << "Format: " << time << std::endl;
 
                     return false;
@@ -144,7 +144,7 @@ bool Time::fromString(const std::string &time)
         } else if (c >= '0' && c <= '9') {
             t += c;
         } else {
-            std::cout << "Time format was wrong.\n";
+            std::cout << "time_t format was wrong.\n";
             std::cout << "Format: " << time;
             std::cout << " Last read char: " << c << std::endl;
 
@@ -152,15 +152,15 @@ bool Time::fromString(const std::string &time)
         }
     }
 
-    u32 val = convStrToInt<u32>(t);
+    u32 val = std::stoi(t);
 
     if (state == 2) {
-        seconds(val);
-        milliSeconds(0);
+        s(val);
+        ms(0);
     } else if (state == 3) {
-        milliSeconds(val);
+        ms(val);
     } else if (state < 3) {
-        std::cout << "Time format was wrong.\n";
+        std::cout << "time_t format was wrong.\n";
         std::cout << "Format: " << time << std::endl;
 
         return false;
@@ -173,53 +173,53 @@ bool Time::fromString(const std::string &time)
     return true;
 }
 
-std::string Time::toString() const
+std::string time_t::to_string() const
 {
     fmt::Writer f;
     auto add = [&f] (i32 in) {
         in < 10 ? f.Format(":0{}") << in : f.Format(":{}") << in;
     };
 
-    f.Format("{}") << (i32)hours();
-    add(minutes());
-    add(seconds());
+    f.Format("{}") << (i32)h();
+    add(m());
+    add(s());
     return f.str();
 }
 
-bool Time::operator<(const Time &t) const
+bool time_t::operator<(const time_t &t) const
 {
     return _value < t._value;
 }
 
-bool Time::operator<=(const Time &t) const
+bool time_t::operator<=(const time_t &t) const
 {
     return _value <= t._value;
 }
 
-bool Time::operator>(const Time &t) const
+bool time_t::operator>(const time_t &t) const
 {
     return _value > t._value;
 }
 
-bool Time::operator>=(const Time &t) const
+bool time_t::operator>=(const time_t &t) const
 {
     return _value >= t._value;
 }
 
-bool Time::operator==(const Time &t) const
+bool time_t::operator==(const time_t &t) const
 {
     return _value == t._value;
 }
 
-bool Time::operator!=(const Time &t) const
+bool time_t::operator!=(const time_t &t) const
 {
     return _value != t._value;
 }
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::Time &t)
+std::ostream &operator<<(std::ostream &os, const eater::time_t &t)
 {
-    return os << t.toString();
+    return os << t.to_string();
 }
 
 namespace
@@ -243,7 +243,7 @@ state inc(state const i)
 
 }
 
-std::istream &operator>>(std::istream &is, Eater::Time &t)
+std::istream &operator>>(std::istream &is, eater::time_t &t)
 {
     auto at = HOUR;
     std::string time, h = "", m = "", s = "";

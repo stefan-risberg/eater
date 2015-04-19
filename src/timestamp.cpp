@@ -1,33 +1,30 @@
 #include "eater/timestamp.hpp"
 #include <ctime>
 
-namespace Eater
+namespace eater
 {
-TimeStamp::TimeStamp() : date(), time()
+time_stamp_t::time_stamp_t() : date(), time()
+{}
+
+time_stamp_t::time_stamp_t(const date_t &d, const time_t &t) : date(d), time(t)
+{}
+
+time_stamp_t::time_stamp_t(u32 d, u32 t) : date(d), time(t)
+{}
+
+time_stamp_t::time_stamp_t(u64 ts)
 {
+    set(ts);
 }
 
-TimeStamp::TimeStamp(const Date &d, const Time &t) : date(d), time(t)
-{
-}
-
-TimeStamp::TimeStamp(u32 d, u32 t) : date(d), time(t)
-{
-}
-
-TimeStamp::TimeStamp(u64 ts)
-{
-    setTimeStamp(ts);
-}
-
-void TimeStamp::now()
+void time_stamp_t::now()
 {
     date.now();
     time.now();
 }
 
 
-void TimeStamp::setTimeStamp(u64 ts)
+void time_stamp_t::set(u64 ts)
 {
     u32 t = 0x00000000FFFFFFFF & ts;
     u32 d = ts >> 32;
@@ -35,20 +32,20 @@ void TimeStamp::setTimeStamp(u64 ts)
     time.set(t);
 }
 
-void TimeStamp::setTimeStamp(const TimeStamp &ts)
+void time_stamp_t::set(const time_stamp_t &ts)
 {
     date = ts.date;
     time = ts.time;
 }
 
-void TimeStamp::setTimeStamp(u32 d, u32 t)
+void time_stamp_t::set(u32 d, u32 t)
 {
     date.set(d);
     time.set(t);
 }
 
 
-u64 TimeStamp::getTimeStamp() const
+u64 time_stamp_t::get() const
 {
     u64 ts = date.get();
     ts = ts << 32;
@@ -56,12 +53,12 @@ u64 TimeStamp::getTimeStamp() const
     return ts;
 }
 
-std::string TimeStamp::toString() const
+std::string time_stamp_t::to_string() const
 {
-    return date.toString() + " " + time.toString();
+    return date.to_string() + " " + time.to_string();
 }
 
-bool TimeStamp::operator<(const TimeStamp &ts) const
+bool time_stamp_t::operator<(const time_stamp_t &ts) const
 {
     if (date < ts.date) {
         return true;
@@ -72,7 +69,7 @@ bool TimeStamp::operator<(const TimeStamp &ts) const
     return false;
 }
 
-bool TimeStamp::operator<=(const TimeStamp &ts) const
+bool time_stamp_t::operator<=(const time_stamp_t &ts) const
 {
     if (date <= ts.date) {
         return true;
@@ -83,7 +80,7 @@ bool TimeStamp::operator<=(const TimeStamp &ts) const
     return false;
 }
 
-bool TimeStamp::operator>(const TimeStamp &ts) const
+bool time_stamp_t::operator>(const time_stamp_t &ts) const
 {
     if (date > ts.date) {
         return true;
@@ -94,7 +91,7 @@ bool TimeStamp::operator>(const TimeStamp &ts) const
     return false;
 }
 
-bool TimeStamp::operator>=(const TimeStamp &ts) const
+bool time_stamp_t::operator>=(const time_stamp_t &ts) const
 {
     if (date >= ts.date) {
         return true;
@@ -105,7 +102,7 @@ bool TimeStamp::operator>=(const TimeStamp &ts) const
     return false;
 }
 
-bool TimeStamp::operator==(const TimeStamp &ts) const
+bool time_stamp_t::operator==(const time_stamp_t &ts) const
 {
     if (date == ts.date && time == ts.time) {
         return true;
@@ -114,7 +111,7 @@ bool TimeStamp::operator==(const TimeStamp &ts) const
     return false;
 }
 
-bool TimeStamp::operator!=(const TimeStamp &ts) const
+bool time_stamp_t::operator!=(const time_stamp_t &ts) const
 {
     if (date != ts.date || time != ts.time) {
         return true;
@@ -124,12 +121,12 @@ bool TimeStamp::operator!=(const TimeStamp &ts) const
 }
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::TimeStamp &ts)
+std::ostream &operator<<(std::ostream &os, const eater::time_stamp_t &ts)
 {
     return os << ts.date << " " << ts.time;
 }
 
-std::istream &operator>>(std::istream &is, Eater::TimeStamp &ts)
+std::istream &operator>>(std::istream &is, eater::time_stamp_t &ts)
 {
     return is >> ts.date >> ts.time;
 }

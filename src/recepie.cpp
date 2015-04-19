@@ -1,6 +1,6 @@
 #include "eater/recepie.hpp"
 
-namespace Eater
+namespace eater
 {
 Recepie::Recepie() : _id(-1), _name(""), mn(0.0, 0.0, 0.0, 0.0)
 {
@@ -54,7 +54,7 @@ std::string Recepie::name() const
     return _name;
 }
 
-bool Recepie::foodExists(const FoodItem &food) const
+bool Recepie::foodExists(const food_item_t &food) const
 {
     for (auto f : _foods) {
         if (f.item.id() == food.id()) {
@@ -93,7 +93,7 @@ bool Recepie::addFoods(const amount_vec &foods)
     return added_one;
 }
 
-bool Recepie::removeFood(const FoodItem &food)
+bool Recepie::removeFood(const food_item_t &food)
 {
     for (auto it = _foods.begin(); it != _foods.end(); it++) {
         if (it->item.id() == food.id()) {
@@ -120,7 +120,7 @@ bool Recepie::removeFoods(const food_vec &_foods)
     return found_one;
 }
 
-bool Recepie::modifyFood(const FoodItem &food, const u32 amount)
+bool Recepie::modifyFood(const food_item_t &food, const u32 amount)
 {
     for (auto a : _foods) {
         if (a.item.id() == food.id()) {
@@ -135,7 +135,7 @@ bool Recepie::modifyFood(const FoodItem &food, const u32 amount)
     return false;
 }
 
-void Recepie::changeNutrients(const FoodItem &item, u32 amount)
+void Recepie::changeNutrients(const food_item_t &item, u32 amount)
 {
     auto mn = item.mn;
     auto a = mn.calories();

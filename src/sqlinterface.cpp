@@ -1,12 +1,12 @@
 #include "eater/sqlinterface.hpp"
 
-namespace Eater
+namespace eater
 {
 
-Statement::Statement(std::shared_ptr<sqlite3> &db, sqlite3_stmt *st)
+statement_t::statement_t(std::shared_ptr<sqlite3> &db, sqlite3_stmt *st)
 {
     if (st == nullptr) {
-        throw SqlException("Tried to initialize statement with null.");
+        throw sql_exception("Tried to initialize statement with null.");
     }
 
     this->st = st;
@@ -14,90 +14,90 @@ Statement::Statement(std::shared_ptr<sqlite3> &db, sqlite3_stmt *st)
     this->db = db;
 }
 
-Statement::~Statement()
+statement_t::~statement_t()
 {
     sqlite3_finalize(st);
 }
 
-Sql::Status Statement::step()
+sql::status_t statement_t::step()
 {
     if (st == nullptr) {
-        return Sql::ERROR;
+        return sql::ERROR;
     }
 
     auto r = sqlite3_step(st);
 
     switch(r) {
-    case SQLITE_OK: last_status = Sql::OK; break;
-    case SQLITE_ERROR: last_status = Sql::ERROR; break;
-    case SQLITE_BUSY: last_status = Sql::BUSY; break;
-    case SQLITE_FULL: last_status = Sql::FULL; break;
-    case SQLITE_ROW: last_status = Sql::ROW; break;
-    case SQLITE_DONE: last_status = Sql::DONE; break;
-    default: last_status = Sql::OTHER;
+    case SQLITE_OK: last_status = sql::OK; break;
+    case SQLITE_ERROR: last_status = sql::ERROR; break;
+    case SQLITE_BUSY: last_status = sql::BUSY; break;
+    case SQLITE_FULL: last_status = sql::FULL; break;
+    case SQLITE_ROW: last_status = sql::ROW; break;
+    case SQLITE_DONE: last_status = sql::DONE; break;
+    default: last_status = sql::OTHER;
     }
 
     return last_status;
 }
 
-Sql::Type Statement::getType(i32 col)
+sql::type_t statement_t::get_type(i32 col)
 {
-    validateBeforeGet(col);
+    val_before_get(col);
 
     switch(sqlite3_column_type(st, col)) {
-    case SQLITE_INTEGER: return Sql::INTEGER;
-    case SQLITE_FLOAT: return Sql::DOUBLE;
-    case SQLITE_TEXT: return Sql::TEXT;
-    case SQLITE_BLOB: return Sql::BLOB;
-    default: return Sql::NONE;
+    case SQLITE_INTEGER: return sql::INTEGER;
+    case SQLITE_FLOAT: return sql::DOUBLE;
+    case SQLITE_TEXT: return sql::TEXT;
+    case SQLITE_BLOB: return sql::BLOB;
+    default: return sql::NONE;
     }
 }
 
-i32 Statement::getInt(i32 col)
+i32 statement_t::get_int(i32 col)
 {
-    validateBeforeGet(col);
+    val_before_get(col);
     return sqlite3_column_int(st, col);
 }
 
-f64 Statement::getDouble(i32 col)
+f64 statement_t::get_double(i32 col)
 {
-    validateBeforeGet(col);
+    val_before_get(col);
     return sqlite3_column_double(st, col);
 }
 
-std::string Statement::getStr(i32 col)
+std::string statement_t::get_str(i32 col)
 {
-    validateBeforeGet(col);
+    val_before_get(col);
     return std::string(
         reinterpret_cast<const char *> (sqlite3_column_text(st, col)));
 }
 
-void Statement::validateBeforeGet(i32 col)
+void statement_t::val_before_get(i32 col)
 {
     if (st == nullptr) {
-        throw SqlException("No prepared statement.");
+        throw sql_exception("No prepared statement.");
     }
 
-    if (last_status != Sql::ROW) {
-        throw SqlException("No row to extract data from.");
+    if (last_status != sql::ROW) {
+        throw sql_exception("No row to extract data from.");
     }
 
     if (col >= col_count) {
-        throw SqlException("Out of bounds on columns.");
+        throw sql_exception("Out of bounds on columns.");
     }
 }
 
-Session::Session()
+session_t::session_t()
 {}
 
-Session::Session(const std::string &db)
+session_t::session_t(const std::string &db)
 {
     if (!open(db)) {
-        throw SqlException("Faild to open database " + db);
+        throw sql_exception("Faild to open database " + db);
     }
 }
 
-bool Session::open(const std::string &db)
+bool session_t::open(const std::string &db)
 {
     sqlite3 *tmp = nullptr;
     int r = sqlite3_open(db.c_str(), &tmp);
@@ -110,32 +110,31 @@ bool Session::open(const std::string &db)
     return true;
 }
 
-Statement Session::prepare(const std::string &query)
+statement_t session_t::prepare(const std::string &query)
 {
     sqlite3_stmt *st = nullptr;
     int r = sqlite3_prepare_v2(db.get(), query.c_str(), -1, &st, nullptr);
 
     if (r != SQLITE_OK) {
-        throw SqlException("Faild to prepare statement: " + query + ".");
+        throw sql_exception("Faild to prepare statement: " + query + ".");
     }
 
-    return Statement(db, st);
+    return statement_t(db, st);
 }
 
-i64 Session::lastRowInsertRowId()
+i64 session_t::lastRowInsertRowId()
 {
     return sqlite3_last_insert_rowid(db.get());
 }
 
-void Session::operator<< (const std::string &query)
+void session_t::operator<< (const std::string &query)
 {
     auto s = prepare(query);
 
-    if (s.step() != Sql::DONE) {
-        throw SqlException("Query wasn't done after one step..");
+    if (s.step() != sql::DONE) {
+        throw sql_exception("Query wasn't done after one step..");
     }
 }
 
-} /* Eater */
+} /* eater */
 
-#undef CHECK_FOR_GET

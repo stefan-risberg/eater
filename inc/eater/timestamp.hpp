@@ -5,45 +5,45 @@
 #include "eater/time.hpp"
 #include "eater/date.hpp"
 
-namespace Eater
+namespace eater
 {
 /**
  * A time stamp.
  */
-class TimeStamp
+class time_stamp_t
 {
    public:
-    Date date;  //!< Date of time stamp.
-    Time time;  //!< Time of time stamp.
+    date_t date;  //!< date_t of time stamp.
+    time_t time;  //!< time_t of time stamp.
 
    public:
     /**
      * Default contructor.
      */
-    TimeStamp();
+    time_stamp_t();
 
     /**
      * Set time and date for time stamp.
      *
-     * \param t Time.
-     * \param d Date.
+     * \param t time_t.
+     * \param d date_t.
      */
-    TimeStamp(const Date &d, const Time &t);
+    time_stamp_t(const date_t &d, const time_t &t);
 
     /**
      * Set time and date for time stamp.
      *
-     * \param t Time.
-     * \param d Date.
+     * \param t time_t.
+     * \param d date_t.
      */
-    TimeStamp(u32 d, u32 t);
+    time_stamp_t(u32 d, u32 t);
 
     /**
      * Set time and date for new timestamp.
      *
-     * \param ts Timestamp.
+     * \param ts time_tstamp.
      */
-    TimeStamp(u64 ts);
+    time_stamp_t(u64 ts);
 
     /**
      * Set timestamp to current time.
@@ -55,33 +55,33 @@ class TimeStamp
      *
      * \param ts New timestamp.
      */
-    void setTimeStamp(u64 ts);
+    void set(u64 ts);
 
     /**
      * Set new timestamp.
      *
      * \param ts New timestamp.
      */
-    void setTimeStamp(const TimeStamp &ts);
+    void set(const time_stamp_t &ts);
 
     /**
      * Set new timestamp.
      *
      * \param d New date.
-     * \param t New Time.
+     * \param t New time_t.
      */
-    void setTimeStamp(u32 d, u32 t);
+    void set(u32 d, u32 t);
 
     /**
      * Query the timestamp as a 64 bit integer.
      *
      * The first 32 bits are the date and the remaining are the time.
      *
-     * \return Timestamp as a 64 bit integer.
-     * \see Time
-     * \see Date
+     * \return time_tstamp as a 64 bit integer.
+     * \see time_t
+     * \see date_t
      */
-    u64 getTimeStamp() const;
+    u64 get() const;
 
     /**
      * Query for a string representation of the timestamp.
@@ -89,19 +89,19 @@ class TimeStamp
      * \return String representing timestamp.
      * \see ToString_trait
      */
-    std::string toString() const;
+    std::string to_string() const;
 
-    bool operator<(const TimeStamp &ts) const;
-    bool operator<=(const TimeStamp &ts) const;
-    bool operator>(const TimeStamp &ts) const;
-    bool operator>=(const TimeStamp &ts) const;
-    bool operator==(const TimeStamp &ts) const;
-    bool operator!=(const TimeStamp &ts) const;
+    bool operator<(const time_stamp_t &ts) const;
+    bool operator<=(const time_stamp_t &ts) const;
+    bool operator>(const time_stamp_t &ts) const;
+    bool operator>=(const time_stamp_t &ts) const;
+    bool operator==(const time_stamp_t &ts) const;
+    bool operator!=(const time_stamp_t &ts) const;
 };
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::TimeStamp &ts);
-std::istream &operator>>(std::istream &is, Eater::TimeStamp &ts);
+std::ostream &operator<<(std::ostream &os, const eater::time_stamp_t &ts);
+std::istream &operator>>(std::istream &is, eater::time_stamp_t &ts);
 
 #endif /* EATER_TIMESTAMP_HPP_ */
 

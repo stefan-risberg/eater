@@ -3,9 +3,9 @@
 
 #include "eater/common.hpp"
 
-namespace Eater
+namespace eater
 {
-class MacroNutrients
+class macro_nutrients_t
 {
    private:
     f32 _calories;
@@ -22,10 +22,10 @@ class MacroNutrients
      * \param _proteins Protein count for 100g.
      * \param _fats Fat count for 100g.
      */
-    MacroNutrients(f32 _calories = 0,
-                   f32 _carbohydrates = 0.0,
-                   f32 _proteins = 0.0,
-                   f32 _fats = 0.0);
+    macro_nutrients_t(f32 _calories = 0,
+                      f32 _carbohydrates = 0.0,
+                      f32 _proteins = 0.0,
+                      f32 _fats = 0.0);
 
     /**
      * Set all values of the MacroNutrient.
@@ -98,12 +98,12 @@ class MacroNutrients
      *
      * \return String representation.
      */
-    std::string toString() const;
+    std::string to_string() const;
 };
 }
 
-std::ostream &operator<<(std::ostream &os, const Eater::MacroNutrients &mn);
-std::istream &operator>>(std::istream &is, Eater::MacroNutrients &mn);
+std::ostream &operator<<(std::ostream &os, const eater::macro_nutrients_t &mn);
+std::istream &operator>>(std::istream &is, eater::macro_nutrients_t &mn);
 
 #endif /* EATER_NUTRIENTS_HPP_ */
 
