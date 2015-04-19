@@ -6,7 +6,7 @@ namespace eater
 statement_t::statement_t(std::shared_ptr<sqlite3> &db, sqlite3_stmt *st)
 {
     if (st == nullptr) {
-        throw sql_exception("Tried to initialize statement with null.");
+        throw sql_error("Tried to initialize statement with null.");
     }
 
     this->st = st;
@@ -75,15 +75,15 @@ std::string statement_t::get_str(i32 col)
 void statement_t::val_before_get(i32 col)
 {
     if (st == nullptr) {
-        throw sql_exception("No prepared statement.");
+        throw sql_error("No prepared statement.");
     }
 
     if (last_status != sql::ROW) {
-        throw sql_exception("No row to extract data from.");
+        throw sql_error("No row to extract data from.");
     }
 
     if (col >= col_count) {
-        throw sql_exception("Out of bounds on columns.");
+        throw sql_error("Out of bounds on columns.");
     }
 }
 
@@ -93,7 +93,7 @@ session_t::session_t()
 session_t::session_t(const std::string &db)
 {
     if (!open(db)) {
-        throw sql_exception("Faild to open database " + db);
+        throw sql_error("Faild to open database " + db);
     }
 }
 
@@ -116,7 +116,7 @@ statement_t session_t::prepare(const std::string &query)
     int r = sqlite3_prepare_v2(db.get(), query.c_str(), -1, &st, nullptr);
 
     if (r != SQLITE_OK) {
-        throw sql_exception("Faild to prepare statement: " + query + ".");
+        throw sql_error("Faild to prepare statement: " + query + ".");
     }
 
     return statement_t(db, st);
@@ -132,7 +132,7 @@ void session_t::operator<< (const std::string &query)
     auto s = prepare(query);
 
     if (s.step() != sql::DONE) {
-        throw sql_exception("Query wasn't done after one step..");
+        throw sql_error("Query wasn't done after one step..");
     }
 }
 

@@ -2,7 +2,7 @@
 #define EATER_db_t_HPP_
 
 #include <string>
-#include <exception>
+#include "eater/exception.hpp"
 #include "eater/common.hpp"
 #include "eater/sqlinterface.hpp"
 
@@ -19,25 +19,6 @@ class tag_t;
  */
 class db_t {
  public:
-    class base_exception : public std::exception {
-     private:
-        str _msg;
-
-     public:
-        explicit base_exception(const str &msg);
-        virtual const char* what() const throw();
-    };
-
-    class not_found : public base_exception {
-     public:
-        explicit not_found(const str &msg);
-    };
-
-    class exists_already : public base_exception {
-     public:
-        explicit exists_already(const str &msg);
-    };
-
     /**
      * Unsafe database handeling.
      *

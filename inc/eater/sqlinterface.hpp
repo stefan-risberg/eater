@@ -1,31 +1,16 @@
 #ifndef EATER_SQL_INTERFACE_HPP_
 #define EATER_SQL_INTERFACE_HPP_
 
+#include "eater/common.hpp"
+#include "eater/exception.hpp"
+
 #include <sqlite3.h>
 #include <memory>
 #include <string>
-#include <exception>
 
-#include "eater/common.hpp"
 
 namespace eater
 {
-
-class sql_exception : public std::exception {
- public:
-    explicit sql_exception(const str &msg)
-    {
-        this->_msg = msg;
-    }
-
-    virtual const char* what() const throw()
-    {
-        return _msg.c_str();
-    }
-
- private:
-    str _msg;
-};
 
 namespace sql
 {
