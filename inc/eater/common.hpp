@@ -82,22 +82,6 @@ typedef std::string str;
 
 typedef std::vector<id_t> id_vec;
 typedef std::vector<std::string> str_vec;
-
-template <class T>
-T convStrToInt(const std::string &number)
-{
-    try
-    {
-        T r = std::stoi(number);
-        return r;
-    }
-    catch (std::exception &e)
-    {
-        std::cerr << "Faild to convert to integer: " << number << "\n";
-
-        return 0;
-    }
-}
 }
 
 #endif /* EATER_COMMON_HPP_ */
