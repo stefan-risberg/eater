@@ -10,4 +10,4 @@ LIBS += ./lib/cppformat/libformat.a
 PROJECT_NAME = eater
 
 : foreach src/*.cpp |> !cc |>
-: $(BUILD_DIR)/*.o $(LIBS) |> $(CXX) -o %o %f $(GLOBAL_LIBS) |> $(PROJECT_NAME)
+: $(BUILD_DIR)/*.o $(LIBS) |> $(CXX) -o %o %f $(GLOBAL_LIBS) |> bin/$(PROJECT_NAME)

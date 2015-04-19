@@ -1,7 +1,9 @@
 build
+bin
 doc
 *.swp
 *.pyc
 .tup
 *.lib
+*.a
 *.o
