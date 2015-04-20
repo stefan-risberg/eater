@@ -195,6 +195,10 @@ class db_t {
     str col_tag_id    = "tag_id";
     str col_food_id   = "food_id";
 };
+
+typedef std::shared_ptr<db_t> shared_db_t;
+typedef std::weak_ptr<db_t> weak_db_t;
+
 } /* eater */
 
 #endif /* end of include guard: EATER_db_t_HPP_ */

@@ -116,6 +116,9 @@ class session_t {
     std::shared_ptr<sqlite3> db = nullptr;
 };
 
+typedef std::shared_ptr<session_t> shared_session_t;
+typedef std::weak_ptr<session_t> weak_session_t;
+
 } /* eater */
 
 #endif /* end of include guard: EATER_SQL_INTERFACE_HPP_ */
