@@ -52,7 +52,7 @@ class date_t {
      *
      * \param date date.
      */
-    date_t(const std::string &date);
+    date_t(const str &date);
 
     /**
      * Set new date.
@@ -130,14 +130,14 @@ class date_t {
      * \param d New date.
      * \return False if date was in wrong format.
      */
-    bool from_string(const std::string &date);
+    bool from_str(const str &date);
 
     /**
      * Resturn date as a string.
      *
      * \return date.
      */
-    std::string to_string() const;
+    str to_str() const;
 
     bool operator<(const date_t &t) const;
     bool operator<=(const date_t &t) const;

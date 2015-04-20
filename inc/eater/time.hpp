@@ -21,7 +21,7 @@ class time_t {
     };
 
  public:
-    time_t(const std::string &time);
+    time_t(const str &time);
     /**
      * Set all time values.
      *
@@ -60,8 +60,8 @@ class time_t {
     u8 ms() const;
     u32 get() const;
 
-    bool from_string(const std::string &time);
-    std::string to_string() const;
+    bool from_str(const str &time);
+    str to_str() const;
 
     bool operator<(const time_t &t) const;
     bool operator<=(const time_t &t) const;

@@ -6,9 +6,9 @@
 
 namespace eater
 {
-time_t::time_t(const std::string &time)
+time_t::time_t(const str &time)
 {
-    if (!from_string(time)) {
+    if (!from_str(time)) {
         set(0, 0, 0, 0);
     }
 }
@@ -110,9 +110,9 @@ u32 time_t::get() const
     return _value;
 }
 
-bool time_t::from_string(const std::string &time)
+bool time_t::from_str(const str &time)
 {
-    std::string t = "";
+    str t = "";
     u32 state = 0;
 
     for (auto c : time) {
@@ -173,7 +173,7 @@ bool time_t::from_string(const std::string &time)
     return true;
 }
 
-std::string time_t::to_string() const
+str time_t::to_str() const
 {
     fmt::Writer f;
     auto add = [&f] (i32 in) {
@@ -219,7 +219,7 @@ bool time_t::operator!=(const time_t &t) const
 
 std::ostream &operator<<(std::ostream &os, const eater::time_t &t)
 {
-    return os << t.to_string();
+    return os << t.to_str();
 }
 
 namespace
@@ -246,7 +246,7 @@ state inc(state const i)
 std::istream &operator>>(std::istream &is, eater::time_t &t)
 {
     auto at = HOUR;
-    std::string time, h = "", m = "", s = "";
+    eater::str time, h = "", m = "", s = "";
     is >> time;
 
     for (size_t i = 0; i < time.length(); i++) {

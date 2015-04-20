@@ -89,7 +89,7 @@ class time_stamp_t
      * \return String representing timestamp.
      * \see ToString_trait
      */
-    std::string to_string() const;
+    str to_str() const;
 
     bool operator<(const time_stamp_t &ts) const;
     bool operator<=(const time_stamp_t &ts) const;

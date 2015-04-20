@@ -1,4 +1,5 @@
 #include "eater/nutrients.hpp"
+#include <format.h>
 
 namespace eater
 {
@@ -76,13 +77,17 @@ f32 macro_nutrients_t::fats() const
     return _fats;
 }
 
-std::string macro_nutrients_t::to_string() const
+str macro_nutrients_t::to_str() const
 {
-    std::stringstream ss;
-    ss << "Kcal: " << calories() << " Proteins: " << proteins()
-       << " Carbohydrates: " << carbohydrates() << " Fats: " << fats();
+    fmt::Writer w;
+    w.Format("Kcal: {}, Carbohydrates: {}, "
+             "Proteins: {}, Fats: {}.")
+        << calories()
+        << carbohydrates()
+        << proteins()
+        << fats();
 
-    return ss.str();
+    return w.str();
 }
 }
 

@@ -52,7 +52,7 @@ void db_t::unsafe_t::insert(food_item_t *it)
         << _db->col_proteins
         << _db->col_fats
         << it->id()
-        << it->ts.to_string()
+        << it->ts.to_str()
         << it->name()
         << it->brand()
         << it->mn.calories()

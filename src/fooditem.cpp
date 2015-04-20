@@ -1,5 +1,6 @@
 #include "eater/fooditem.hpp"
 #include "eater/timestamp.hpp"
+#include <format.h>
 
 namespace eater
 {
@@ -7,7 +8,7 @@ food_item_t::food_item_t() : _id(-1), _name(""), _brand("")
 {
 }
 
-food_item_t::food_item_t(const std::string &_name, const std::string &_brand)
+food_item_t::food_item_t(const str &_name, const str &_brand)
     : _id(-1), _name(_name), _brand(_brand)
 {
 }
@@ -37,12 +38,12 @@ void food_item_t::id(const id_t _id)
     this->_id = _id;
 }
 
-void food_item_t::name(const std::string &_name)
+void food_item_t::name(const str &_name)
 {
     this->_name = _name;
 }
 
-void food_item_t::brand(const std::string &_brand)
+void food_item_t::brand(const str &_brand)
 {
     this->_brand = _brand;
 }
@@ -52,26 +53,28 @@ id_t food_item_t::id() const
     return _id;
 }
 
-std::string food_item_t::name() const
+str food_item_t::name() const
 {
     return _name;
 }
 
-std::string food_item_t::brand() const
+str food_item_t::brand() const
 {
     return _brand;
 }
 
-std::string food_item_t::to_string() const
+str food_item_t::to_str() const
 {
-    std::stringstream ss;
-    ss << id() << " - " << ts.to_string() << "\n\t"
-       << "Name: " << name() << "\n\t"
-       << "Brand: " << brand() << "\n\t"
-       << "Tags: " << tags.to_string() << "\n\t"
-       << "Macro: " << mn.to_string();
+    fmt::Writer w;
+    w.Format("{} - {}\n"
+             "Name: {}\n"
+             "Brand: {}\n"
+             "Tags: {}\n"
+             "Macro: {}\n")
+        << id() << ts.to_str() << name() << brand()
+        << tags.to_str() << mn.to_str();
 
-    return ss.str();
+    return w.str();
 }
 
 food_item_t &food_item_t::operator=(const food_item_t &it)

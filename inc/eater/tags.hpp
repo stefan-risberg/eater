@@ -11,18 +11,18 @@ namespace eater
 class tag_t {
  private:
     id_t _id;
-    std::string _name;
+    str _name;
 
  public:
     tag_t();
-    tag_t(const std::string &name);
-    tag_t(id_t id, const std::string &name);
+    tag_t(const str &name);
+    tag_t(id_t id, const str &name);
 
     void id(id_t id);
     id_t id() const;
 
-    void name(const std::string &name);
-    std::string name() const;
+    void name(const str &name);
+    str name() const;
 
     bool operator==(const tag_t &t) const;
 };
@@ -63,7 +63,7 @@ class tag_vec
      * \param tag tag to find.
      * \return True if found else false.
      */
-    bool exists(const std::string &name);
+    bool exists(const str &name);
 
     /**
      * Checks if a tag with id exists.
@@ -132,7 +132,7 @@ class tag_vec
      *
      * \return String representation of tags.
      */
-    std::string to_string() const;
+    str to_str() const;
 
     tag_vec &operator=(const tag_vec &t);
 };

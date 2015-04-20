@@ -53,9 +53,9 @@ u64 time_stamp_t::get() const
     return ts;
 }
 
-std::string time_stamp_t::to_string() const
+str time_stamp_t::to_str() const
 {
-    return date.to_string() + " " + time.to_string();
+    return date.to_str() + " " + time.to_str();
 }
 
 bool time_stamp_t::operator<(const time_stamp_t &ts) const

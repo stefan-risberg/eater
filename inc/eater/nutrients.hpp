@@ -98,7 +98,7 @@ class macro_nutrients_t
      *
      * \return String representation.
      */
-    std::string to_string() const;
+    str to_str() const;
 };
 }
 

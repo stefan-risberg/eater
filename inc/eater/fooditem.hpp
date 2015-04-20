@@ -19,8 +19,8 @@ class food_item_t
     // Private data.
    private:
     id_t _id;
-    std::string _name;
-    std::string _brand;
+    str _name;
+    str _brand;
 
     // Public data.
    public:
@@ -40,7 +40,7 @@ class food_item_t
      * \param _name Name of food.
      * \param _brand Brand of food item.
      */
-    food_item_t(const std::string &_name, const std::string &_brand);
+    food_item_t(const str &_name, const str &_brand);
 
     /**
      * Move constructor.
@@ -64,14 +64,14 @@ class food_item_t
      *
      * \oaram[in] _name New name.
      */
-    void name(const std::string &_name);
+    void name(const str &_name);
 
     /**
      * Set brand for food item.
      *
      * \param[in] _bramd New brand.
      */
-    void brand(const std::string &_brand);
+    void brand(const str &_brand);
 
     /**
      * Get food item id.
@@ -85,21 +85,21 @@ class food_item_t
      *
      * \return Name of food item.
      */
-    std::string name() const;
+    str name() const;
 
     /**
      * Get food item brand.
      *
      * \return Brand of food item.
      */
-    std::string brand() const;
+    str brand() const;
 
     /**
      * Creates a string representation of food item.
      *
      * \return String representation of item.
      */
-    std::string to_string() const;
+    str to_str() const;
 
     food_item_t &operator=(const food_item_t &it);
 };

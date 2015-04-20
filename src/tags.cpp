@@ -8,12 +8,12 @@ tag_t::tag_t() :
     _name("")
 {}
 
-tag_t::tag_t(const std::string &name) :
+tag_t::tag_t(const str &name) :
     _id(-1),
     _name(name)
 {}
 
-tag_t::tag_t(id_t id, const std::string &name) :
+tag_t::tag_t(id_t id, const str &name) :
     _id(id),
     _name(name)
 {}
@@ -28,12 +28,12 @@ id_t tag_t::id() const
     return _id;
 }
 
-void tag_t::name(const std::string &name)
+void tag_t::name(const str &name)
 {
     _name = name;
 }
 
-std::string tag_t::name() const
+str tag_t::name() const
 {
     return _name;
 }
@@ -55,7 +55,7 @@ tag_vec::tag_vec(const tag_vec &tags) : _tags(tags._tags)
 tag_vec::tag_vec(tag_vec &&tags) : _tags(std::move(tags._tags))
 {}
 
-bool tag_vec::exists(const std::string &name)
+bool tag_vec::exists(const str &name)
 {
     for (auto &it : _tags) {
         if (it.name() == name) {
@@ -130,7 +130,7 @@ tag_vec::const_iterator tag_vec::end() const
     return _tags.cend();
 }
 
-std::string tag_vec::to_string() const
+str tag_vec::to_str() const
 {
     fmt::Writer w;
     bool first = true;
@@ -165,6 +165,6 @@ tag_vec &tag_vec::operator=(const tag_vec &t)
 
 std::ostream &operator<<(std::ostream &os, const eater::tag_vec &tag_vec)
 {
-    return os << tag_vec.to_string();
+    return os << tag_vec.to_str();
 }
 

@@ -25,8 +25,8 @@ main()
     db.safe.insert(&it1);
     db.safe.insert(&it2);
 
-    std::cout << it1.to_string() << std::endl;
-    std::cout << it2.to_string() << std::endl;
+    std::cout << it1.to_str() << std::endl;
+    std::cout << it2.to_str() << std::endl;
 
     return 0;
 }

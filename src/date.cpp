@@ -22,9 +22,9 @@ date_t::date_t(u32 _date)
     set(_date);
 }
 
-date_t::date_t(const std::string &date)
+date_t::date_t(const str &date)
 {
-    if (!from_string(date)) {
+    if (!from_str(date)) {
         set(0, 0, 0);
     }
 }
@@ -90,9 +90,9 @@ u8 date_t::d() const
     return _day;
 }
 
-bool date_t::from_string(const std::string &date)
+bool date_t::from_str(const str &date)
 {
-    std::string d = "";
+    str d = "";
     u8 state = 0;
 
     for (auto c : date) {
@@ -139,7 +139,7 @@ bool date_t::from_string(const std::string &date)
     return true;
 }
 
-std::string date_t::to_string() const
+str date_t::to_str() const
 {
 
     fmt::Writer f;
@@ -211,13 +211,13 @@ ParsingState inc(ParsingState p) {
 
 std::ostream &operator<<(std::ostream &os, const eater::date_t &d)
 {
-    return os << d.to_string();
+    return os << d.to_str();
 }
 
 std::istream &operator>>(std::istream &is, eater::date_t &d)
 {
     auto at = YEAR;
-    std::string y = "", m = "", _d = "", date;
+    eater::str y = "", m = "", _d = "", date;
     is >> date;
 
     for (size_t i = 0; i < date.length(); i++) {
