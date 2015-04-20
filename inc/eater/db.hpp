@@ -30,7 +30,16 @@ class db_t {
     class unsafe_t {
         friend class db_t;
      private:
+        /**
+         * Default constructor.
+         */
         unsafe_t();
+
+        /**
+         * Initiates the unsafe interface.
+         *
+         * \param db Database interface.
+         */
         void init(db_t *db);
      public:
         /**
@@ -60,11 +69,40 @@ class db_t {
     class safe_t {
         friend class db_t;
      private:
+        /**
+         * Default constructor.
+         */
         safe_t();
+
+        /**
+         * Initiates the safe interface.
+         *
+         * \param db Database interface.
+         */
         void init(db_t *db);
 
      public:
+        /**
+         * Inserts a tag in a data safe way.
+         *
+         * If the id is anoything else then -1, it will check if the id exists
+         * already. Else it will check if the name exists.
+         *
+         * When id is -1 the inserted id of tag will be set.
+         *
+         * \param tag Tag to insert.
+         */
         void insert(tag_t *tag);
+
+        /**
+         * Inserts a food item in a data safe way.o
+         *
+         * If the id is -1 it will check if the fooditems brand and name
+         * combination exists. If inserted the id field of food item is set.
+         *
+         * If id is set already, it will check if it exists. If it does no
+         * insert will be made.
+         */
         void insert(food_item_t *it);
 
      private:
