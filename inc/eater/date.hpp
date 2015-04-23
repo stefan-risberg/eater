@@ -127,10 +127,10 @@ class date_t {
     /**
      * Set a new date with a string format of yyyy-mm-dd.
      *
-     * \param d New date.
-     * \return False if date was in wrong format.
+     * \param d Date.
+     * \return A date_t.
      */
-    bool from_str(const str &date);
+    static date_t from_str(const str &date);
 
     /**
      * Resturn date as a string.

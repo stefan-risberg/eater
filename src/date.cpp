@@ -24,9 +24,9 @@ date_t::date_t(u32 _date)
 
 date_t::date_t(const str &date)
 {
-    if (!from_str(date)) {
-        set(0, 0, 0);
-    }
+    auto  d = date_t::from_str(date);
+
+    set(d.get());
 }
 
 void date_t::set(u16 y, u8 m, u8 d)
@@ -90,53 +90,56 @@ u8 date_t::d() const
     return _day;
 }
 
-bool date_t::from_str(const str &date)
+date_t date_t::from_str(const str &date)
 {
-    str d = "";
+    str tmp = "";
     u8 state = 0;
+    date_t d;
 
     for (auto c : date) {
         if (c == '-') {
-            u32 val = std::stoi(d);
+            u32 val = std::stoi(tmp);
 
-            d = "";
+            tmp = "";
 
             switch (state) {
                 case 0:
-                    y(val);
+                    d.y(val);
                     state++;
                     break;
                 case 1:
-                    m(val);
+                    d.m(val);
                     state++;
                     break;
                 case 2:
                     std::cerr << "Wrong format was given...\n";
                     std::cerr << E_WHITE("Format: ") << date << std::endl;
 
-                    return false;
+                    throw std::invalid_argument("Malformed date: "
+                                                + date
+                                                + ".");
             }
         } else if (c >= '0' && c <= '9') {
-            d += c;
+            tmp += c;
         } else {
             std::cerr << "Wrong format was given...\n";
             std::cerr << E_WHITE("Format: ") << date << " last read: " << c
                       << "\n";
 
-            return false;
+            throw std::invalid_argument("Malformed date: " + date + ".");
         }
     }
 
     if (state == 2) {
-        u32 val = std::stoi(d);
-        this->d(val);
+        u32 val = std::stoi(tmp);
+        d.d(val);
     } else {
         E_Debug(E_RED("BUG: ") "Report it pleas.\n");
 
-        return false;
+        throw std::invalid_argument("Malformed date: " + date + ".");
     }
 
-    return true;
+    return d;
 }
 
 str date_t::to_str() const
