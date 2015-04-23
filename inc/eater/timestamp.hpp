@@ -91,6 +91,14 @@ class time_stamp_t
      */
     str to_str() const;
 
+    /**
+     * Converts a string representation of the timestamp.
+     *
+     * \param s String to convert.
+     * \return Timestamp.
+     */
+    static time_stamp_t from_str(const str &s);
+
     bool operator<(const time_stamp_t &ts) const;
     bool operator<=(const time_stamp_t &ts) const;
     bool operator>(const time_stamp_t &ts) const;

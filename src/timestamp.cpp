@@ -58,6 +58,25 @@ str time_stamp_t::to_str() const
     return date.to_str() + " " + time.to_str();
 }
 
+time_stamp_t time_stamp_t::from_str(const str &s)
+{
+    size_t space_at;
+    for (space_at = 0; space_at < s.length(); space_at++) {
+        if (s[space_at] == ' ')
+            break;
+    }
+
+    if (space_at == s.length() - 1) {
+        throw std::invalid_argument("Malformed time stamp: " + s + ".");
+    }
+
+    str d = s.substr(0, space_at);
+    str t = s.substr(space_at + 1, s.length() - space_at - 1);
+
+    return time_stamp_t(date_t::from_str(d),
+                        time_t::from_str(t));
+}
+
 bool time_stamp_t::operator<(const time_stamp_t &ts) const
 {
     if (date < ts.date) {
