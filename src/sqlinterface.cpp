@@ -149,7 +149,7 @@ i64 session_t::last_index(const str &tbl, const str &col)
                     + " is not a integer index");
 }
 
-i64 session_t::lastRowInsertRowId()
+i64 session_t::last_insert_row_id()
 {
     return sqlite3_last_insert_rowid(db.get());
 }

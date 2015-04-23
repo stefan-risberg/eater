@@ -123,7 +123,7 @@ class session_t {
     /**
      * Get last inserted index.
      */
-    i64 lastRowInsertRowId();
+    i64 last_insert_row_id();
 
     void operator<< (const str &query);
 
