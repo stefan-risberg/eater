@@ -140,6 +140,8 @@ i64 session_t::last_index(const str &tbl, const str &col)
         if (st.get_type(0) == sql::INTEGER) {
             return st.get_int(0);
         }
+    } else if (r == sql::DONE) {
+        return -1;
     }
 
     throw sql_error("Column "
