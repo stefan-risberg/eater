@@ -43,7 +43,7 @@ sql::status_t statement_t::step()
     return last_status;
 }
 
-sql::type_t statement_t::get_type(i32 col)
+sql::type_t statement_t::get_type(i64 col)
 {
     val_before_get(col);
 
@@ -56,26 +56,26 @@ sql::type_t statement_t::get_type(i32 col)
     }
 }
 
-i32 statement_t::get_int(i32 col)
+i64 statement_t::get_int(i64 col)
 {
     val_before_get(col);
     return sqlite3_column_int(st, col);
 }
 
-f64 statement_t::get_double(i32 col)
+f64 statement_t::get_double(i64 col)
 {
     val_before_get(col);
     return sqlite3_column_double(st, col);
 }
 
-std::string statement_t::get_str(i32 col)
+std::string statement_t::get_str(i64 col)
 {
     val_before_get(col);
     return std::string(
         reinterpret_cast<const char *> (sqlite3_column_text(st, col)));
 }
 
-void statement_t::val_before_get(i32 col)
+void statement_t::val_before_get(i64 col)
 {
     if (st == nullptr) {
         throw sql_error("No prepared statement.");

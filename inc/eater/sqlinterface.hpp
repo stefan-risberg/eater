@@ -68,37 +68,37 @@ class statement_t {
      * \param col - Column to get type of.
      * \return The type of the column col.
      */
-    sql::type_t get_type(i32 col);
+    sql::type_t get_type(i64 col);
 
     /**
      * Get the int from column col.
      * \param col - Column to query.
      * \return integer containd in the column.
      */
-    i32 get_int(i32 col);
+    i64 get_int(i64 col);
 
     /**
      * Get the double from column col.
      * \param col - Column to query.
      * \return double containd in the column.
      */
-    f64 get_double(i32 col);
+    f64 get_double(i64 col);
 
     /**
      * Get the text from column col.
      * \param col - Column to query.
      * \return text containd in the column.
      */
-    str get_str(i32 col);
+    str get_str(i64 col);
 
 
  private:
     sqlite3_stmt *st = nullptr;
     sql::status_t last_status = sql::OK;
-    i32 col_count = 0;
+    i64 col_count = 0;
     std::shared_ptr<sqlite3> db;
 
-    inline void val_before_get(i32 col);
+    inline void val_before_get(i64 col);
 };
 
 class session_t {
