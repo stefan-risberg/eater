@@ -8,9 +8,9 @@ namespace eater
 {
 time_t::time_t(const str &time)
 {
-    if (!from_str(time)) {
-        set(0, 0, 0, 0);
-    }
+    auto t = time_t::from_str(time);
+
+    set(t.get());
 }
 
 time_t::time_t(u8 h, u8 m, u8 s, u8 ms)
@@ -110,67 +110,68 @@ u32 time_t::get() const
     return _value;
 }
 
-bool time_t::from_str(const str &time)
+time_t time_t::from_str(const str &time)
 {
-    str t = "";
+    str tmp = "";
     u32 state = 0;
+    time_t t;
 
     for (auto c : time) {
         if (c == ':' || c == '.') {
-            u32 val = std::stoi(t);
-            t = "";
+            u32 val = std::stoi(tmp);
+            tmp = "";
 
             switch (state) {
                 case 0:
-                    h(val);
+                    t.h(val);
                     state++;
                     break;
                 case 1:
-                    m(val);
+                    t.m(val);
                     state++;
                     break;
                 case 2:
-                    s(val);
+                    t.s(val);
                     state++;
                     break;
                 case 3:
                     std::cout << "time_t format was wrong.\n";
                     std::cout << "Format: " << time << std::endl;
 
-                    return false;
+                    throw std::invalid_argument("String malformed: " + time + ".");
                 default:
                     E_Debug("Bug has been found\n");
             }
         } else if (c >= '0' && c <= '9') {
-            t += c;
+            tmp += c;
         } else {
             std::cout << "time_t format was wrong.\n";
             std::cout << "Format: " << time;
             std::cout << " Last read char: " << c << std::endl;
 
-            return false;
+            throw std::invalid_argument("String malformed: " + time + ".");
         }
     }
 
-    u32 val = std::stoi(t);
+    u32 val = std::stoi(tmp);
 
     if (state == 2) {
-        s(val);
-        ms(0);
+        t.s(val);
+        t.ms(0);
     } else if (state == 3) {
-        ms(val);
+        t.ms(val);
     } else if (state < 3) {
         std::cout << "time_t format was wrong.\n";
         std::cout << "Format: " << time << std::endl;
 
-        return false;
+        throw std::invalid_argument("String malformed: " + time + ".");
     } else {
         E_Debug("Bug has been found\n");
 
-        return false;
+        throw std::invalid_argument("String malformed: " + time + ".");
     }
 
-    return true;
+    return t;
 }
 
 str time_t::to_str() const

@@ -60,7 +60,7 @@ class time_t {
     u8 ms() const;
     u32 get() const;
 
-    bool from_str(const str &time);
+    static time_t from_str(const str &time);
     str to_str() const;
 
     bool operator<(const time_t &t) const;
