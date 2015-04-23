@@ -1,4 +1,7 @@
 #include "eater/sqlinterface.hpp"
+#include "eater/exception.hpp"
+
+#include <format.h>
 
 namespace eater
 {
@@ -120,6 +123,30 @@ statement_t session_t::prepare(const std::string &query)
     }
 
     return statement_t(db, st);
+}
+
+i64 session_t::last_index(const str &tbl, const str &col)
+{
+    fmt::Writer q;
+    q.Format("select {0} from {1} order by {0} desc limit 1;")
+        << col
+        << tbl;
+
+    auto st = prepare(q.str());
+
+    auto r = st.step();
+
+    if (r == sql::ROW) {
+        if (st.get_type(0) == sql::INTEGER) {
+            return st.get_int(0);
+        }
+    }
+
+    throw sql_error("Column "
+                    + col
+                    + " in table "
+                    + tbl
+                    + " is not a integer index");
 }
 
 i64 session_t::lastRowInsertRowId()

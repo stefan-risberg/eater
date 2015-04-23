@@ -91,6 +91,7 @@ class statement_t {
      */
     str get_str(i32 col);
 
+
  private:
     sqlite3_stmt *st = nullptr;
     sql::status_t last_status = sql::OK;
@@ -108,6 +109,20 @@ class session_t {
     bool open(const str &db);
 
     statement_t prepare(const str &query);
+
+    /**
+     * Gets last inserted index.
+     *
+     * \param tbl Table.
+     * \param col Index column.
+     *
+     * \return Last index.
+     */
+    i64 last_index(const str &tbl, const str &col);
+
+    /**
+     * Get last inserted index.
+     */
     i64 lastRowInsertRowId();
 
     void operator<< (const str &query);
