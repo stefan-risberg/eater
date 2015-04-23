@@ -78,8 +78,9 @@ typedef i32 id_t;
 
 typedef std::string str;
 
-typedef std::vector<id_t> id_vec;
-typedef std::vector<std::string> str_vec;
+template<class T> using vec = std::vector<T>;
+typedef vec<id_t> id_vec;
+typedef vec<str> str_vec;
 }
 
 #endif /* EATER_COMMON_HPP_ */
