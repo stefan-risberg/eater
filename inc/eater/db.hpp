@@ -7,6 +7,7 @@
 #include "eater/sqlinterface.hpp"
 #include "eater/food_item_table.hpp"
 #include "eater/tag_table.hpp"
+#include "eater/food_item_tags_table.hpp"
 
 namespace eater
 {
@@ -41,6 +42,7 @@ class db_t {
  public:
     food_item_table_t food_table;
     tag_table_t tag_table;
+    food_item_tags_table_t food_tags_table;
 };
 
 typedef std::shared_ptr<db_t> shared_db_t;

@@ -44,8 +44,13 @@ bool db_t::init()
     }
 
   try {
+      food_tags_table.init(_sql);
   } catch (std::exception const &e) {
-
+        LOGG_ERROR(__PRETTY_FUNCTION__);
+        LOGG_ERROR("Faild to initialize table: "
+                   << E_MAGENTA(food_tags_table.name()) << ".");
+        LOGG_ERROR("Reason: " << e.what());
+        return false;
   }
 
     return true;
