@@ -1,5 +1,0 @@
-include_rules
-
-: format.cc |> !cc |>
-: $(BUILD_DIR)/*.o |> ar rcs %o %f |> libformat.a
-

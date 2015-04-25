@@ -18,7 +18,7 @@ void tag_table_t::init(shared_session_t &s)
     *_sql << fmt::format(
         "create table if not exists {} ("
         "{} integer primary key,"
-        "{} text not null",
+        "{} text not null);",
         tbl_tags,
         col_id,
         col_name);

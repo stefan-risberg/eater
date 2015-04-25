@@ -34,8 +34,6 @@ class db_t {
      */
     bool init();
 
-
-
  private:
     shared_session_t _sql;
 
