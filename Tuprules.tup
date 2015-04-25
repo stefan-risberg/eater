@@ -2,7 +2,8 @@ CXXFLAGS += -std=c++11
 CXXFLAGS += -Wall
 CXXFLAGS += -Werror
 CXX = clang++
-BUILD_DIR = build
 
-!cc = |> $(CXX) $(CXXFLAGS) %f -c -o %o |> $(BUILD_DIR)/%B.o
+!cc = |> $(CXX) $(CXXFLAGS) %f -c -o %o |>
+!ld = |> $(CXX) %f -o %o $(LIBS) |>
+!ar = |> ar rcs %o %f |>
 

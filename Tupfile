@@ -1,13 +1,15 @@
 include_rules
 CXXFLAGS += -I./inc
 CXXFLAGS += -I./lib/cppformat
-CXXFLAGS += -I/usr/include/soci
 
-GLOBAL_LIBS += -lsqlite3
-LIBS += ./lib/cppformat/libformat.a
-#LIBS += ./bin/libformat.a
+: ./lib/cppformat/format.cc |> !cc |> build/cppformat/%B.o
 
-PROJECT_NAME = eater
+#LIBS += -lsqlite3
+: foreach src/*.cpp |> !cc |> build/eater/%B.o
 
-: foreach src/*.cpp |> !cc |>
-: $(BUILD_DIR)/*.o $(LIBS) |> $(CXX) -o %o %f $(GLOBAL_LIBS) |> bin/$(PROJECT_NAME)
+: build/cppformat/*.o build/eater/*.o |> !ar |> bin/libeater.a
+
+LIBS = -lsqlite3
+
+: foreach ./test/*.cpp |> !cc |> build/test/%B.o
+: build/test/*.o bin/libeater.a |> !ld |> bin/test
