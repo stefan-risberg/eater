@@ -15,15 +15,14 @@ tag_table_t::tag_table_t()
 void tag_table_t::init(shared_session_t &s)
 {
     _sql = s;
-    fmt::Writer w;
-    w.Format("create table if not exists {} ("
-             "{} integer primary key,"
-             "{} text not null)")
-        << tbl_tags
-        << col_id
-        << col_name;
+    *_sql << fmt::format(
+        "create table if not exists {} ("
+        "{} integer primary key,"
+        "{} text not null",
+        tbl_tags,
+        col_id,
+        col_name);
 
-    *_sql << w.str();
 
     LOGG_MESSAGE("Initialized: " << E_MAGENTA(tbl_tags) << ".");
 }
@@ -44,14 +43,13 @@ void tag_table_t::insert(tag_t &tag, bool safe)
         tag.id(_sql->last_index(tbl_tags, col_id) + 1);
     }
 
-    fmt::Writer q;
-    q.Format("insert into {} ({}, {}) values ({}, '{}');")
-        << tbl_tags
-        << col_id
-        << col_name
-        << tag.id()
-        << tag.name();
-    *_sql << q.str();
+    *_sql << fmt::format(
+        "insert into {} ({}, {}) values ({}, '{}');",
+        tbl_tags,
+        col_id,
+        col_name,
+        tag.id(),
+        tag.name());
 }
 
 void tag_table_t::remove(tag_t &tag)
@@ -60,12 +58,11 @@ void tag_table_t::remove(tag_t &tag)
         throw std::invalid_argument("tag.id() < 0");
     }
 
-    fmt::Writer q;
-    q.Format("delete from {} where {}={};")
-        << tbl_tags
-        << col_id
-        << tag.id();
-    *_sql << q.str();
+    *_sql << fmt::format(
+        "delete from {} where {}={};",
+        tbl_tags,
+        col_id,
+        tag.id());
 }
 
 void tag_table_t::update(tag_t &tag)
@@ -74,23 +71,21 @@ void tag_table_t::update(tag_t &tag)
         throw std::invalid_argument("tag.id() < 0");
     }
 
-    fmt::Writer q;
-    q.Format("update {} set {}='{}';")
-        << tbl_tags
-        << col_id
-        << tag.id();
-    *_sql << q.str();
+    *_sql << fmt::format(
+        "update {} set {}='{}';",
+        tbl_tags,
+        col_id,
+        tag.id());
 }
 
 tag_t tag_table_t::find(const id_t &tag) const
 {
     tag_t t;
-    fmt::Writer q;
-    q.Format("select {0} from {1} where {0}={2};")
-        << col_id
-        << tbl_tags
-        << tag;
-    auto st = _sql->prepare(q.str());
+    auto st = _sql->prepare(fmt::format(
+            "select {0} from {1} where {0}={2};",
+            col_id,
+            tbl_tags,
+            tag));
 
     if (st.step() == sql::ROW) {
         t.id(tag);
@@ -110,13 +105,12 @@ bool tag_table_t::exists(const id_t &tag) const
         throw std::invalid_argument("tag < 0");
     }
 
-    fmt::Writer w;
-    w.Format("select count({0}) from {1} where {0}={2};")
-        << col_id
-        << tbl_tags
-        << tag;
+    auto st = _sql->prepare(fmt::format(
+            "select count({0}) from {1} where {0}={2};",
+            col_id,
+            tbl_tags,
+            tag));
 
-    auto st = _sql->prepare(w.str());
 
     if (st.step() == sql::ROW) {
         if (st.get_int(0) > 0) {
@@ -133,15 +127,13 @@ bool tag_table_t::exists(const tag_t &tag) const
         throw std::invalid_argument("tag < 0");
     }
 
-    fmt::Writer w;
-    w.Format("select count({0}) from {1} where {2}='{3}' and {0}={4};")
-        << col_id
-        << tbl_tags
-        << col_name
-        << tag.name()
-        << tag.id();
-
-    auto st = _sql->prepare(w.str());
+    auto st = _sql->prepare(fmt::format(
+            "select count({0}) from {1} where {2}='{3}' and {0}={4};",
+            col_id,
+            tbl_tags,
+            col_name,
+            tag.name(),
+            tag.id()));
 
     if (st.step() == sql::ROW) {
         if (st.get_int(0) > 0) {

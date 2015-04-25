@@ -127,12 +127,11 @@ statement_t session_t::prepare(const std::string &query)
 
 i64 session_t::last_index(const str &tbl, const str &col)
 {
-    fmt::Writer q;
-    q.Format("select {0} from {1} order by {0} desc limit 1;")
-        << col
-        << tbl;
+    auto st = prepare(fmt::format(
+            "select {0} from {1} order by {0} desc limit 1;",
+            col,
+            tbl));
 
-    auto st = prepare(q.str());
 
     auto r = st.step();
 

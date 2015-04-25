@@ -16,17 +16,11 @@ int main()
     it.mn.set(343, 0, 26, 26);
     it.ts.now();
 
-    food_item_t it2;
-    it2.name("Peppar Salami");
-    it2.brand("Göl");
-    it2.mn.set(427, 1, 18, 39);
-    it2.ts.now();
-
-    db.food_table.insert(it);
-    db.food_table.insert(it2);
-
-    std::cout << it.to_str() << std::endl;
-    std::cout << it2.to_str() << std::endl;
+    try {
+        db.food_table.insert(it);
+        std::cout << it.to_str() << std::endl;
+    } catch (const exists_already &e) {
+    }
 
     return 0;
 }

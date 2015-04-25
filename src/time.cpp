@@ -176,12 +176,12 @@ time_t time_t::from_str(const str &time)
 
 str time_t::to_str() const
 {
-    fmt::Writer f;
+    fmt::MemoryWriter f;
     auto add = [&f] (i32 in) {
-        in < 10 ? f.Format(":0{}") << in : f.Format(":{}") << in;
+        in < 10 ? f.write(":0{}", in) : f.write(":{}", in);
     };
 
-    f.Format("{}") << (i32)h();
+    f.write("{}", (i32)h());
     add(m());
     add(s());
     return f.str();

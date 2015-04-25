@@ -132,25 +132,25 @@ tag_vec::const_iterator tag_vec::end() const
 
 str tag_vec::to_str() const
 {
-    fmt::Writer w;
+    fmt::MemoryWriter w;
     bool first = true;
 
-    w.Format("[");
+    w.write("[");
 
     for (auto &it : _tags) {
         if (first) {
-            w.Format("{}: {}")
-                << std::to_string(it.id())
-                << it.name();
+            w.write("{}: {}",
+                    std::to_string(it.id()),
+                    it.name());
             first = false;
         } else {
-            w.Format(", {}: {}")
-                << std::to_string(it.id())
-                << it.name();
+            w.write(", {}: {}",
+                    std::to_string(it.id()),
+                    it.name());
         }
     }
 
-    w.Format("]");
+    w.write("]");
 
     return w.str();
 }

@@ -65,16 +65,18 @@ str food_item_t::brand() const
 
 str food_item_t::to_str() const
 {
-    fmt::Writer w;
-    w.Format("{} - {}\n"
-             "Name: {}\n"
-             "Brand: {}\n"
-             "Tags: {}\n"
-             "Macro: {}\n")
-        << id() << ts.to_str() << name() << brand()
-        << tags.to_str() << mn.to_str();
-
-    return w.str();
+    return fmt::format(
+        "{} - {}\n"
+        "Name: {}\n"
+        "Brand: {}\n"
+        "Tags: {}\n"
+        "Macro: {}\n",
+        id(),
+        ts.to_str(),
+        name(),
+        brand(),
+        tags.to_str(),
+        mn.to_str());
 }
 
 food_item_t &food_item_t::operator=(const food_item_t &it)

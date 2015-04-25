@@ -79,15 +79,13 @@ f32 macro_nutrients_t::fats() const
 
 str macro_nutrients_t::to_str() const
 {
-    fmt::Writer w;
-    w.Format("Kcal: {}, Carbohydrates: {}, "
-             "Proteins: {}, Fats: {}.")
-        << calories()
-        << carbohydrates()
-        << proteins()
-        << fats();
+    return fmt::format("Kcal: {}, Carbohydrates: {}, "
+                       "Proteins: {}, Fats: {}.",
+                       calories(),
+                       carbohydrates(),
+                       proteins(),
+                       fats());
 
-    return w.str();
 }
 }
 

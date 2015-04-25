@@ -145,18 +145,17 @@ date_t date_t::from_str(const str &date)
 str date_t::to_str() const
 {
 
-    fmt::Writer f;
+    fmt::MemoryWriter f;
 
     auto add = [&f] (i32 in) {
         if (in < 10) {
-            f.Format("-0{}", in);
+            f.write("-0{}", in);
         } else {
-            f.Format("-{}", in);
+            f.write("-{}", in);
         }
     };
 
-    f.Format("{}")
-        << (i32)y();
+    f.write("{}", (i32)y());
     add(m());
     add(d());
 
