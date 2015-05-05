@@ -2,14 +2,17 @@ include_rules
 CXXFLAGS += -I./inc
 CXXFLAGS += -I./lib/cppformat
 
+# cppFormat object files
 : ./lib/cppformat/format.cc |> !cc |> build/cppformat/%B.o
 
-#LIBS += -lsqlite3
+# Eater object files
 : foreach src/*.cpp |> !cc |> build/eater/%B.o
 
+# build eater library
 : build/cppformat/*.o build/eater/*.o |> !ar |> bin/libeater.a
 
 LIBS = -lsqlite3
 
+# Build testing application
 : foreach ./test/*.cpp |> !cc |> build/test/%B.o
 : build/test/*.o bin/libeater.a |> !ld |> bin/test
