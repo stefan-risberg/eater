@@ -79,10 +79,6 @@ bool tag_vec::exists(id_t id)
 
 bool tag_vec::add(const tag_t &tag)
 {
-    if (tag.id() == -1) {
-        return false;
-    }
-
     for (auto it = begin(); it != end(); it++) {
         if (*it == tag) {
             return false;
