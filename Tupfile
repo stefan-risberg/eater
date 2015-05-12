@@ -16,3 +16,7 @@ LIBS = -lsqlite3
 # Build testing application
 : foreach ./test/*.cpp |> !cc |> build/test/%B.o
 : build/test/*.o bin/libeater.a |> !ld |> bin/test
+
+# Build additem
+: foreach ./tools/additem/*.cpp |> !cc |> build/additem/%B.o
+: ./build/additem/*.o bin/libeater.a |> !ld |> bin/additem
