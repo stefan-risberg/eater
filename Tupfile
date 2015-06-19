@@ -11,6 +11,7 @@ CXXFLAGS += -I./lib/cppformat
 # build eater library
 : build/cppformat/*.o build/eater/*.o |> !ar |> bin/libeater.a
 
+# libs
 LIBS = -lsqlite3
 
 # Build testing application
